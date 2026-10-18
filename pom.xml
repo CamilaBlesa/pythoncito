@@ -8,11 +8,11 @@
 		<version>4.1.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.pythoncito</groupId>
+	<groupId>ar.edu.unsam.programacion3</groupId>
 	<artifactId>pythoncito</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name/>
-	<description/>
+	<name>pythoncito</name>
+	<description>Plataforma educativa Pythoncito con Spring Boot, JPA y SQL Server</description>
 	<url/>
 	<licenses>
 		<license/>

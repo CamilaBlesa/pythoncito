@@ -23,21 +23,18 @@
 ---
 
 ## 🏗️ Arquitectura de Paquetes
-Organizada en capas de responsabilidades separadas:
+Organizada en capas limpias bajo la convención de la cátedra UNSAM:
 
 ```
-src/main/java/com/pythoncito/pythoncito/
-├── configs/           # Configuración de Swagger/OpenAPI, CORS, Beans
-├── controllers/       # RestControllers (endpoints HTTP con Swagger @Operation, @Tag)
-├── dtos/              # Data Transfer Objects (Requests y Responses)
-├── exceptions/        # Clases de excepción y GlobalExceptionHandler (@RestControllerAdvice)
-├── models/            # Entidades JPA (@Entity)
-├── repositories/      # Interfaces Spring Data JPA
-├── repositories/impl/ # Implementaciones a medida de repositorios
-├── services/          # Interfaces de lógica de negocio
-├── services/impl/     # Implementaciones de servicios (@Service)
-├── validators/        # Validaciones de reglas de negocio funcionales
-└── utils/             # Funciones auxiliares y utilidades
+src/main/java/ar/edu/unsam/programacion3/pythoncito/
+├── config/            # Configuración de Swagger/OpenAPI, CORS, Beans
+├── controller/        # RestControllers (endpoints HTTP con Swagger @Operation, @Tag)
+├── dto/               # Data Transfer Objects (Requests y Responses)
+├── exception/         # Manejo global de excepciones (@RestControllerAdvice)
+├── model/             # Entidades JPA (@Entity)
+├── repository/        # Interfaces Spring Data JPA
+├── service/           # Clases con la lógica de negocio (@Service)
+└── PythoncitoApplication.java
 ```
 
 ---
