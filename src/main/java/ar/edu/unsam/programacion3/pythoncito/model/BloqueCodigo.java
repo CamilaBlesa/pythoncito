@@ -1,7 +1,6 @@
 package ar.edu.unsam.programacion3.pythoncito.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
@@ -62,7 +61,6 @@ public class BloqueCodigo {
         return contenido;
     }
 
-    @JsonProperty("code")
     public void setContenido(String contenido) {
         this.contenido = contenido;
     }
@@ -71,7 +69,6 @@ public class BloqueCodigo {
         return ordenPresentacion;
     }
 
-    @JsonProperty("order")
     public void setOrdenPresentacion(Integer ordenPresentacion) {
         this.ordenPresentacion = ordenPresentacion;
     }
@@ -80,7 +77,6 @@ public class BloqueCodigo {
         return ordenCorrecto;
     }
 
-    @JsonProperty("correctOrder")
     public void setOrdenCorrecto(Integer ordenCorrecto) {
         this.ordenCorrecto = ordenCorrecto;
     }
@@ -89,7 +85,6 @@ public class BloqueCodigo {
         return ejercicio;
     }
 
-    @JsonProperty("exercise")
     public void setEjercicio(Ejercicio ejercicio) {
         this.ejercicio = ejercicio;
     }

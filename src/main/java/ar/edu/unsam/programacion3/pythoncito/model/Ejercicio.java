@@ -2,7 +2,6 @@
 package ar.edu.unsam.programacion3.pythoncito.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import java.util.ArrayList;
@@ -82,7 +81,6 @@ public class Ejercicio {
         return titulo;
     }
 
-    @JsonProperty("title")
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
@@ -91,7 +89,6 @@ public class Ejercicio {
         return consigna;
     }
     
-    @JsonProperty("instructions")
     public void setConsigna(String consigna) {
         this.consigna = consigna;
     }
@@ -100,7 +97,6 @@ public class Ejercicio {
         return codigoEsperado;
     }
 
-    @JsonProperty("expectedCode")
     public void setCodigoEsperado(String codigoEsperado) {
         this.codigoEsperado = codigoEsperado;
     }
@@ -109,7 +105,6 @@ public class Ejercicio {
         return ordenPresentacion;
     }
 
-    @JsonProperty("order")
     public void setOrdenPresentacion(Integer ordenPresentacion) {
         this.ordenPresentacion = ordenPresentacion;
     }
@@ -118,7 +113,6 @@ public class Ejercicio {
         return nivel;
     }
 
-    @JsonProperty("level")
     public void setNivel(Nivel nivel) {
         this.nivel = nivel;
     }
@@ -127,7 +121,6 @@ public class Ejercicio {
         return bloques;
     }
 
-    @JsonProperty("codeBlocks")
     public void setBloques(List<BloqueCodigo> bloques) {
         this.bloques = bloques;
     }

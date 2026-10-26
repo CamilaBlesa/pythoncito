@@ -1,7 +1,6 @@
 package ar.edu.unsam.programacion3.pythoncito.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import java.util.*;
@@ -64,7 +63,6 @@ public class Nivel {
         return titulo;
     }
 
-    @JsonProperty("title")
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
@@ -73,7 +71,6 @@ public class Nivel {
         return tema;
     }
 
-    @JsonProperty("topic")
     public void setTema(String tema) {
         this.tema = tema;
     }
@@ -82,7 +79,6 @@ public class Nivel {
         return activo;
     }
 
-    @JsonProperty("active")
     public void setActivo(Boolean activo) {
         this.activo = activo;
     }
@@ -91,7 +87,6 @@ public class Nivel {
         return ordenPresentacion;
     }
     
-    @JsonProperty("order")
     public void setOrdenPresentacion(Integer ordenPresentacion) {
         this.ordenPresentacion = ordenPresentacion;
     }
@@ -100,7 +95,6 @@ public class Nivel {
         return ejercicios;
     }
 
-    @JsonProperty("exercises")
     public void setEjercicios(List<Ejercicio> ejercicios) {
         this.ejercicios = ejercicios;
     }
