@@ -6,6 +6,7 @@ import ar.edu.unsam.programacion3.pythoncito.model.Nivel;
 import ar.edu.unsam.programacion3.pythoncito.repositories.NivelRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,17 +19,19 @@ public class NivelService {
     }
 
     public List<NivelDTO> listar() {
-        return nivelRepository.findAll()
-                .stream()
-                .map(NivelMapper::aDTO)
-                .toList();
+        List<Nivel> niveles = nivelRepository.findAll();
+        List<NivelDTO> nivelesDTO = new ArrayList<>();
+        for (Nivel nivel : niveles) {
+            nivelesDTO.add(NivelMapper.aDTO(nivel));
+        }
+        return nivelesDTO;
     }
 
     public NivelDTO obtenerPorId(Long id) {
-        for (Nivel nivel : nivelRepository.findAllById(List.of(id))) {
-            NivelMapper.aDTO(nivel);
+        Nivel nivel = nivelRepository.findById(id).orElse(null);
+        if (nivel == null) {
+            return null;
         }
-
-        return null;
+        return NivelMapper.aDTO(nivel);
     }
 }
