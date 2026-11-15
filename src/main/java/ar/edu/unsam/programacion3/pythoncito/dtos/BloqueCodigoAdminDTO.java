@@ -1,5 +1,5 @@
 
-package ar.edu.unsam.programacion3.pythoncito.dto;
+package ar.edu.unsam.programacion3.pythoncito.dtos;
 
 public class BloqueCodigoAdminDTO {
 

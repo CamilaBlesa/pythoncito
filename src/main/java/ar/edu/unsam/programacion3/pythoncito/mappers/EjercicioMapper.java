@@ -1,17 +1,20 @@
-package ar.edu.unsam.programacion3.pythoncito.mapper;
+package ar.edu.unsam.programacion3.pythoncito.mappers;
 
-import ar.edu.unsam.programacion3.pythoncito.model.Ejercicio;
-import ar.edu.unsam.programacion3.pythoncito.dto.EjercicioDTO;
-import ar.edu.unsam.programacion3.pythoncito.dto.BloqueCodigoDTO;
-import ar.edu.unsam.programacion3.pythoncito.dto.EjercicioAdminDTO;
-import ar.edu.unsam.programacion3.pythoncito.dto.BloqueCodigoAdminDTO;
+import ar.edu.unsam.programacion3.pythoncito.dtos.BloqueCodigoAdminDTO;
+import ar.edu.unsam.programacion3.pythoncito.dtos.BloqueCodigoDTO;
+import ar.edu.unsam.programacion3.pythoncito.dtos.EjercicioAdminDTO;
+import ar.edu.unsam.programacion3.pythoncito.dtos.EjercicioDTO;
+import ar.edu.unsam.programacion3.pythoncito.models.Ejercicio;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class EjercicioMapper {
 
-    
+    private EjercicioMapper() {
+        /* This utility class should not be instantiated */
+    }
+
     public static EjercicioDTO aDTOAlumno(Ejercicio ejercicio) {
 
         List<BloqueCodigoDTO> bloquesDTO = ejercicio.getBloques()
