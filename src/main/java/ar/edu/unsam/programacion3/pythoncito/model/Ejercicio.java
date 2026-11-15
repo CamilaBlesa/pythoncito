@@ -40,6 +40,30 @@ public class Ejercicio {
 
     @Column(length = 1000, nullable = false)
     @Schema(
+        description = "Explicacion breve del concepto trabajado.",
+        example = "print() muestra informacion en la pantalla.",
+        requiredMode = Schema.RequiredMode.REQUIRED
+    )
+    private String explicacion;
+
+    @Column(length = 1000, nullable = false)
+    @Schema(
+        description = "Ejemplo diferente al reto principal.",
+        example = "print(\"Buenos dias\")",
+        requiredMode = Schema.RequiredMode.REQUIRED
+    )
+    private String ejemploDiferente;
+
+    @Column(length = 500, nullable = false)
+    @Schema(
+        description = "Resultado del ejemplo diferente.",
+        example = "Buenos dias",
+        requiredMode = Schema.RequiredMode.REQUIRED
+    )
+    private String resultadoEjemplo;
+
+    @Column(length = 1000, nullable = false)
+    @Schema(
         description = "Código esperado del ejercicio.",
         example = "print('Hola Mundo')",
         requiredMode = Schema.RequiredMode.REQUIRED
@@ -53,6 +77,12 @@ public class Ejercicio {
         requiredMode = Schema.RequiredMode.REQUIRED
     )
     private Integer ordenPresentacion;
+
+    @OneToMany(mappedBy = "ejercicio", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("orden ASC")
+    @JsonIgnoreProperties({"ejercicio"})
+    @Schema(description = "Pistas progresivas ordenadas para el ejercicio.")
+    private ArrayList<Pista> pistas = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "nivel_id", nullable = false)
@@ -94,6 +124,30 @@ public class Ejercicio {
         this.consigna = consigna;
     }
 
+    public String getExplicacion() {
+        return explicacion;
+    }
+
+    public void setExplicacion(String explicacion) {
+        this.explicacion = explicacion;
+    }
+
+    public String getEjemploDiferente() {
+        return ejemploDiferente;
+    }
+
+    public void setEjemploDiferente(String ejemploDiferente) {
+        this.ejemploDiferente = ejemploDiferente;
+    }
+
+    public String getResultadoEjemplo() {
+        return resultadoEjemplo;
+    }
+
+    public void setResultadoEjemplo(String resultadoEjemplo) {
+        this.resultadoEjemplo = resultadoEjemplo;
+    }
+
     public String getCodigoEsperado() {
         return codigoEsperado;
     }
@@ -108,6 +162,14 @@ public class Ejercicio {
 
     public void setOrdenPresentacion(Integer ordenPresentacion) {
         this.ordenPresentacion = ordenPresentacion;
+    }
+
+    public ArrayList<Pista> getPistas() {
+        return pistas;
+    }
+
+    public void setPistas(ArrayList<Pista> pistas) {
+        this.pistas = pistas;
     }
 
     public Nivel getNivel() {
