@@ -7,12 +7,11 @@ import ar.edu.unsam.programacion3.pythoncito.dtos.EjercicioDTO;
 import ar.edu.unsam.programacion3.pythoncito.models.Ejercicio;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class EjercicioMapper {
 
     private EjercicioMapper() {
-        /* This utility class should not be instantiated */
+        // Constructor privado para evitar instanciación
     }
 
     public static EjercicioDTO aDTOAlumno(Ejercicio ejercicio) {
@@ -24,7 +23,7 @@ public class EjercicioMapper {
                         bloque.getContenido(),
                         bloque.getOrdenPresentacion()
                 ))
-                .collect(Collectors.toList());
+                .toList();
 
         return new EjercicioDTO(
                 ejercicio.getId(),
@@ -45,7 +44,7 @@ public class EjercicioMapper {
                         bloque.getOrdenPresentacion(),
                         bloque.getOrdenCorrecto()
                 ))
-                .collect(Collectors.toList());
+                .toList();
 
         return new EjercicioAdminDTO(
                 ejercicio.getId(),
