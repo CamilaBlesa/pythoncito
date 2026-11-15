@@ -2,7 +2,7 @@ package ar.edu.unsam.programacion3.pythoncito.services;
 
 import ar.edu.unsam.programacion3.pythoncito.dtos.NivelDTO;
 import ar.edu.unsam.programacion3.pythoncito.mappers.NivelMapper;
-import ar.edu.unsam.programacion3.pythoncito.models.Nivel;
+import ar.edu.unsam.programacion3.pythoncito.model.Nivel;
 import ar.edu.unsam.programacion3.pythoncito.repositories.NivelRepository;
 import org.springframework.stereotype.Service;
 

@@ -3,7 +3,7 @@ package ar.edu.unsam.programacion3.pythoncito.services;
 import ar.edu.unsam.programacion3.pythoncito.dtos.EjercicioAdminDTO;
 import ar.edu.unsam.programacion3.pythoncito.dtos.EjercicioDTO;
 import ar.edu.unsam.programacion3.pythoncito.mappers.EjercicioMapper;
-import ar.edu.unsam.programacion3.pythoncito.models.Ejercicio;
+import ar.edu.unsam.programacion3.pythoncito.model.Ejercicio;
 import ar.edu.unsam.programacion3.pythoncito.repositories.EjercicioRepository;
 import org.springframework.stereotype.Service;
 

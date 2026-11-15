@@ -1,4 +1,4 @@
-package ar.edu.unsam.programacion3.pythoncito.models;
+package ar.edu.unsam.programacion3.pythoncito.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.v3.oas.annotations.media.Schema;
