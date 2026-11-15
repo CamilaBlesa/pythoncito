@@ -2,46 +2,29 @@ package ar.edu.unsam.programacion3.pythoncito.dtos;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import java.util.List;
+import java.util.ArrayList;
 
 @Schema(description = "Ejercicio que se presenta al alumno sin exponer la solucion.")
 public class EjercicioDTO {
 
-    @Schema(
-        description = "Identificador unico del ejercicio.",
-        accessMode = Schema.AccessMode.READ_ONLY
-    )
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
 
-    @Schema(
-        description = "Titulo del ejercicio.",
-        example = "Tu primer mensaje",
-        requiredMode = Schema.RequiredMode.REQUIRED
-    )
     private String titulo;
 
-    @Schema(
-        description = "Consigna que debe resolver el alumno.",
-        example = "Ordena los bloques para que Python muestre un saludo.",
-        requiredMode = Schema.RequiredMode.REQUIRED
-    )
     private String consigna;
 
-    @Schema(
-        description = "Bloques disponibles para ordenar.",
-        requiredMode = Schema.RequiredMode.REQUIRED
-    )
-    private List<BloqueCodigoDTO> bloques;
+    private String explicacion;
+
+    private String ejemploDiferente;
+
+    private String resultadoEjemplo;
+
+    private ArrayList<BloqueCodigoDTO> bloques;
+
+    private ArrayList<PistaDTO> pistas;
 
     public EjercicioDTO() {
-    }
-
-    public EjercicioDTO(Long id, String titulo, String consigna,
-                        List<BloqueCodigoDTO> bloques) {
-        this.id = id;
-        this.titulo = titulo;
-        this.consigna = consigna;
-        this.bloques = bloques;
     }
 
     public Long getId() {
@@ -68,11 +51,43 @@ public class EjercicioDTO {
         this.consigna = consigna;
     }
 
-    public List<BloqueCodigoDTO> getBloques() {
+    public String getExplicacion() {
+        return explicacion;
+    }
+
+    public void setExplicacion(String explicacion) {
+        this.explicacion = explicacion;
+    }
+
+    public String getEjemploDiferente() {
+        return ejemploDiferente;
+    }
+
+    public void setEjemploDiferente(String ejemploDiferente) {
+        this.ejemploDiferente = ejemploDiferente;
+    }
+
+    public String getResultadoEjemplo() {
+        return resultadoEjemplo;
+    }
+
+    public void setResultadoEjemplo(String resultadoEjemplo) {
+        this.resultadoEjemplo = resultadoEjemplo;
+    }
+
+    public ArrayList<BloqueCodigoDTO> getBloques() {
         return bloques;
     }
 
-    public void setBloques(List<BloqueCodigoDTO> bloques) {
+    public void setBloques(ArrayList<BloqueCodigoDTO> bloques) {
         this.bloques = bloques;
+    }
+
+    public ArrayList<PistaDTO> getPistas() {
+        return pistas;
+    }
+
+    public void setPistas(ArrayList<PistaDTO> pistas) {
+        this.pistas = pistas;
     }
 }

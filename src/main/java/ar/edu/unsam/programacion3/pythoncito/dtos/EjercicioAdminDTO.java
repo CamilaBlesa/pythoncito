@@ -3,47 +3,33 @@ package ar.edu.unsam.programacion3.pythoncito.dtos;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import java.util.List;
+import java.util.ArrayList;
 
 @Schema(description = "Ejercicio con la informacion necesaria para el panel administrativo.")
 public class EjercicioAdminDTO {
 
-    @Schema(
-        description = "Identificador unico del ejercicio.",
-        accessMode = Schema.AccessMode.READ_ONLY
-    )
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
 
-    @Schema(
-        description = "Titulo del ejercicio.",
-        example = "Tu primer mensaje",
-        requiredMode = Schema.RequiredMode.REQUIRED
-    )
     private String titulo;
 
-    @Schema(
-        description = "Consigna del ejercicio.",
-        example = "Ordena los bloques para que Python muestre un saludo.",
-        requiredMode = Schema.RequiredMode.REQUIRED
-    )
     private String consigna;
 
-    @Schema(
-        description = "Bloques disponibles y orden correcto de la solucion.",
-        requiredMode = Schema.RequiredMode.REQUIRED
-    )
-    private List<BloqueCodigoAdminDTO> bloques;
+    private String explicacion;
 
-    public EjercicioAdminDTO() {
-    }
+    private String ejemploDiferente;
 
-    public EjercicioAdminDTO(Long id, String titulo,
-            String consigna, List<BloqueCodigoAdminDTO> bloques) {
-        this.id = id;
-        this.titulo = titulo;
-        this.consigna = consigna;
-        this.bloques = bloques;
-    }
+    private String resultadoEjemplo;
+
+    private String codigoEsperado;
+
+    private Integer ordenPresentacion;
+
+    private Long nivelId;
+
+    private ArrayList<BloqueCodigoAdminDTO> bloques;
+
+    private ArrayList<PistaDTO> pistas;
 
     public Long getId() {
         return id;
@@ -69,11 +55,67 @@ public class EjercicioAdminDTO {
         this.consigna = consigna;
     }
 
-    public List<BloqueCodigoAdminDTO> getBloques() {
+    public String getExplicacion() {
+        return explicacion;
+    }
+
+    public void setExplicacion(String explicacion) {
+        this.explicacion = explicacion;
+    }
+
+    public String getEjemploDiferente() {
+        return ejemploDiferente;
+    }
+
+    public void setEjemploDiferente(String ejemploDiferente) {
+        this.ejemploDiferente = ejemploDiferente;
+    }
+
+    public String getResultadoEjemplo() {
+        return resultadoEjemplo;
+    }
+
+    public void setResultadoEjemplo(String resultadoEjemplo) {
+        this.resultadoEjemplo = resultadoEjemplo;
+    }
+
+    public String getCodigoEsperado() {
+        return codigoEsperado;
+    }
+
+    public void setCodigoEsperado(String codigoEsperado) {
+        this.codigoEsperado = codigoEsperado;
+    }
+
+    public Integer getOrdenPresentacion() {
+        return ordenPresentacion;
+    }
+
+    public void setOrdenPresentacion(Integer ordenPresentacion) {
+        this.ordenPresentacion = ordenPresentacion;
+    }
+
+    public Long getNivelId() {
+        return nivelId;
+    }
+
+    public void setNivelId(Long nivelId) {
+        this.nivelId = nivelId;
+    }
+
+    public ArrayList<BloqueCodigoAdminDTO> getBloques() {
         return bloques;
     }
 
-    public void setBloques(List<BloqueCodigoAdminDTO> bloques) {
+    public void setBloques(ArrayList<BloqueCodigoAdminDTO> bloques) {
         this.bloques = bloques;
+    }
+
+    public ArrayList<PistaDTO> getPistas() {
+        return pistas;
+    }
+
+    public void setPistas(ArrayList<PistaDTO> pistas) {
+        this.pistas = pistas;
     }
 }

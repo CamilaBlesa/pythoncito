@@ -5,38 +5,15 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(description = "Datos de un nivel de aprendizaje.")
 public class NivelDTO {
 
-    @Schema(
-        description = "Identificador unico del nivel.",
-        accessMode = Schema.AccessMode.READ_ONLY
-    )
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
 
-    @Schema(
-        description = "Titulo del nivel.",
-        example = "Mensajes con print",
-        requiredMode = Schema.RequiredMode.REQUIRED
-    )
     private String titulo;
 
-    @Schema(
-        description = "Tema principal del nivel.",
-        example = "Mostrar texto con print",
-        requiredMode = Schema.RequiredMode.REQUIRED
-    )
     private String tema;
 
-    @Schema(
-        description = "Indica si el nivel esta disponible.",
-        example = "true",
-        requiredMode = Schema.RequiredMode.REQUIRED
-    )
     private Boolean activo;
 
-    @Schema(
-        description = "Orden de presentacion del nivel.",
-        example = "1",
-        requiredMode = Schema.RequiredMode.REQUIRED
-    )
     private Integer ordenPresentacion;
 
     public NivelDTO() {
