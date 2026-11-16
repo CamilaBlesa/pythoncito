@@ -5,9 +5,10 @@ import ar.edu.unsam.programacion3.pythoncito.dtos.BloqueCodigoDTO;
 import ar.edu.unsam.programacion3.pythoncito.dtos.EjercicioAdminDTO;
 import ar.edu.unsam.programacion3.pythoncito.dtos.EjercicioDTO;
 import ar.edu.unsam.programacion3.pythoncito.dtos.PistaDTO;
-import ar.edu.unsam.programacion3.pythoncito.model.BloqueCodigo;
-import ar.edu.unsam.programacion3.pythoncito.model.Ejercicio;
-import ar.edu.unsam.programacion3.pythoncito.model.Pista;
+
+import ar.edu.unsam.programacion3.pythoncito.models.BloqueCodigo;
+import ar.edu.unsam.programacion3.pythoncito.models.Ejercicio;
+import ar.edu.unsam.programacion3.pythoncito.models.Pista;
 
 import java.util.ArrayList;
 

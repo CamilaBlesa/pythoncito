@@ -1,8 +1,8 @@
 package ar.edu.unsam.programacion3.pythoncito.services;
 
 import ar.edu.unsam.programacion3.pythoncito.dtos.BloqueCodigoAdminDTO;
-import ar.edu.unsam.programacion3.pythoncito.exception.RecursoNoEncontradoException;
-import ar.edu.unsam.programacion3.pythoncito.model.BloqueCodigo;
+import ar.edu.unsam.programacion3.pythoncito.exceptions.RecursoNoEncontradoException;
+import ar.edu.unsam.programacion3.pythoncito.models.BloqueCodigo;
 import ar.edu.unsam.programacion3.pythoncito.repositories.BloqueCodigoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

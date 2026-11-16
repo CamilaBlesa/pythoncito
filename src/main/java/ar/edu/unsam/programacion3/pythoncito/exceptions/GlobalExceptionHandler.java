@@ -1,4 +1,4 @@
-package ar.edu.unsam.programacion3.pythoncito.exception;
+package ar.edu.unsam.programacion3.pythoncito.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
