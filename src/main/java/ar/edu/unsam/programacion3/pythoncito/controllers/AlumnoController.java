@@ -1,14 +1,8 @@
 package ar.edu.unsam.programacion3.pythoncito.controllers;
 
-import ar.edu.unsam.programacion3.pythoncito.dtos.EjercicioDTO;
-import ar.edu.unsam.programacion3.pythoncito.dtos.IntentoDTO;
-import ar.edu.unsam.programacion3.pythoncito.dtos.NivelDTO;
-import ar.edu.unsam.programacion3.pythoncito.dtos.PistaDTO;
-import ar.edu.unsam.programacion3.pythoncito.dtos.ResultadoValidacionDTO;
-import ar.edu.unsam.programacion3.pythoncito.dtos.ValidacionPeticionDTO;
-import ar.edu.unsam.programacion3.pythoncito.services.EjercicioService;
-import ar.edu.unsam.programacion3.pythoncito.services.IntentoService;
-import ar.edu.unsam.programacion3.pythoncito.services.NivelService;
+import ar.edu.unsam.programacion3.pythoncito.dtos.*;
+import ar.edu.unsam.programacion3.pythoncito.services.*;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
