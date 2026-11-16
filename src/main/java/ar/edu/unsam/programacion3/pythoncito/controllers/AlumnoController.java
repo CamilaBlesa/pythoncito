@@ -1,0 +1,65 @@
+package ar.edu.unsam.programacion3.pythoncito.controllers;
+
+import ar.edu.unsam.programacion3.pythoncito.dtos.EjercicioDTO;
+import ar.edu.unsam.programacion3.pythoncito.dtos.NivelDTO;
+import ar.edu.unsam.programacion3.pythoncito.dtos.PistaDTO;
+import ar.edu.unsam.programacion3.pythoncito.dtos.ResultadoValidacionDTO;
+import ar.edu.unsam.programacion3.pythoncito.dtos.ValidacionPeticionDTO;
+import ar.edu.unsam.programacion3.pythoncito.services.EjercicioService;
+import ar.edu.unsam.programacion3.pythoncito.services.NivelService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/alumno")
+public class AlumnoController {
+
+    private final NivelService nivelService;
+    private final EjercicioService ejercicioService;
+
+    public AlumnoController(NivelService nivelService, EjercicioService ejercicioService) {
+        this.nivelService = nivelService;
+        this.ejercicioService = ejercicioService;
+    }
+
+    @GetMapping("/niveles")
+    public ResponseEntity<List<NivelDTO>> listarNivelesActivos() {
+        return ResponseEntity.ok(nivelService.listarActivos());
+    }
+
+    @GetMapping("/niveles/{id}")
+    public ResponseEntity<NivelDTO> obtenerNivel(@PathVariable Long id) {
+        return ResponseEntity.ok(nivelService.obtenerPorId(id));
+    }
+
+    @GetMapping("/niveles/{id}/ejercicios")
+    public ResponseEntity<List<EjercicioDTO>> listarEjerciciosPorNivel(@PathVariable Long id) {
+        return ResponseEntity.ok(ejercicioService.listarPorNivelParaAlumno(id));
+    }
+
+    @GetMapping("/ejercicios/{id}")
+    public ResponseEntity<EjercicioDTO> obtenerEjercicio(@PathVariable Long id) {
+        return ResponseEntity.ok(ejercicioService.obtenerEjercicioParaAlumno(id));
+    }
+
+    @GetMapping("/ejercicios/{id}/pistas/{orden}")
+    public ResponseEntity<PistaDTO> obtenerPista(@PathVariable Long id, @PathVariable Integer orden) {
+        return ResponseEntity.ok(ejercicioService.obtenerPista(id, orden));
+    }
+
+    @PostMapping("/ejercicios/{id}/validar")
+    public ResponseEntity<ResultadoValidacionDTO> validarRespuesta(
+            @PathVariable Long id,
+            @RequestBody List<Long> bloqueIds) {
+        ValidacionPeticionDTO peticion = new ValidacionPeticionDTO(id, bloqueIds);
+        return ResponseEntity.ok(ejercicioService.validarRespuesta(peticion));
+    }
+
+    @PostMapping("/ejercicios/validar")
+    public ResponseEntity<ResultadoValidacionDTO> validarRespuestaDirecta(
+            @RequestBody ValidacionPeticionDTO peticion) {
+        return ResponseEntity.ok(ejercicioService.validarRespuesta(peticion));
+    }
+}

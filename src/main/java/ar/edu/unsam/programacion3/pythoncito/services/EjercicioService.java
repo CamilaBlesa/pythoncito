@@ -34,6 +34,36 @@ public class EjercicioService {
         return ejerciciosDTO;
     }
 
+    public List<EjercicioDTO> listarPorNivelParaAlumno(Long nivelId) {
+        Nivel nivel = buscarNivel(nivelId);
+        if (nivel == null) {
+            throw new RecursoNoEncontradoException("Nivel", nivelId);
+        }
+        List<Ejercicio> todos = ejercicioRepository.findAll();
+        List<Ejercicio> delNivel = new ArrayList<>();
+        for (Ejercicio ejercicio : todos) {
+            if (ejercicio.getNivel() != null && ejercicio.getNivel().getId() != null && ejercicio.getNivel().getId().equals(nivelId)) {
+                delNivel.add(ejercicio);
+            }
+        }
+        for (int i = 0; i < delNivel.size() - 1; i++) {
+            for (int j = 0; j < delNivel.size() - 1 - i; j++) {
+                int orden1 = delNivel.get(j).getOrdenPresentacion() != null ? delNivel.get(j).getOrdenPresentacion() : 0;
+                int orden2 = delNivel.get(j + 1).getOrdenPresentacion() != null ? delNivel.get(j + 1).getOrdenPresentacion() : 0;
+                if (orden1 > orden2) {
+                    Ejercicio temporal = delNivel.get(j);
+                    delNivel.set(j, delNivel.get(j + 1));
+                    delNivel.set(j + 1, temporal);
+                }
+            }
+        }
+        List<EjercicioDTO> ejerciciosDTO = new ArrayList<>();
+        for (Ejercicio ejercicio : delNivel) {
+            ejerciciosDTO.add(EjercicioMapper.aDTOAlumno(ejercicio));
+        }
+        return ejerciciosDTO;
+    }
+
     public EjercicioDTO obtenerEjercicioParaAlumno(Long id) {
         Ejercicio ejercicio = buscarPorId(id);
         if (ejercicio == null) {
@@ -71,6 +101,141 @@ public class EjercicioService {
             }
         }
         throw new RecursoNoEncontradoException("Pista con orden " + orden + " en ejercicio " + ejercicioId);
+    }
+
+    public ResultadoValidacionDTO validarRespuesta(ValidacionPeticionDTO peticion) {
+        if (peticion == null || peticion.getEjercicioId() == null) {
+            throw new ValidacionException("Debe indicar el identificador del ejercicio.");
+        }
+        Ejercicio ejercicio = buscarPorId(peticion.getEjercicioId());
+        if (ejercicio == null) {
+            throw new RecursoNoEncontradoException("Ejercicio", peticion.getEjercicioId());
+        }
+
+        List<BloqueCodigo> bloquesOficiales = ejercicio.getBloques();
+        if (bloquesOficiales == null) {
+            bloquesOficiales = new ArrayList<>();
+        }
+
+        List<Long> idsRecibidos = peticion.getBloqueIds();
+        if (idsRecibidos == null) {
+            idsRecibidos = new ArrayList<>();
+        }
+
+        List<Long> bloquesSobrantes = new ArrayList<>();
+        for (int i = 0; i < idsRecibidos.size(); i++) {
+            Long idRecibido = idsRecibidos.get(i);
+            boolean pertenece = false;
+            for (int j = 0; j < bloquesOficiales.size(); j++) {
+                if (bloquesOficiales.get(j).getId() != null && bloquesOficiales.get(j).getId().equals(idRecibido)) {
+                    pertenece = true;
+                    break;
+                }
+            }
+            if (!pertenece) {
+                boolean yaAgregado = false;
+                for (int k = 0; k < bloquesSobrantes.size(); k++) {
+                    if (bloquesSobrantes.get(k).equals(idRecibido)) {
+                        yaAgregado = true;
+                        break;
+                    }
+                }
+                if (!yaAgregado) {
+                    bloquesSobrantes.add(idRecibido);
+                }
+            }
+        }
+
+        List<Long> bloquesFaltantes = new ArrayList<>();
+        for (int i = 0; i < bloquesOficiales.size(); i++) {
+            Long idOficial = bloquesOficiales.get(i).getId();
+            boolean estaPresente = false;
+            for (int j = 0; j < idsRecibidos.size(); j++) {
+                if (idOficial != null && idOficial.equals(idsRecibidos.get(j))) {
+                    estaPresente = true;
+                    break;
+                }
+            }
+            if (!estaPresente) {
+                bloquesFaltantes.add(idOficial);
+            }
+        }
+
+        List<BloqueCodigo> solucionOrdenada = new ArrayList<>();
+        for (int i = 0; i < bloquesOficiales.size(); i++) {
+            solucionOrdenada.add(bloquesOficiales.get(i));
+        }
+
+        for (int i = 0; i < solucionOrdenada.size() - 1; i++) {
+            for (int j = 0; j < solucionOrdenada.size() - 1 - i; j++) {
+                int orden1 = solucionOrdenada.get(j).getOrdenCorrecto() != null ? solucionOrdenada.get(j).getOrdenCorrecto() : 0;
+                int orden2 = solucionOrdenada.get(j + 1).getOrdenCorrecto() != null ? solucionOrdenada.get(j + 1).getOrdenCorrecto() : 0;
+                if (orden1 > orden2) {
+                    BloqueCodigo temporal = solucionOrdenada.get(j);
+                    solucionOrdenada.set(j, solucionOrdenada.get(j + 1));
+                    solucionOrdenada.set(j + 1, temporal);
+                }
+            }
+        }
+
+        List<Long> bloquesFueraDeOrden = new ArrayList<>();
+        for (int i = 0; i < idsRecibidos.size(); i++) {
+            Long idRecibido = idsRecibidos.get(i);
+            boolean esSobrante = false;
+            for (int s = 0; s < bloquesSobrantes.size(); s++) {
+                if (bloquesSobrantes.get(s).equals(idRecibido)) {
+                    esSobrante = true;
+                    break;
+                }
+            }
+            if (!esSobrante) {
+                if (i < solucionOrdenada.size()) {
+                    Long idEsperado = solucionOrdenada.get(i).getId();
+                    if (idEsperado != null && !idEsperado.equals(idRecibido)) {
+                        boolean yaListado = false;
+                        for (int k = 0; k < bloquesFueraDeOrden.size(); k++) {
+                            if (bloquesFueraDeOrden.get(k).equals(idRecibido)) {
+                                yaListado = true;
+                                break;
+                            }
+                        }
+                        if (!yaListado) {
+                            bloquesFueraDeOrden.add(idRecibido);
+                        }
+                    }
+                } else {
+                    boolean yaListado = false;
+                    for (int k = 0; k < bloquesFueraDeOrden.size(); k++) {
+                        if (bloquesFueraDeOrden.get(k).equals(idRecibido)) {
+                            yaListado = true;
+                            break;
+                        }
+                    }
+                    if (!yaListado) {
+                        bloquesFueraDeOrden.add(idRecibido);
+                    }
+                }
+            }
+        }
+
+        boolean correcta = bloquesFaltantes.isEmpty() && bloquesSobrantes.isEmpty() && bloquesFueraDeOrden.isEmpty();
+
+        String mensaje;
+        if (correcta) {
+            mensaje = "Excelente, la solucion es correcta.";
+        } else if (!bloquesFaltantes.isEmpty() && !bloquesSobrantes.isEmpty()) {
+            mensaje = "Faltan bloques necesarios y sobran bloques que no corresponden.";
+        } else if (!bloquesFaltantes.isEmpty()) {
+            mensaje = "Faltan bloques para completar la solucion.";
+        } else if (!bloquesSobrantes.isEmpty()) {
+            mensaje = "Hay bloques que no pertenecen a este ejercicio.";
+        } else if (!bloquesFueraDeOrden.isEmpty()) {
+            mensaje = "El orden de los bloques no es correcto. Revisa la secuencia logica.";
+        } else {
+            mensaje = "La respuesta es incorrecta.";
+        }
+
+        return new ResultadoValidacionDTO(correcta, mensaje, bloquesFaltantes, bloquesSobrantes, bloquesFueraDeOrden);
     }
 
     @Transactional
@@ -111,18 +276,17 @@ public class EjercicioService {
     }
 
     private Ejercicio buscarPorId(Long id) {
-        return ejercicioRepository.findById(id).isPresent() ? ejercicioRepository.findById(id).get() : null;
+        return ejercicioRepository.findById(id).orElse(null);
     }
 
     private Nivel buscarNivel(Long id) {
         if (id == null) {
             return null;
         }
-        return nivelRepository.findById(id).isPresent() ? nivelRepository.findById(id).get() : null;
+        return nivelRepository.findById(id).orElse(null);
     }
 
     private void actualizarDatos(Ejercicio ejercicio, EjercicioAdminDTO datos, Nivel nivel) {
-
         ejercicio.setTitulo(datos.getTitulo());
         ejercicio.setConsigna(datos.getConsigna());
         ejercicio.setExplicacion(datos.getExplicacion());
