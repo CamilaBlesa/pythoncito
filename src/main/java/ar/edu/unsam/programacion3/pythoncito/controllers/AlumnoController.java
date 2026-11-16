@@ -1,11 +1,13 @@
 package ar.edu.unsam.programacion3.pythoncito.controllers;
 
 import ar.edu.unsam.programacion3.pythoncito.dtos.EjercicioDTO;
+import ar.edu.unsam.programacion3.pythoncito.dtos.IntentoDTO;
 import ar.edu.unsam.programacion3.pythoncito.dtos.NivelDTO;
 import ar.edu.unsam.programacion3.pythoncito.dtos.PistaDTO;
 import ar.edu.unsam.programacion3.pythoncito.dtos.ResultadoValidacionDTO;
 import ar.edu.unsam.programacion3.pythoncito.dtos.ValidacionPeticionDTO;
 import ar.edu.unsam.programacion3.pythoncito.services.EjercicioService;
+import ar.edu.unsam.programacion3.pythoncito.services.IntentoService;
 import ar.edu.unsam.programacion3.pythoncito.services.NivelService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +20,14 @@ public class AlumnoController {
 
     private final NivelService nivelService;
     private final EjercicioService ejercicioService;
+    private final IntentoService intentoService;
 
-    public AlumnoController(NivelService nivelService, EjercicioService ejercicioService) {
+    public AlumnoController(NivelService nivelService,
+                            EjercicioService ejercicioService,
+                            IntentoService intentoService) {
         this.nivelService = nivelService;
         this.ejercicioService = ejercicioService;
+        this.intentoService = intentoService;
     }
 
     @GetMapping("/niveles")
@@ -42,6 +48,11 @@ public class AlumnoController {
     @GetMapping("/ejercicios/{id}")
     public ResponseEntity<EjercicioDTO> obtenerEjercicio(@PathVariable Long id) {
         return ResponseEntity.ok(ejercicioService.obtenerEjercicioParaAlumno(id));
+    }
+
+    @GetMapping("/ejercicios/{id}/intentos")
+    public ResponseEntity<List<IntentoDTO>> listarIntentos(@PathVariable Long id) {
+        return ResponseEntity.ok(intentoService.listarPorEjercicio(id));
     }
 
     @GetMapping("/ejercicios/{id}/pistas/{orden}")

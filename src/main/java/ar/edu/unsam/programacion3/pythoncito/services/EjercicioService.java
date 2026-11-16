@@ -17,12 +17,15 @@ public class EjercicioService {
 
     private final EjercicioRepository ejercicioRepository;
     private final NivelRepository nivelRepository;
+    private final IntentoService intentoService;
 
     public EjercicioService(
             EjercicioRepository ejercicioRepository,
-            NivelRepository nivelRepository) {
+            NivelRepository nivelRepository,
+            IntentoService intentoService) {
         this.ejercicioRepository = ejercicioRepository;
         this.nivelRepository = nivelRepository;
+        this.intentoService = intentoService;
     }
 
     public List<EjercicioDTO> listarParaAlumno() {
@@ -146,6 +149,7 @@ public class EjercicioService {
         boolean esCorrecta = bloquesFaltantes.isEmpty()
                 && bloquesSobrantes.isEmpty()
                 && bloquesFueraDeOrden.isEmpty();
+        intentoService.registrarIntento(ejercicio.getId(), esCorrecta);
 
         return new ResultadoValidacionDTO(
                 esCorrecta,

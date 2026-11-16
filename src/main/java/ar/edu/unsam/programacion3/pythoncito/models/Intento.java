@@ -42,7 +42,7 @@ public class Intento {
         example = "true",
         requiredMode = Schema.RequiredMode.REQUIRED
     )
-    private Boolean esCorrecta;
+    private Boolean correcta;
 
     @Column(nullable = false)
     @Schema(
@@ -74,12 +74,12 @@ public class Intento {
         this.numeroIntento = numeroIntento;
     }
 
-    public Boolean getEsCorrecta() {
-        return esCorrecta;
+    public Boolean getCorrecta() {
+        return correcta;
     }
 
-    public void setEsCorrecta(Boolean esCorrecta) {
-        this.esCorrecta = esCorrecta;
+    public void setCorrecta(Boolean correcta) {
+        this.correcta = correcta;
     }
 
     public LocalDateTime getFechaHora() {
