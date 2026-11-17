@@ -3,7 +3,7 @@ package ar.edu.unsam.programacion3.pythoncito.dtos;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 
-@Schema(description = "Datos para la validacion de una respuesta enviada por el alumno.")
+@Schema(description = "Datos para la validacion de una respuesta enviada por el estudiante.")
 public class ValidacionPeticionDTO {
 
     private Long ejercicioId;

@@ -1,10 +1,10 @@
 package ar.edu.unsam.programacion3.pythoncito.dtos;
 
-public class RecuperarAlumnoRequestDTO {
+public class RecuperarEstudianteRequestDTO {
 
     private String token;
 
-    public RecuperarAlumnoRequestDTO() {
+    public RecuperarEstudianteRequestDTO() {
     }
 
     public String getToken() {

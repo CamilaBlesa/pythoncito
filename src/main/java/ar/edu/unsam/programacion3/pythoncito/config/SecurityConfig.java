@@ -35,7 +35,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/api-docs/**").permitAll()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/alumno/**").hasRole("ALUMNO")
+                        .requestMatchers("/api/estudiante/**").hasRole("ESTUDIANTE")
                         .anyRequest().denyAll()
                 )
                 .oauth2ResourceServer(oauth2 ->

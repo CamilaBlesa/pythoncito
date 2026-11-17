@@ -29,12 +29,12 @@ public class Intento {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "usuario_id", nullable = false)
-    @Schema(description = "Alumno que realizo el intento.")
+    @Schema(description = "Estudiantes que realizo el intento.")
     private Usuario usuario;
 
     @Column(nullable = false)
     @Schema(
-        description = "Numero correlativo del intento para el ejercicio y alumno.",
+        description = "Numero correlativo del intento para el ejercicio y estudiante.",
         example = "1",
         requiredMode = Schema.RequiredMode.REQUIRED
     )

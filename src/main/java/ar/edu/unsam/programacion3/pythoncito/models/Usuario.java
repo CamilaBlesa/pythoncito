@@ -9,7 +9,7 @@ public class Usuario {
 
     public enum Rol {
         ADMIN,
-        ALUMNO
+        ESTUDIANTE
     }
 
     @Id

@@ -42,7 +42,7 @@ public class IntentoService {
             Long ejercicioId,
             Boolean correcta) {
 
-        Usuario alumno = buscarAlumno(usuarioId);
+        Usuario estudiante = buscarEstudiante(usuarioId);
         Ejercicio ejercicio = buscarEjercicio(ejercicioId);
 
         Intento ultimoIntento =
@@ -56,7 +56,7 @@ public class IntentoService {
                 : ultimoIntento.getNumeroIntento() + 1;
 
         Intento intento = new Intento();
-        intento.setUsuario(alumno);
+        intento.setUsuario(estudiante);
         intento.setEjercicio(ejercicio);
         intento.setNumeroIntento(siguienteNumero);
         intento.setCorrecta(correcta);
@@ -70,7 +70,7 @@ public class IntentoService {
             Long usuarioId,
             Long ejercicioId) {
 
-        buscarAlumno(usuarioId);
+        buscarEstudiante(usuarioId);
         buscarEjercicio(ejercicioId);
 
         List<Intento> intentos =
@@ -88,20 +88,20 @@ public class IntentoService {
         return intentosDTO;
     }
 
-    private Usuario buscarAlumno(Long usuarioId) {
+    private Usuario buscarEstudiante(Long usuarioId) {
 
-        Usuario alumno = usuarioRepository.findById(usuarioId)
+        Usuario estudiante = usuarioRepository.findById(usuarioId)
                 .orElseThrow(() ->
-                        new RecursoNoEncontradoException("Alumno", usuarioId)
+                        new RecursoNoEncontradoException("Estudiante", usuarioId)
                 );
 
-        if (alumno.getRol() != Usuario.Rol.ALUMNO) {
+        if (estudiante.getRol() != Usuario.Rol.ESTUDIANTE) {
             throw new CredencialInvalidaException(
-                    "El usuario autenticado no es un alumno."
+                    "El usuario autenticado no es un estudiante."
             );
         }
 
-        return alumno;
+        return estudiante;
     }
 
     private Ejercicio buscarEjercicio(Long ejercicioId) {

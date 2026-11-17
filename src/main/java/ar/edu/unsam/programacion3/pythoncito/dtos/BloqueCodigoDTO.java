@@ -2,7 +2,7 @@ package ar.edu.unsam.programacion3.pythoncito.dtos;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-@Schema(description = "Bloque de codigo visible para el alumno.")
+@Schema(description = "Bloque de codigo visible para el estudiante.")
 public class BloqueCodigoDTO {
 
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)

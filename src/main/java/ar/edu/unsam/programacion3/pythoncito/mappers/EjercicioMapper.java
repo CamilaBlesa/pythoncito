@@ -18,7 +18,7 @@ public class EjercicioMapper {
         // Constructor privado para evitar instanciación
     }
 
-    public static EjercicioDTO aDTOAlumno(Ejercicio ejercicio) {
+    public static EjercicioDTO aDTOEstudiante(Ejercicio ejercicio) {
 
         ArrayList<BloqueCodigoDTO> bloquesDTO = new ArrayList<>();
         for (BloqueCodigo bloque : ejercicio.getBloques()) {

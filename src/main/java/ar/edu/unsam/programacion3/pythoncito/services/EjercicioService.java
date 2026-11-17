@@ -28,23 +28,23 @@ public class EjercicioService {
         this.intentoService = intentoService;
     }
 
-    public List<EjercicioDTO> listarParaAlumno() {
+    public List<EjercicioDTO> listarParaEstudiante() {
         List<Ejercicio> ejercicios = ejercicioRepository.findAll();
         List<EjercicioDTO> ejerciciosDTO = new ArrayList<>();
         for (Ejercicio ejercicio : ejercicios) {
-            ejerciciosDTO.add(EjercicioMapper.aDTOAlumno(ejercicio));
+            ejerciciosDTO.add(EjercicioMapper.aDTOEstudiante(ejercicio));
         }
         return ejerciciosDTO;
     }
 
-    public List<EjercicioDTO> listarPorNivelParaAlumno(Long nivelId) {
+    public List<EjercicioDTO> listarPorNivelParaEstudiante(Long nivelId) {
         if (buscarNivel(nivelId) == null) {
             throw new RecursoNoEncontradoException("Nivel", nivelId);
         }
 
         List<Ejercicio> ejercicios = buscarEjerciciosDelNivel(nivelId);
         ordenarPorPresentacion(ejercicios);
-        return convertirADTOAlumno(ejercicios);
+        return convertirADTOEstudiante(ejercicios);
     }
 
     private List<Ejercicio> buscarEjerciciosDelNivel(Long nivelId) {
@@ -85,20 +85,20 @@ public class EjercicioService {
         return ejercicio.getOrdenPresentacion();
     }
 
-    private List<EjercicioDTO> convertirADTOAlumno(List<Ejercicio> ejercicios) {
+    private List<EjercicioDTO> convertirADTOEstudiante(List<Ejercicio> ejercicios) {
         List<EjercicioDTO> ejerciciosDTO = new ArrayList<>();
         for (Ejercicio ejercicio : ejercicios) {
-            ejerciciosDTO.add(EjercicioMapper.aDTOAlumno(ejercicio));
+            ejerciciosDTO.add(EjercicioMapper.aDTOEstudiante(ejercicio));
         }
         return ejerciciosDTO;
     }
 
-    public EjercicioDTO obtenerEjercicioParaAlumno(Long id) {
+    public EjercicioDTO obtenerEjercicioParaEstudiante(Long id) {
         Ejercicio ejercicio = buscarPorId(id);
         if (ejercicio == null) {
             throw new RecursoNoEncontradoException("Ejercicio", id);
         }
-        return EjercicioMapper.aDTOAlumno(ejercicio);
+        return EjercicioMapper.aDTOEstudiante(ejercicio);
     }
 
     public List<EjercicioAdminDTO> listarParaAdmin() {

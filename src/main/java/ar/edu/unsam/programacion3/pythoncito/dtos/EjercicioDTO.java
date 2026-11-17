@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.ArrayList;
 
-@Schema(description = "Ejercicio que se presenta al alumno sin exponer la solucion.")
+@Schema(description = "Ejercicio que se presenta al estudiante sin exponer la solucion.")
 public class EjercicioDTO {
 
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)

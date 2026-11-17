@@ -11,14 +11,14 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/alumno")
-public class AlumnoController {
+@RequestMapping("/api/estudiante")
+public class EstudianteController {
 
     private final NivelService nivelService;
     private final EjercicioService ejercicioService;
     private final IntentoService intentoService;
 
-    public AlumnoController(NivelService nivelService,
+    public EstudianteController(NivelService nivelService,
             EjercicioService ejercicioService,
             IntentoService intentoService) {
         this.nivelService = nivelService;
@@ -38,12 +38,12 @@ public class AlumnoController {
 
     @GetMapping("/niveles/{id}/ejercicios")
     public ResponseEntity<List<EjercicioDTO>> listarEjerciciosPorNivel(@PathVariable Long id) {
-        return ResponseEntity.ok(ejercicioService.listarPorNivelParaAlumno(id));
+        return ResponseEntity.ok(ejercicioService.listarPorNivelParaEstudiante(id));
     }
 
     @GetMapping("/ejercicios/{id}")
     public ResponseEntity<EjercicioDTO> obtenerEjercicio(@PathVariable Long id) {
-        return ResponseEntity.ok(ejercicioService.obtenerEjercicioParaAlumno(id));
+        return ResponseEntity.ok(ejercicioService.obtenerEjercicioParaEstudiante(id));
     }
 
     @GetMapping("/ejercicios/{id}/intentos")

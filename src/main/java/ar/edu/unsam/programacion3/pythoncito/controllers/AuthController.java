@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ar.edu.unsam.programacion3.pythoncito.dtos.AuthResponseDTO;
 import ar.edu.unsam.programacion3.pythoncito.dtos.AdminLoginRequestDTO;
-import ar.edu.unsam.programacion3.pythoncito.dtos.RecuperarAlumnoRequestDTO;
+import ar.edu.unsam.programacion3.pythoncito.dtos.RecuperarEstudianteRequestDTO;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -18,9 +18,9 @@ public class AuthController {
         this.authService = authService;
     }
 
-    @PostMapping("/alumno")
-    public ResponseEntity<AuthResponseDTO> ingresarAlumno() {
-        String token = authService.crearAlumno();
+    @PostMapping("/estudiante")
+    public ResponseEntity<AuthResponseDTO> ingresarEstudiante() {
+        String token = authService.crearEstudiante();
         return ResponseEntity.ok(new AuthResponseDTO(token));
     }
 
@@ -33,11 +33,11 @@ public class AuthController {
         return ResponseEntity.ok(new AuthResponseDTO(token));
     }
     
-    @PostMapping("/alumno/recuperar")
-    public ResponseEntity<AuthResponseDTO> recuperarAlumno(
-        @RequestBody RecuperarAlumnoRequestDTO peticion) {
+    @PostMapping("/estudiante/recuperar")
+    public ResponseEntity<AuthResponseDTO> recuperarEstudiante(
+        @RequestBody RecuperarEstudianteRequestDTO peticion) {
 
-        String nuevoToken = authService.recuperarAlumno(peticion.getToken());
+        String nuevoToken = authService.recuperarEstudiante(peticion.getToken());
 
         return ResponseEntity.ok(new AuthResponseDTO(nuevoToken));
     }
