@@ -19,4 +19,8 @@ public interface IntentoRepository extends JpaRepository<Intento, Long> {
         boolean existsByUsuarioIdAndEjercicioIdAndCorrectaTrue(
                         Long usuarioId,
                         Long ejercicioId);
+
+        long countByUsuarioIdAndEjercicioIdAndCorrectaFalse(
+                        Long usuarioId,
+                        Long ejercicioId);
 }

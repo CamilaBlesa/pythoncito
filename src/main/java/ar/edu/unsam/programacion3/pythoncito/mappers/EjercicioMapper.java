@@ -29,15 +29,6 @@ public class EjercicioMapper {
             ));
         }
 
-        ArrayList<PistaDTO> pistasDTO = new ArrayList<>();
-        for (Pista pista : ejercicio.getPistas()) {
-            pistasDTO.add(new PistaDTO(
-                        pista.getId(),
-                        pista.getTexto(),
-                        pista.getOrden()
-            ));
-        }
-
         EjercicioDTO dto = new EjercicioDTO();
         dto.setId(ejercicio.getId());
         dto.setTitulo(ejercicio.getTitulo());
@@ -46,7 +37,6 @@ public class EjercicioMapper {
         dto.setEjemploDiferente(ejercicio.getEjemploDiferente());
         dto.setResultadoEjemplo(ejercicio.getResultadoEjemplo());
         dto.setBloques(bloquesDTO);
-        dto.setPistas(pistasDTO);
         return dto;
     }
 

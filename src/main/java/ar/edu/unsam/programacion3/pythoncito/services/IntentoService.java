@@ -126,4 +126,15 @@ public class IntentoService {
                                 intento.getCorrecta(),
                                 intento.getFechaHora());
         }
+
+        @Transactional(readOnly = true)
+        public long contarIntentosFallidos(Long usuarioId, Long ejercicioId) {
+
+                buscarEstudiante(usuarioId);
+                buscarEjercicio(ejercicioId);
+
+                return intentoRepository.countByUsuarioIdAndEjercicioIdAndCorrectaFalse(
+                                usuarioId,
+                                ejercicioId);
+        }
 }

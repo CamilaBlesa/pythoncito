@@ -22,8 +22,6 @@ public class EjercicioDTO {
 
     private ArrayList<BloqueCodigoDTO> bloques;
 
-    private ArrayList<PistaDTO> pistas;
-
     public EjercicioDTO() {
     }
 
@@ -81,13 +79,5 @@ public class EjercicioDTO {
 
     public void setBloques(ArrayList<BloqueCodigoDTO> bloques) {
         this.bloques = bloques;
-    }
-
-    public ArrayList<PistaDTO> getPistas() {
-        return pistas;
-    }
-
-    public void setPistas(ArrayList<PistaDTO> pistas) {
-        this.pistas = pistas;
     }
 }

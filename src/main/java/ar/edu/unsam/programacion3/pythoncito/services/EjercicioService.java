@@ -131,8 +131,14 @@ public class EjercicioService {
         return EjercicioMapper.aDTOAdmin(ejercicio);
     }
 
+    @Transactional(readOnly = true)
     public PistaDTO obtenerPista(
             Long ejercicioId, Integer orden, Long usuarioId) {
+
+        if (orden == null || orden < 1) {
+            throw new ValidacionException(
+                    "Debe indicar un número de pista válido.");
+        }
 
         Ejercicio ejercicio = buscarPorId(ejercicioId);
 
@@ -144,17 +150,24 @@ public class EjercicioService {
                 ejercicio.getNivel().getId(),
                 usuarioId);
 
+        Pista pistaSolicitada = null;
+
         for (Pista pista : ejercicio.getPistas()) {
             if (orden.equals(pista.getOrden())) {
-                return new PistaDTO(
-                        pista.getId(),
-                        pista.getTexto(),
-                        pista.getOrden());
+                pistaSolicitada = pista;
+                break;
             }
         }
 
-        throw new RecursoNoEncontradoException(
-                "Pista con orden " + orden + " en ejercicio " + ejercicioId);
+        if (pistaSolicitada == null) {
+            throw new RecursoNoEncontradoException(
+                    "Pista con orden " + orden + " en ejercicio " + ejercicioId);
+        }
+
+        return new PistaDTO(
+                pistaSolicitada.getId(),
+                pistaSolicitada.getTexto(),
+                pistaSolicitada.getOrden());
     }
 
     @Transactional
