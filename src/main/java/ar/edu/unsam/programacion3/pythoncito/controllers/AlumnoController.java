@@ -5,6 +5,8 @@ import ar.edu.unsam.programacion3.pythoncito.services.*;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 
 import java.util.List;
 
@@ -17,8 +19,8 @@ public class AlumnoController {
     private final IntentoService intentoService;
 
     public AlumnoController(NivelService nivelService,
-                            EjercicioService ejercicioService,
-                            IntentoService intentoService) {
+            EjercicioService ejercicioService,
+            IntentoService intentoService) {
         this.nivelService = nivelService;
         this.ejercicioService = ejercicioService;
         this.intentoService = intentoService;
@@ -45,8 +47,14 @@ public class AlumnoController {
     }
 
     @GetMapping("/ejercicios/{id}/intentos")
-    public ResponseEntity<List<IntentoDTO>> listarIntentos(@PathVariable Long id) {
-        return ResponseEntity.ok(intentoService.listarPorEjercicio(id));
+    public ResponseEntity<List<IntentoDTO>> listarIntentos(
+            @PathVariable Long id,
+            @AuthenticationPrincipal Jwt jwt) {
+
+        Long usuarioId = Long.valueOf(jwt.getSubject());
+
+        return ResponseEntity.ok(
+                intentoService.listarPorEjercicio(usuarioId, id));
     }
 
     @GetMapping("/ejercicios/{id}/pistas/{orden}")
@@ -57,14 +65,25 @@ public class AlumnoController {
     @PostMapping("/ejercicios/{id}/validar")
     public ResponseEntity<ResultadoValidacionDTO> validarRespuesta(
             @PathVariable Long id,
-            @RequestBody List<Long> bloqueIds) {
+            @RequestBody List<Long> bloqueIds,
+            @AuthenticationPrincipal Jwt jwt) {
+
+        Long usuarioId = Long.valueOf(jwt.getSubject());
+
         ValidacionPeticionDTO peticion = new ValidacionPeticionDTO(id, bloqueIds);
-        return ResponseEntity.ok(ejercicioService.validarRespuesta(peticion));
+
+        return ResponseEntity.ok(
+                ejercicioService.validarRespuesta(peticion, usuarioId));
     }
 
     @PostMapping("/ejercicios/validar")
     public ResponseEntity<ResultadoValidacionDTO> validarRespuestaDirecta(
-            @RequestBody ValidacionPeticionDTO peticion) {
-        return ResponseEntity.ok(ejercicioService.validarRespuesta(peticion));
+            @RequestBody ValidacionPeticionDTO peticion,
+            @AuthenticationPrincipal Jwt jwt) {
+
+        Long usuarioId = Long.valueOf(jwt.getSubject());
+
+        return ResponseEntity.ok(
+                ejercicioService.validarRespuesta(peticion, usuarioId));
     }
 }

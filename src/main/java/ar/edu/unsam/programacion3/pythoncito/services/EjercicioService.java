@@ -132,7 +132,7 @@ public class EjercicioService {
         throw new RecursoNoEncontradoException("Pista con orden " + orden + " en ejercicio " + ejercicioId);
     }
 
-    public ResultadoValidacionDTO validarRespuesta(ValidacionPeticionDTO peticion) {
+    public ResultadoValidacionDTO validarRespuesta(ValidacionPeticionDTO peticion, Long usuarioId) {
         validarPeticion(peticion);
         Ejercicio ejercicio = buscarPorId(peticion.getEjercicioId());
         if (ejercicio == null) {
@@ -149,7 +149,7 @@ public class EjercicioService {
         boolean esCorrecta = bloquesFaltantes.isEmpty()
                 && bloquesSobrantes.isEmpty()
                 && bloquesFueraDeOrden.isEmpty();
-        intentoService.registrarIntento(ejercicio.getId(), esCorrecta);
+        intentoService.registrarIntento(usuarioId, ejercicio.getId(), esCorrecta);
 
         return new ResultadoValidacionDTO(
                 esCorrecta,

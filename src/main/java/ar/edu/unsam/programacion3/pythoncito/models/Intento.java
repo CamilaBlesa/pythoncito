@@ -1,3 +1,4 @@
+
 package ar.edu.unsam.programacion3.pythoncito.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -23,14 +24,17 @@ public class Intento {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "ejercicio_id", nullable = false)
     @JsonIgnoreProperties({"intentos", "bloques", "pistas", "nivel"})
-    @Schema(
-        description = "Ejercicio resuelto en el intento."
-    )
+    @Schema(description = "Ejercicio resuelto en el intento.")
     private Ejercicio ejercicio;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "usuario_id", nullable = false)
+    @Schema(description = "Alumno que realizo el intento.")
+    private Usuario usuario;
 
     @Column(nullable = false)
     @Schema(
-        description = "Numero correlativo del intento para el ejercicio.",
+        description = "Numero correlativo del intento para el ejercicio y alumno.",
         example = "1",
         requiredMode = Schema.RequiredMode.REQUIRED
     )
@@ -64,6 +68,14 @@ public class Intento {
 
     public void setEjercicio(Ejercicio ejercicio) {
         this.ejercicio = ejercicio;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public Integer getNumeroIntento() {
