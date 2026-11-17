@@ -16,89 +16,59 @@ public class Ejercicio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Schema(
-        description = "Identificador único del ejercicio.",
-        accessMode = Schema.AccessMode.READ_ONLY
-    )
+    @Schema(description = "Identificador único del ejercicio.", accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
 
     @Column(length = 100, nullable = false)
-    @Schema(
-        description = "Título del ejercicio.",
-        example = "Ejercicio 1: Mostrar texto en pantalla",
-        requiredMode = Schema.RequiredMode.REQUIRED
-    )
+    @Schema(description = "Título del ejercicio.", example = "Ejercicio 1: Mostrar texto en pantalla", requiredMode = Schema.RequiredMode.REQUIRED)
     private String titulo;
 
     @Column(length = 500, nullable = false)
-    @Schema(
-        description = "Instrucciones del ejercicio.",
-        example = "Escribe un programa que imprima 'Hola Mundo' en la pantalla.",
-        requiredMode = Schema.RequiredMode.REQUIRED
-    )
+    @Schema(description = "Instrucciones del ejercicio.", example = "Escribe un programa que imprima 'Hola Mundo' en la pantalla.", requiredMode = Schema.RequiredMode.REQUIRED)
     private String consigna;
 
     @Column(length = 1000, nullable = false)
-    @Schema(
-        description = "Explicacion breve del concepto trabajado.",
-        example = "print() muestra informacion en la pantalla.",
-        requiredMode = Schema.RequiredMode.REQUIRED
-    )
+    @Schema(description = "Explicacion breve del concepto trabajado.", example = "print() muestra informacion en la pantalla.", requiredMode = Schema.RequiredMode.REQUIRED)
     private String explicacion;
 
     @Column(length = 1000, nullable = false)
-    @Schema(
-        description = "Ejemplo diferente al reto principal.",
-        example = "print(\"Buenos dias\")",
-        requiredMode = Schema.RequiredMode.REQUIRED
-    )
+    @Schema(description = "Ejemplo diferente al reto principal.", example = "print(\"Buenos dias\")", requiredMode = Schema.RequiredMode.REQUIRED)
     private String ejemploDiferente;
 
     @Column(length = 500, nullable = false)
-    @Schema(
-        description = "Resultado del ejemplo diferente.",
-        example = "Buenos dias",
-        requiredMode = Schema.RequiredMode.REQUIRED
-    )
+    @Schema(description = "Resultado del ejemplo diferente.", example = "Buenos dias", requiredMode = Schema.RequiredMode.REQUIRED)
     private String resultadoEjemplo;
 
     @Column(length = 1000, nullable = false)
-    @Schema(
-        description = "Código esperado del ejercicio.",
-        example = "print('Hola Mundo')",
-        requiredMode = Schema.RequiredMode.REQUIRED
-    )
+    @Schema(description = "Código esperado del ejercicio.", example = "print('Hola Mundo')", requiredMode = Schema.RequiredMode.REQUIRED)
     private String codigoEsperado;
 
     @Column(nullable = false)
-    @Schema(
-        description = "Indica el orden de presentación del ejercicio.",
-        example = "1",
-        requiredMode = Schema.RequiredMode.REQUIRED
-    )
+    @Schema(description = "Indica el orden de presentación del ejercicio.", example = "1", requiredMode = Schema.RequiredMode.REQUIRED)
     private Integer ordenPresentacion;
 
     @OneToMany(mappedBy = "ejercicio", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("orden ASC")
-    @JsonIgnoreProperties({"ejercicio"})
+    @JsonIgnoreProperties({ "ejercicio" })
     @Schema(description = "Pistas progresivas ordenadas para el ejercicio.")
     private ArrayList<Pista> pistas = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "nivel_id", nullable = false)
-    @JsonIgnoreProperties({"ejercicios"})
-    @Schema(
-        description = "Nivel al que pertenece el ejercicio."
-    )
+    @JsonIgnoreProperties({ "ejercicios" })
+    @Schema(description = "Nivel al que pertenece el ejercicio.")
     private Nivel nivel;
 
     @OneToMany(mappedBy = "ejercicio", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("ordenPresentacion ASC")
-    @JsonIgnoreProperties({"ejercicio"})
-    @Schema(
-        description = "Bloques de código que se encuentran dentro del ejercicio."
-    )
+    @JsonIgnoreProperties({ "ejercicio" })
+    @Schema(description = "Bloques de código que se encuentran dentro del ejercicio.")
     private List<BloqueCodigo> bloques = new ArrayList<>();
+
+    @OneToMany(mappedBy = "ejercicio", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties({ "ejercicio", "usuario" })
+    @Schema(description = "Intentos realizados por los estudiantes en este ejercicio.")
+    private List<Intento> intentos = new ArrayList<>();
 
     public Ejercicio() {
         // Constructor vacío requerido por JPA
@@ -119,7 +89,7 @@ public class Ejercicio {
     public String getConsigna() {
         return consigna;
     }
-    
+
     public void setConsigna(String consigna) {
         this.consigna = consigna;
     }
@@ -188,14 +158,18 @@ public class Ejercicio {
         this.bloques = bloques;
     }
 
+    public List<Intento> getIntentos() {
+        return intentos;
+    }
+
     @Override
     public String toString() {
         return "Ejercicio{" +
-            "id=" + id +
-            ", titulo='" + titulo + '\'' +
-            ", consigna='" + consigna + '\'' +
-            ", codigoEsperado='" + codigoEsperado + '\'' +
-            ", ordenPresentacion=" + ordenPresentacion +
-            '}';
+                "id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", consigna='" + consigna + '\'' +
+                ", codigoEsperado='" + codigoEsperado + '\'' +
+                ", ordenPresentacion=" + ordenPresentacion +
+                '}';
     }
 }

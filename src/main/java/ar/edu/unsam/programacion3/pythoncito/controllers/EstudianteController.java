@@ -17,13 +17,16 @@ public class EstudianteController {
     private final NivelService nivelService;
     private final EjercicioService ejercicioService;
     private final IntentoService intentoService;
+    private final ProgresoEstudianteService progresoEstudianteService;
 
     public EstudianteController(NivelService nivelService,
             EjercicioService ejercicioService,
-            IntentoService intentoService) {
+            IntentoService intentoService,
+            ProgresoEstudianteService progresoEstudianteService) {
         this.nivelService = nivelService;
         this.ejercicioService = ejercicioService;
         this.intentoService = intentoService;
+        this.progresoEstudianteService = progresoEstudianteService;
     }
 
     @GetMapping("/niveles")
@@ -85,5 +88,15 @@ public class EstudianteController {
 
         return ResponseEntity.ok(
                 ejercicioService.validarRespuesta(peticion, usuarioId));
+    }
+
+    @GetMapping("/progreso")
+    public ResponseEntity<List<ProgresoEstudianteDTO>> listarProgreso(
+            @AuthenticationPrincipal Jwt jwt) {
+
+        Long usuarioId = Long.valueOf(jwt.getSubject());
+
+        return ResponseEntity.ok(
+                progresoEstudianteService.listarProgreso(usuarioId));
     }
 }

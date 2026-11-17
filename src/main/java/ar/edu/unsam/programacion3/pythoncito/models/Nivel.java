@@ -13,34 +13,19 @@ public class Nivel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Schema(
-        description = "Identificador único del nivel.",
-        accessMode = Schema.AccessMode.READ_ONLY
-    )
+    @Schema(description = "Identificador único del nivel.", accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
 
     @Column(length = 100, nullable = false)
-    @Schema(
-        description = "Título del nivel.",
-        example = "Nivel 1: Introducción a Python",
-        requiredMode = Schema.RequiredMode.REQUIRED
-    )
+    @Schema(description = "Título del nivel.", example = "Nivel 1: Introducción a Python", requiredMode = Schema.RequiredMode.REQUIRED)
     private String titulo;
 
     @Column(length = 100, nullable = false)
-    @Schema(
-        description = "Tema del nivel.",
-        example = "Programación en Python",
-        requiredMode = Schema.RequiredMode.REQUIRED
-    )
+    @Schema(description = "Tema del nivel.", example = "Programación en Python", requiredMode = Schema.RequiredMode.REQUIRED)
     private String tema;
 
     @Column(nullable = false)
-    @Schema(
-        description = "Indica si el nivel está activo.",
-        example = "true",
-        requiredMode = Schema.RequiredMode.REQUIRED
-    )
+    @Schema(description = "Indica si el nivel está activo.", example = "true", requiredMode = Schema.RequiredMode.REQUIRED)
     private Boolean activo;
 
     @Column(nullable = false)
@@ -51,6 +36,10 @@ public class Nivel {
     @OrderBy("ordenPresentacion ASC")
     @Schema(description = "Ejercicios que pertenecen al nivel.")
     private List<Ejercicio> ejercicios = new ArrayList<>();
+
+    @OneToMany(mappedBy = "nivel", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Schema(description = "Progresos de los estudiantes en este nivel.")
+    private List<ProgresoEstudiante> progresos = new ArrayList<>();
 
     public Nivel() {
         // Constructor vacío requerido por JPA
@@ -87,7 +76,7 @@ public class Nivel {
     public Integer getOrdenPresentacion() {
         return ordenPresentacion;
     }
-    
+
     public void setOrdenPresentacion(Integer ordenPresentacion) {
         this.ordenPresentacion = ordenPresentacion;
     }
@@ -100,14 +89,22 @@ public class Nivel {
         this.ejercicios = ejercicios;
     }
 
+    public List<ProgresoEstudiante> getProgresos() {
+        return progresos;
+    }
+
+    public void setProgresos(List<ProgresoEstudiante> progresos) {
+        this.progresos = progresos;
+    }
+
     @Override
     public String toString() {
         return "Nivel{" +
-            "id=" + id +
-            ", titulo='" + titulo + '\'' +
-            ", tema='" + tema + '\'' +
-            ", activo=" + activo +
-            ", ordenPresentacion=" + ordenPresentacion +
-            '}';
+                "id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", tema='" + tema + '\'' +
+                ", activo=" + activo +
+                ", ordenPresentacion=" + ordenPresentacion +
+                '}';
     }
 }

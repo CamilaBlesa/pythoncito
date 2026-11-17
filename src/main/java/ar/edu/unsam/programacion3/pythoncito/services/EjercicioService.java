@@ -18,14 +18,17 @@ public class EjercicioService {
     private final EjercicioRepository ejercicioRepository;
     private final NivelRepository nivelRepository;
     private final IntentoService intentoService;
+    private final ProgresoEstudianteService progresoEstudianteService;
 
     public EjercicioService(
             EjercicioRepository ejercicioRepository,
             NivelRepository nivelRepository,
-            IntentoService intentoService) {
+            IntentoService intentoService,
+            ProgresoEstudianteService progresoEstudianteService) {
         this.ejercicioRepository = ejercicioRepository;
         this.nivelRepository = nivelRepository;
         this.intentoService = intentoService;
+        this.progresoEstudianteService = progresoEstudianteService;
     }
 
     public List<EjercicioDTO> listarParaEstudiante() {
@@ -132,28 +135,57 @@ public class EjercicioService {
         throw new RecursoNoEncontradoException("Pista con orden " + orden + " en ejercicio " + ejercicioId);
     }
 
-    public ResultadoValidacionDTO validarRespuesta(ValidacionPeticionDTO peticion, Long usuarioId) {
+    @Transactional
+    public ResultadoValidacionDTO validarRespuesta(
+            ValidacionPeticionDTO peticion,
+            Long usuarioId) {
+
         validarPeticion(peticion);
+
         Ejercicio ejercicio = buscarPorId(peticion.getEjercicioId());
+
         if (ejercicio == null) {
-            throw new RecursoNoEncontradoException("Ejercicio", peticion.getEjercicioId());
+            throw new RecursoNoEncontradoException(
+                    "Ejercicio",
+                    peticion.getEjercicioId());
         }
 
         List<BloqueCodigo> bloquesOficiales = obtenerBloques(ejercicio);
         List<Long> idsRecibidos = obtenerIdsRecibidos(peticion);
+
         List<Long> bloquesSobrantes = buscarSobrantes(bloquesOficiales, idsRecibidos);
+
         List<Long> bloquesFaltantes = buscarFaltantes(bloquesOficiales, idsRecibidos);
+
         List<BloqueCodigo> solucionOrdenada = ordenarPorSolucion(bloquesOficiales);
-        List<Long> bloquesFueraDeOrden =
-                buscarFueraDeOrden(solucionOrdenada, idsRecibidos, bloquesSobrantes);
+
+        List<Long> bloquesFueraDeOrden = buscarFueraDeOrden(
+                solucionOrdenada,
+                idsRecibidos,
+                bloquesSobrantes);
+
         boolean esCorrecta = bloquesFaltantes.isEmpty()
                 && bloquesSobrantes.isEmpty()
                 && bloquesFueraDeOrden.isEmpty();
-        intentoService.registrarIntento(usuarioId, ejercicio.getId(), esCorrecta);
+
+        intentoService.registrarIntento(
+                usuarioId,
+                ejercicio.getId(),
+                esCorrecta);
+
+        if (esCorrecta) {
+            progresoEstudianteService.completarNivelSiCorresponde(
+                    usuarioId,
+                    ejercicio.getNivel().getId());
+        }
 
         return new ResultadoValidacionDTO(
                 esCorrecta,
-                construirMensaje(esCorrecta, bloquesFaltantes, bloquesSobrantes, bloquesFueraDeOrden),
+                construirMensaje(
+                        esCorrecta,
+                        bloquesFaltantes,
+                        bloquesSobrantes,
+                        bloquesFueraDeOrden),
                 bloquesFaltantes,
                 bloquesSobrantes,
                 bloquesFueraDeOrden);

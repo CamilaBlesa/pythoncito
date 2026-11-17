@@ -8,13 +8,15 @@ import ar.edu.unsam.programacion3.pythoncito.models.Intento;
 
 public interface IntentoRepository extends JpaRepository<Intento, Long> {
 
-    Intento findTopByUsuarioIdAndEjercicioIdOrderByNumeroIntentoDesc(
-            Long usuarioId,
-            Long ejercicioId
-    );
+        Intento findTopByUsuarioIdAndEjercicioIdOrderByNumeroIntentoDesc(
+                        Long usuarioId,
+                        Long ejercicioId);
 
-    List<Intento> findByUsuarioIdAndEjercicioIdOrderByNumeroIntentoAsc(
-            Long usuarioId,
-            Long ejercicioId
-    );
+        List<Intento> findByUsuarioIdAndEjercicioIdOrderByNumeroIntentoAsc(
+                        Long usuarioId,
+                        Long ejercicioId);
+
+        boolean existsByUsuarioIdAndEjercicioIdAndCorrectaTrue(
+                        Long usuarioId,
+                        Long ejercicioId);
 }
