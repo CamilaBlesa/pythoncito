@@ -19,16 +19,17 @@ public class EjercicioService {
     private final NivelRepository nivelRepository;
     private final IntentoService intentoService;
     private final ProgresoEstudianteService progresoEstudianteService;
+    private final NivelService nivelService;
 
     public EjercicioService(
-            EjercicioRepository ejercicioRepository,
-            NivelRepository nivelRepository,
-            IntentoService intentoService,
-            ProgresoEstudianteService progresoEstudianteService) {
+            EjercicioRepository ejercicioRepository, NivelRepository nivelRepository,
+            IntentoService intentoService, ProgresoEstudianteService progresoEstudianteService,
+            NivelService nivelService) {
         this.ejercicioRepository = ejercicioRepository;
         this.nivelRepository = nivelRepository;
         this.intentoService = intentoService;
         this.progresoEstudianteService = progresoEstudianteService;
+        this.nivelService = nivelService;
     }
 
     public List<EjercicioDTO> listarParaEstudiante() {
@@ -40,13 +41,14 @@ public class EjercicioService {
         return ejerciciosDTO;
     }
 
-    public List<EjercicioDTO> listarPorNivelParaEstudiante(Long nivelId) {
-        if (buscarNivel(nivelId) == null) {
-            throw new RecursoNoEncontradoException("Nivel", nivelId);
-        }
+    public List<EjercicioDTO> listarPorNivelParaEstudiante(
+            Long nivelId, Long usuarioId) {
+
+        nivelService.obtenerNivelParaEstudiante(nivelId, usuarioId);
 
         List<Ejercicio> ejercicios = buscarEjerciciosDelNivel(nivelId);
         ordenarPorPresentacion(ejercicios);
+
         return convertirADTOEstudiante(ejercicios);
     }
 
@@ -96,11 +98,19 @@ public class EjercicioService {
         return ejerciciosDTO;
     }
 
-    public EjercicioDTO obtenerEjercicioParaEstudiante(Long id) {
+    public EjercicioDTO obtenerEjercicioParaEstudiante(
+            Long id, Long usuarioId) {
+
         Ejercicio ejercicio = buscarPorId(id);
+
         if (ejercicio == null) {
             throw new RecursoNoEncontradoException("Ejercicio", id);
         }
+
+        nivelService.obtenerNivelParaEstudiante(
+                ejercicio.getNivel().getId(),
+                usuarioId);
+
         return EjercicioMapper.aDTOEstudiante(ejercicio);
     }
 
@@ -121,34 +131,44 @@ public class EjercicioService {
         return EjercicioMapper.aDTOAdmin(ejercicio);
     }
 
-    public PistaDTO obtenerPista(Long ejercicioId, Integer orden) {
+    public PistaDTO obtenerPista(
+            Long ejercicioId, Integer orden, Long usuarioId) {
+
         Ejercicio ejercicio = buscarPorId(ejercicioId);
+
         if (ejercicio == null) {
             throw new RecursoNoEncontradoException("Ejercicio", ejercicioId);
         }
 
+        nivelService.obtenerNivelParaEstudiante(
+                ejercicio.getNivel().getId(),
+                usuarioId);
+
         for (Pista pista : ejercicio.getPistas()) {
             if (orden.equals(pista.getOrden())) {
-                return new PistaDTO(pista.getId(), pista.getTexto(), pista.getOrden());
+                return new PistaDTO(
+                        pista.getId(),
+                        pista.getTexto(),
+                        pista.getOrden());
             }
         }
-        throw new RecursoNoEncontradoException("Pista con orden " + orden + " en ejercicio " + ejercicioId);
+
+        throw new RecursoNoEncontradoException(
+                "Pista con orden " + orden + " en ejercicio " + ejercicioId);
     }
 
     @Transactional
-    public ResultadoValidacionDTO validarRespuesta(
-            ValidacionPeticionDTO peticion,
-            Long usuarioId) {
+    public ResultadoValidacionDTO validarRespuesta(ValidacionPeticionDTO peticion, Long usuarioId) {
 
         validarPeticion(peticion);
 
         Ejercicio ejercicio = buscarPorId(peticion.getEjercicioId());
 
         if (ejercicio == null) {
-            throw new RecursoNoEncontradoException(
-                    "Ejercicio",
-                    peticion.getEjercicioId());
+            throw new RecursoNoEncontradoException("Ejercicio", peticion.getEjercicioId());
         }
+
+        nivelService.obtenerNivelParaEstudiante(ejercicio.getNivel().getId(), usuarioId);
 
         List<BloqueCodigo> bloquesOficiales = obtenerBloques(ejercicio);
         List<Long> idsRecibidos = obtenerIdsRecibidos(peticion);
@@ -160,18 +180,13 @@ public class EjercicioService {
         List<BloqueCodigo> solucionOrdenada = ordenarPorSolucion(bloquesOficiales);
 
         List<Long> bloquesFueraDeOrden = buscarFueraDeOrden(
-                solucionOrdenada,
-                idsRecibidos,
-                bloquesSobrantes);
+                solucionOrdenada, idsRecibidos, bloquesSobrantes);
 
         boolean esCorrecta = bloquesFaltantes.isEmpty()
                 && bloquesSobrantes.isEmpty()
                 && bloquesFueraDeOrden.isEmpty();
 
-        intentoService.registrarIntento(
-                usuarioId,
-                ejercicio.getId(),
-                esCorrecta);
+        intentoService.registrarIntento(usuarioId, ejercicio.getId(), esCorrecta);
 
         if (esCorrecta) {
             progresoEstudianteService.completarNivelSiCorresponde(
@@ -179,8 +194,7 @@ public class EjercicioService {
                     ejercicio.getNivel().getId());
         }
 
-        return new ResultadoValidacionDTO(
-                esCorrecta,
+        return new ResultadoValidacionDTO(esCorrecta,
                 construirMensaje(
                         esCorrecta,
                         bloquesFaltantes,

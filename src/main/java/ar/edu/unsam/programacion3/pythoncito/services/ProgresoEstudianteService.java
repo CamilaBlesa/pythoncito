@@ -51,7 +51,7 @@ public class ProgresoEstudianteService {
                 Nivel nivel = nivelRepository.findById(nivelId)
                                 .orElseThrow(() -> new RecursoNoEncontradoException("Nivel", nivelId));
 
-                if (nivel.getEjercicios().isEmpty()) {
+                if (nivel.getEjercicios() == null || nivel.getEjercicios().isEmpty()) {
                         return false;
                 }
 
@@ -66,11 +66,11 @@ public class ProgresoEstudianteService {
                         }
                 }
 
-                boolean yaRegistrado = progresoRepository.existsByUsuarioIdAndNivelId(
-                                usuarioId,
-                                nivelId);
+                ProgresoEstudiante progresoExistente = progresoRepository
+                                .findByUsuarioIdAndNivelId(usuarioId, nivelId)
+                                .orElse(null);
 
-                if (!yaRegistrado) {
+                if (progresoExistente == null) {
 
                         ProgresoEstudiante progreso = new ProgresoEstudiante();
 
@@ -80,7 +80,6 @@ public class ProgresoEstudianteService {
 
                         progresoRepository.save(progreso);
                 }
-
                 return true;
         }
 

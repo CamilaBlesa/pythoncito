@@ -22,108 +22,108 @@ import java.util.List;
 @Service
 public class IntentoService {
 
-    private final IntentoRepository intentoRepository;
-    private final EjercicioRepository ejercicioRepository;
-    private final UsuarioRepository usuarioRepository;
+        private final IntentoRepository intentoRepository;
+        private final EjercicioRepository ejercicioRepository;
+        private final UsuarioRepository usuarioRepository;
+        private final NivelService nivelService;
 
-    public IntentoService(
-            IntentoRepository intentoRepository,
-            EjercicioRepository ejercicioRepository,
-            UsuarioRepository usuarioRepository) {
+        public IntentoService(
+                        IntentoRepository intentoRepository,
+                        EjercicioRepository ejercicioRepository,
+                        UsuarioRepository usuarioRepository,
+                        NivelService nivelService) {
 
-        this.intentoRepository = intentoRepository;
-        this.ejercicioRepository = ejercicioRepository;
-        this.usuarioRepository = usuarioRepository;
-    }
-
-    @Transactional
-    public IntentoDTO registrarIntento(
-            Long usuarioId,
-            Long ejercicioId,
-            Boolean correcta) {
-
-        Usuario estudiante = buscarEstudiante(usuarioId);
-        Ejercicio ejercicio = buscarEjercicio(ejercicioId);
-
-        Intento ultimoIntento =
-                intentoRepository.findTopByUsuarioIdAndEjercicioIdOrderByNumeroIntentoDesc(
-                        usuarioId,
-                        ejercicioId
-                );
-
-        int siguienteNumero = ultimoIntento == null
-                ? 1
-                : ultimoIntento.getNumeroIntento() + 1;
-
-        Intento intento = new Intento();
-        intento.setUsuario(estudiante);
-        intento.setEjercicio(ejercicio);
-        intento.setNumeroIntento(siguienteNumero);
-        intento.setCorrecta(correcta);
-        intento.setFechaHora(LocalDateTime.now(ZoneId.systemDefault()));
-
-        return convertirADTO(intentoRepository.save(intento));
-    }
-
-    @Transactional(readOnly = true)
-    public List<IntentoDTO> listarPorEjercicio(
-            Long usuarioId,
-            Long ejercicioId) {
-
-        buscarEstudiante(usuarioId);
-        buscarEjercicio(ejercicioId);
-
-        List<Intento> intentos =
-                intentoRepository.findByUsuarioIdAndEjercicioIdOrderByNumeroIntentoAsc(
-                        usuarioId,
-                        ejercicioId
-                );
-
-        List<IntentoDTO> intentosDTO = new ArrayList<>();
-
-        for (Intento intento : intentos) {
-            intentosDTO.add(convertirADTO(intento));
+                this.intentoRepository = intentoRepository;
+                this.ejercicioRepository = ejercicioRepository;
+                this.usuarioRepository = usuarioRepository;
+                this.nivelService = nivelService;
         }
 
-        return intentosDTO;
-    }
+        @Transactional
+        public IntentoDTO registrarIntento(
+                        Long usuarioId,
+                        Long ejercicioId,
+                        Boolean correcta) {
 
-    private Usuario buscarEstudiante(Long usuarioId) {
+                Usuario estudiante = buscarEstudiante(usuarioId);
+                Ejercicio ejercicio = buscarEjercicio(ejercicioId);
 
-        Usuario estudiante = usuarioRepository.findById(usuarioId)
-                .orElseThrow(() ->
-                        new RecursoNoEncontradoException("Estudiante", usuarioId)
-                );
+                Intento ultimoIntento = intentoRepository.findTopByUsuarioIdAndEjercicioIdOrderByNumeroIntentoDesc(
+                                usuarioId,
+                                ejercicioId);
 
-        if (estudiante.getRol() != Usuario.Rol.ESTUDIANTE) {
-            throw new CredencialInvalidaException(
-                    "El usuario autenticado no es un estudiante."
-            );
+                int siguienteNumero = ultimoIntento == null
+                                ? 1
+                                : ultimoIntento.getNumeroIntento() + 1;
+
+                Intento intento = new Intento();
+                intento.setUsuario(estudiante);
+                intento.setEjercicio(ejercicio);
+                intento.setNumeroIntento(siguienteNumero);
+                intento.setCorrecta(correcta);
+                intento.setFechaHora(LocalDateTime.now(ZoneId.systemDefault()));
+
+                return convertirADTO(intentoRepository.save(intento));
         }
 
-        return estudiante;
-    }
+        @Transactional(readOnly = true)
+        public List<IntentoDTO> listarPorEjercicio(
+                        Long usuarioId,
+                        Long ejercicioId) {
 
-    private Ejercicio buscarEjercicio(Long ejercicioId) {
+                buscarEstudiante(usuarioId);
 
-        Ejercicio ejercicio = ejercicioRepository.findById(ejercicioId)
-                .orElse(null);
+                Ejercicio ejercicio = buscarEjercicio(ejercicioId);
 
-        if (ejercicio == null) {
-            throw new RecursoNoEncontradoException("Ejercicio", ejercicioId);
+                nivelService.obtenerNivelParaEstudiante(
+                                ejercicio.getNivel().getId(),
+                                usuarioId);
+
+                List<Intento> intentos = intentoRepository.findByUsuarioIdAndEjercicioIdOrderByNumeroIntentoAsc(
+                                usuarioId,
+                                ejercicioId);
+
+                List<IntentoDTO> intentosDTO = new ArrayList<>();
+
+                for (Intento intento : intentos) {
+                        intentosDTO.add(convertirADTO(intento));
+                }
+
+                return intentosDTO;
         }
 
-        return ejercicio;
-    }
+        private Usuario buscarEstudiante(Long usuarioId) {
 
-    private IntentoDTO convertirADTO(Intento intento) {
+                Usuario estudiante = usuarioRepository.findById(usuarioId)
+                                .orElseThrow(() -> new RecursoNoEncontradoException("Estudiante", usuarioId));
 
-        return new IntentoDTO(
-                intento.getId(),
-                intento.getEjercicio().getId(),
-                intento.getNumeroIntento(),
-                intento.getCorrecta(),
-                intento.getFechaHora()
-        );
-    }
+                if (estudiante.getRol() != Usuario.Rol.ESTUDIANTE) {
+                        throw new CredencialInvalidaException(
+                                        "El usuario autenticado no es un estudiante.");
+                }
+
+                return estudiante;
+        }
+
+        private Ejercicio buscarEjercicio(Long ejercicioId) {
+
+                Ejercicio ejercicio = ejercicioRepository.findById(ejercicioId)
+                                .orElse(null);
+
+                if (ejercicio == null) {
+                        throw new RecursoNoEncontradoException("Ejercicio", ejercicioId);
+                }
+
+                return ejercicio;
+        }
+
+        private IntentoDTO convertirADTO(Intento intento) {
+
+                return new IntentoDTO(
+                                intento.getId(),
+                                intento.getEjercicio().getId(),
+                                intento.getNumeroIntento(),
+                                intento.getCorrecta(),
+                                intento.getFechaHora());
+        }
 }

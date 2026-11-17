@@ -16,11 +16,14 @@ public class NivelDTO {
 
     private Integer ordenPresentacion;
 
+    private boolean completado;
+    private boolean desbloqueado;
+
     public NivelDTO() {
     }
 
     public NivelDTO(Long id, String titulo, String tema,
-                    Boolean activo, Integer ordenPresentacion) {
+            Boolean activo, Integer ordenPresentacion) {
         this.id = id;
         this.titulo = titulo;
         this.tema = tema;
@@ -66,5 +69,21 @@ public class NivelDTO {
 
     public void setOrdenPresentacion(Integer ordenPresentacion) {
         this.ordenPresentacion = ordenPresentacion;
+    }
+
+    public boolean isDesbloqueado() {
+        return desbloqueado;
+    }
+
+    public void setDesbloqueado(boolean desbloqueado) {
+        this.desbloqueado = desbloqueado;
+    }
+
+    public boolean isCompletado() {
+        return completado;
+    }
+
+    public void setCompletado(boolean completado) {
+        this.completado = completado;
     }
 }

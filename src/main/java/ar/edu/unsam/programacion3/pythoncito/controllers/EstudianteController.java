@@ -30,23 +30,44 @@ public class EstudianteController {
     }
 
     @GetMapping("/niveles")
-    public ResponseEntity<List<NivelDTO>> listarNivelesActivos() {
-        return ResponseEntity.ok(nivelService.listarActivos());
+    public ResponseEntity<List<NivelDTO>> listarNivelesActivos(
+            @AuthenticationPrincipal Jwt jwt) {
+
+        Long usuarioId = Long.valueOf(jwt.getSubject());
+
+        return ResponseEntity.ok(
+                nivelService.listarActivosParaEstudiante(usuarioId));
     }
 
     @GetMapping("/niveles/{id}")
-    public ResponseEntity<NivelDTO> obtenerNivel(@PathVariable Long id) {
-        return ResponseEntity.ok(nivelService.obtenerPorId(id));
+    public ResponseEntity<NivelDTO> obtenerNivel(
+            @PathVariable Long id,
+            @AuthenticationPrincipal Jwt jwt) {
+
+        Long usuarioId = Long.valueOf(jwt.getSubject());
+
+        return ResponseEntity.ok(
+                nivelService.obtenerNivelParaEstudiante(id, usuarioId));
     }
 
     @GetMapping("/niveles/{id}/ejercicios")
-    public ResponseEntity<List<EjercicioDTO>> listarEjerciciosPorNivel(@PathVariable Long id) {
-        return ResponseEntity.ok(ejercicioService.listarPorNivelParaEstudiante(id));
+    public ResponseEntity<List<EjercicioDTO>> listarEjerciciosPorNivel(
+            @PathVariable Long id,
+            @AuthenticationPrincipal Jwt jwt) {
+
+        Long usuarioId = Long.valueOf(jwt.getSubject());
+
+        return ResponseEntity.ok(ejercicioService.listarPorNivelParaEstudiante(id, usuarioId));
     }
 
     @GetMapping("/ejercicios/{id}")
-    public ResponseEntity<EjercicioDTO> obtenerEjercicio(@PathVariable Long id) {
-        return ResponseEntity.ok(ejercicioService.obtenerEjercicioParaEstudiante(id));
+    public ResponseEntity<EjercicioDTO> obtenerEjercicio(
+            @PathVariable Long id,
+            @AuthenticationPrincipal Jwt jwt) {
+
+        Long usuarioId = Long.valueOf(jwt.getSubject());
+
+        return ResponseEntity.ok(ejercicioService.obtenerEjercicioParaEstudiante(id, usuarioId));
     }
 
     @GetMapping("/ejercicios/{id}/intentos")
@@ -56,13 +77,18 @@ public class EstudianteController {
 
         Long usuarioId = Long.valueOf(jwt.getSubject());
 
-        return ResponseEntity.ok(
-                intentoService.listarPorEjercicio(usuarioId, id));
+        return ResponseEntity.ok(intentoService.listarPorEjercicio(usuarioId, id));
     }
 
     @GetMapping("/ejercicios/{id}/pistas/{orden}")
-    public ResponseEntity<PistaDTO> obtenerPista(@PathVariable Long id, @PathVariable Integer orden) {
-        return ResponseEntity.ok(ejercicioService.obtenerPista(id, orden));
+    public ResponseEntity<PistaDTO> obtenerPista(
+            @PathVariable Long id,
+            @PathVariable Integer orden,
+            @AuthenticationPrincipal Jwt jwt) {
+
+        Long usuarioId = Long.valueOf(jwt.getSubject());
+
+        return ResponseEntity.ok(ejercicioService.obtenerPista(id, orden, usuarioId));
     }
 
     @PostMapping("/ejercicios/{id}/validar")
@@ -75,8 +101,7 @@ public class EstudianteController {
 
         ValidacionPeticionDTO peticion = new ValidacionPeticionDTO(id, bloqueIds);
 
-        return ResponseEntity.ok(
-                ejercicioService.validarRespuesta(peticion, usuarioId));
+        return ResponseEntity.ok(ejercicioService.validarRespuesta(peticion, usuarioId));
     }
 
     @PostMapping("/ejercicios/validar")
@@ -86,8 +111,7 @@ public class EstudianteController {
 
         Long usuarioId = Long.valueOf(jwt.getSubject());
 
-        return ResponseEntity.ok(
-                ejercicioService.validarRespuesta(peticion, usuarioId));
+        return ResponseEntity.ok(ejercicioService.validarRespuesta(peticion, usuarioId));
     }
 
     @GetMapping("/progreso")
@@ -96,7 +120,6 @@ public class EstudianteController {
 
         Long usuarioId = Long.valueOf(jwt.getSubject());
 
-        return ResponseEntity.ok(
-                progresoEstudianteService.listarProgreso(usuarioId));
+        return ResponseEntity.ok(progresoEstudianteService.listarProgreso(usuarioId));
     }
 }
