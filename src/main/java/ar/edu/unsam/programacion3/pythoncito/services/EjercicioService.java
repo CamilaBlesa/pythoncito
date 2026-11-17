@@ -164,6 +164,14 @@ public class EjercicioService {
                     "Pista con orden " + orden + " en ejercicio " + ejercicioId);
         }
 
+        long intentosFallidos = intentoService.contarIntentosFallidos(usuarioId, ejercicioId);
+
+        if (intentosFallidos < orden) {
+            throw new AccesoDenegadoException(
+                    "Necesitás realizar " + orden
+                            + " intento(s) incorrecto(s) para desbloquear esta pista.");
+        }
+
         return new PistaDTO(
                 pistaSolicitada.getId(),
                 pistaSolicitada.getTexto(),

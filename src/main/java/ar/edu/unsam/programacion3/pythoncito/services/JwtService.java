@@ -16,6 +16,9 @@ import java.time.Instant;
 @Service
 public class JwtService {
 
+    private static final long DURACION_ESTUDIANTE = 30L * 24 * 60 * 60;
+    private static final long DURACION_ADMIN = 2L * 60 * 60;
+
     private final JwtEncoder jwtEncoder;
     private final JwtDecoder jwtDecoder;
 
@@ -28,10 +31,12 @@ public class JwtService {
 
         Instant ahora = Instant.now();
 
+        long duracion = obtenerDuracionToken(usuario);
+
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("pythoncito")
                 .issuedAt(ahora)
-                .expiresAt(ahora.plusSeconds(86400))
+                .expiresAt(ahora.plusSeconds(duracion))
                 .subject(usuario.getId().toString())
                 .claim("roles", usuario.getRol().name())
                 .build();
@@ -42,6 +47,15 @@ public class JwtService {
         return jwtEncoder.encode(
                 JwtEncoderParameters.from(encabezado, claims)
         ).getTokenValue();
+    }
+
+    private long obtenerDuracionToken(Usuario usuario) {
+
+        if (usuario.getRol() == Usuario.Rol.ADMIN) {
+            return DURACION_ADMIN;
+        }
+
+        return DURACION_ESTUDIANTE;
     }
 
     public Long obtenerIdUsuario(String token) {
