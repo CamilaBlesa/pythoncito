@@ -1,5 +1,7 @@
 package ar.edu.unsam.programacion3.pythoncito.exceptions;
 
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -19,5 +21,14 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResponseEntity<String> manejarValidacion(ValidacionException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+    
+    @ExceptionHandler(CredencialInvalidaException.class)
+    public ResponseEntity<Map<String, String>> manejarCredencialesInvalidas(
+            CredencialInvalidaException excepcion) {
+
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(Map.of("mensaje", excepcion.getMessage()));
     }
 }
