@@ -1,0 +1,432 @@
+{
+	"info": {
+		"_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+		"name": "Pythoncito API - TPI Programacion 3",
+		"description": "Coleccion oficial de endpoints y tests automatizados de Pythoncito (UNSAM - Prof. Di Ludovico)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Autenticación (Auth)",
+			"item": [
+				{
+					"name": "1.1 POST Login Estudiante",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Devuelve token JWT de estudiante\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.token).to.be.a('string');",
+									"    pm.collectionVariables.set(\"token_estudiante\", jsonData.token);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/auth/estudiante",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "auth", "estudiante"]
+						}
+					}
+				},
+				{
+					"name": "1.2 POST Login Admin (Docente)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Devuelve token JWT de admin\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.token).to.be.a('string');",
+									"    pm.collectionVariables.set(\"token_admin\", jsonData.token);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"clave\": \"programacion2026\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/admin",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "auth", "admin"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "2. Endpoints Estudiante (Juego y Progreso)",
+			"item": [
+				{
+					"name": "2.1 GET Listar Niveles Activos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Lista niveles activos ordenados\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('array');",
+									"    if (jsonData.length > 0) {",
+									"        pm.collectionVariables.set(\"primer_nivel_id\", jsonData[0].id);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_estudiante}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/estudiante/niveles",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "estudiante", "niveles"]
+						}
+					}
+				},
+				{
+					"name": "2.2 GET Ejercicios del Primer Nivel",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_estudiante}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/estudiante/niveles/{{primer_nivel_id}}/ejercicios",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "estudiante", "niveles", "{{primer_nivel_id}}", "ejercicios"]
+						}
+					}
+				},
+				{
+					"name": "2.3 GET Detalle de Ejercicio 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_estudiante}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/estudiante/ejercicios/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "estudiante", "ejercicios", "1"]
+						}
+					}
+				},
+				{
+					"name": "2.4 GET Pista 1 de Ejercicio 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_estudiante}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/estudiante/ejercicios/1/pistas/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "estudiante", "ejercicios", "1", "pistas", "1"]
+						}
+					}
+				},
+				{
+					"name": "2.5 POST Validar Respuesta Ejercicio 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Motor de validacion responde diagnostico DUA\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('correcta');",
+									"    pm.expect(jsonData).to.have.property('mensaje');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_estudiante}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"ejercicioId\": 1,\n  \"bloqueIds\": [1, 2, 3]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/estudiante/ejercicios/validar",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "estudiante", "ejercicios", "validar"]
+						}
+					}
+				},
+				{
+					"name": "2.6 GET Consultar Progreso Estudiante",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_estudiante}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/estudiante/progreso",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "estudiante", "progreso"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "3. Endpoints Admin (Docente - ABML)",
+			"item": [
+				{
+					"name": "3.1 GET Listar Todos los Niveles (Admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/admin/niveles",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "admin", "niveles"]
+						}
+					}
+				},
+				{
+					"name": "3.2 GET Listar Todos los Ejercicios (Admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code es 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/admin/ejercicios",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["api", "admin", "ejercicios"]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "token_estudiante",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "token_admin",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "primer_nivel_id",
+			"value": "2",
+			"type": "string"
+		}
+	]
+}

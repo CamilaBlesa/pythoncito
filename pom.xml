@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>4.1.2</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 	<groupId>ar.edu.unsam.programacion3</groupId>
 	<artifactId>pythoncito</artifactId>
@@ -86,15 +86,36 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-					<argLine>"-Djava.library.path=${project.basedir}/drivers/sqljdbc_auth"</argLine>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<jvmArguments>"-Djava.library.path=${project.basedir}/drivers/sqljdbc_auth"</jvmArguments>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.pitest</groupId>
+				<artifactId>pitest-maven</artifactId>
+				<version>1.25.7</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.pitest</groupId>
+						<artifactId>pitest-junit5-plugin</artifactId>
+						<version>1.2.3</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<targetClasses>
+						<param>ar.edu.unsam.programacion3.pythoncito.services.*</param>
+					</targetClasses>
+					<targetTests>
+						<param>ar.edu.unsam.programacion3.pythoncito.services.*Test</param>
+					</targetTests>
+					<outputFormats>
+						<outputFormat>HTML</outputFormat>
+					</outputFormats>
+					<timestampedReports>false</timestampedReports>
 				</configuration>
 			</plugin>
 		</plugins>
