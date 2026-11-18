@@ -427,7 +427,11 @@ public class EjercicioService {
         return nivelRepository.findById(id).orElse(null);
     }
 
-    private void actualizarDatos(Ejercicio ejercicio, EjercicioAdminDTO datos, Nivel nivel) {
+    private void actualizarDatos(
+            Ejercicio ejercicio,
+            EjercicioAdminDTO datos,
+            Nivel nivel) {
+
         ejercicio.setTitulo(datos.getTitulo());
         ejercicio.setConsigna(datos.getConsigna());
         ejercicio.setExplicacion(datos.getExplicacion());
@@ -438,28 +442,44 @@ public class EjercicioService {
         ejercicio.setNivel(nivel);
 
         if (datos.getBloques() != null) {
-            List<BloqueCodigo> bloques = new ArrayList<>();
+
+            if (ejercicio.getBloques() == null) {
+                ejercicio.setBloques(new ArrayList<>());
+            } else {
+                ejercicio.getBloques().clear();
+            }
+
             for (BloqueCodigoAdminDTO bloqueDTO : datos.getBloques()) {
+
                 BloqueCodigo bloque = new BloqueCodigo();
+
                 bloque.setContenido(bloqueDTO.getContenido());
                 bloque.setOrdenPresentacion(bloqueDTO.getOrdenPresentacion());
                 bloque.setOrdenCorrecto(bloqueDTO.getOrdenCorrecto());
                 bloque.setEjercicio(ejercicio);
-                bloques.add(bloque);
+
+                ejercicio.getBloques().add(bloque);
             }
-            ejercicio.setBloques(bloques);
         }
 
         if (datos.getPistas() != null) {
-            ArrayList<Pista> pistas = new ArrayList<>();
+
+            if (ejercicio.getPistas() == null) {
+                ejercicio.setPistas(new ArrayList<>());
+            } else {
+                ejercicio.getPistas().clear();
+            }
+
             for (PistaDTO pistaDTO : datos.getPistas()) {
+
                 Pista pista = new Pista();
+
                 pista.setTexto(pistaDTO.getTexto());
                 pista.setOrden(pistaDTO.getOrden());
                 pista.setEjercicio(ejercicio);
-                pistas.add(pista);
+
+                ejercicio.getPistas().add(pista);
             }
-            ejercicio.setPistas(pistas);
         }
     }
 }

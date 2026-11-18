@@ -66,10 +66,9 @@ async function cargarNiveles() {
         progressBar.setAttribute("aria-valuenow", porcentaje);
 
     } catch (error) {
-        contenedor.innerHTML = `
-            <div class="empty-placeholder" style="color: var(--danger);">
-                Ocurrió un error al cargar los niveles: ${error.message}
-            </div>
-        `;
+        const titulo = document.createElement("h2");
+        titulo.textContent = nivel.titulo || "Error al cargar los niveles";
+        titulo.className = "level-title";
+        contenedor.appendChild(titulo);
     }
 }

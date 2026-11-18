@@ -202,6 +202,150 @@
           </form>
         </div>
       </div>
+      <section id="ejercicios-section" style="display: none">
+
+        <div class="admin-section-header">
+          <h2 class="section-title">Ejercicios del nivel</h2>
+
+          <div class="admin-section-actions">
+            <button type="button" id="btn-nuevo-ejercicio" class="btn-primary">
+              ➕ Nuevo ejercicio
+            </button>
+
+            <button type="button" id="btn-volver-niveles" class="btn-secondary">
+              Volver a niveles
+            </button>
+          </div>
+        </div>
+        <div class="admin-table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Orden</th>
+                <th>Título</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+
+            <tbody id="ejercicios-tbody">
+              <tr>
+                <td colspan="4">Seleccioná un nivel.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <div class="modal-backdrop" id="modal-ejercicio">
+        <div class="modal-content">
+          <h3 id="ejercicio-modal-title">Modificar ejercicio</h3>
+
+          <form id="form-ejercicio">
+            <input type="hidden" id="ejercicio-id" />
+
+            <div class="form-group">
+              <label for="ejercicio-titulo">Título</label>
+              <input id="ejercicio-titulo" class="form-input" required />
+            </div>
+
+            <div class="form-group">
+              <label for="ejercicio-consigna">Consigna</label>
+              <textarea
+                id="ejercicio-consigna"
+                class="form-input"
+                required
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="ejercicio-explicacion">Explicación</label>
+              <textarea
+                id="ejercicio-explicacion"
+                class="form-input"
+                required
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="ejercicio-ejemplo">Ejemplo diferente</label>
+              <textarea
+                id="ejercicio-ejemplo"
+                class="form-input"
+                required
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="ejercicio-resultado">Resultado del ejemplo</label>
+              <textarea
+                id="ejercicio-resultado"
+                class="form-input"
+                required
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="ejercicio-codigo">Código esperado</label>
+              <textarea
+                id="ejercicio-codigo"
+                class="form-input"
+                required
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="ejercicio-orden">Orden de presentación</label>
+              <input
+                type="number"
+                id="ejercicio-orden"
+                class="form-input"
+                min="1"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="ejercicio-nivel">ID del nivel</label>
+              <input
+                type="number"
+                id="ejercicio-nivel"
+                class="form-input"
+                min="1"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="ejercicio-bloques">Bloques (JSON)</label>
+              <textarea
+                id="ejercicio-bloques"
+                class="form-input"
+                rows="8"
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="ejercicio-pistas">Pistas (JSON)</label>
+              <textarea
+                id="ejercicio-pistas"
+                class="form-input"
+                rows="6"
+              ></textarea>
+            </div>
+
+            <button
+              type="button"
+              id="btn-cancelar-ejercicio"
+              class="btn-secondary"
+            >
+              Cancelar
+            </button>
+
+            <button type="submit" class="btn-primary">Guardar cambios</button>
+          </form>
+        </div>
+      </div>
     </main>
 
     <footer class="footer">
