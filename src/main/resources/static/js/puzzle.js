@@ -335,7 +335,7 @@ async function pedirPista() {
         mostrarPista(pista);
         ordenPistaActual++;
     } catch (error) {
-        alert(error.message || "No hay más pistas disponibles para este ejercicio.");
+        mostrarAvisoPista(error.message || "No hay más pistas disponibles para este ejercicio.");
     }
 }
 
@@ -343,6 +343,11 @@ function mostrarPista(pista) {
     const wrapper = document.getElementById("hints-wrapper");
     const lista = document.getElementById("hints-list");
     wrapper.style.display = "block";
+
+    const avisoExistente = document.getElementById("hint-notice-card");
+    if (avisoExistente) {
+        avisoExistente.remove();
+    }
 
     const card = document.createElement("div");
     card.className = "hint-card";
@@ -354,6 +359,31 @@ function mostrarPista(pista) {
         </div>
     `;
     lista.appendChild(card);
+    card.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function mostrarAvisoPista(mensaje) {
+    const wrapper = document.getElementById("hints-wrapper");
+    const lista = document.getElementById("hints-list");
+    wrapper.style.display = "block";
+
+    const avisoExistente = document.getElementById("hint-notice-card");
+    if (avisoExistente) {
+        avisoExistente.remove();
+    }
+
+    const card = document.createElement("div");
+    card.id = "hint-notice-card";
+    card.className = "hint-card";
+    card.innerHTML = `
+        <span style="font-size: 1.5rem;" aria-hidden="true">💡</span>
+        <div>
+            <strong>Pistas Progresivas:</strong>
+            <p>${mensaje}</p>
+        </div>
+    `;
+    lista.appendChild(card);
+    card.scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
 
 async function validarSolucion() {

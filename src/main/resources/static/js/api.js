@@ -59,7 +59,7 @@ async function apiFetch(endpoint, opciones = {}) {
         let detalleError = "Error en la petición";
         try {
             const errorJson = await respuesta.json();
-            detalleError = errorJson.error || errorJson.mensaje || errorJson.message || JSON.stringify(errorJson);
+            detalleError = errorJson.mensaje || errorJson.message || errorJson.error || JSON.stringify(errorJson);
         } catch (e) {
             detalleError = `Error HTTP ${respuesta.status}: ${respuesta.statusText}`;
         }
