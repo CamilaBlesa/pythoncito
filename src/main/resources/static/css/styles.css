@@ -62,12 +62,20 @@ body.font-dyslexic {
     line-height: 1.8;
 }
 
-body.font-lg {
-    --font-size-base: 18px;
+html {
+    font-size: 16px;
 }
 
+html.font-lg,
+body.font-lg {
+    font-size: 19px;
+    --font-size-base: 19px;
+}
+
+html.font-xl,
 body.font-xl {
-    --font-size-base: 20px;
+    font-size: 23px;
+    --font-size-base: 23px;
 }
 
 * {

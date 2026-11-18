@@ -81,8 +81,10 @@ function inicializarPreferenciasAccesibilidad() {
         document.body.classList.add("font-dyslexic");
     }
     if (tamanoFuente === "lg") {
+        document.documentElement.classList.add("font-lg");
         document.body.classList.add("font-lg");
     } else if (tamanoFuente === "xl") {
+        document.documentElement.classList.add("font-xl");
         document.body.classList.add("font-xl");
     }
 
@@ -120,10 +122,13 @@ function inicializarPreferenciasAccesibilidad() {
                 siguiente = "base";
             }
 
+            document.documentElement.classList.remove("font-lg", "font-xl");
             document.body.classList.remove("font-lg", "font-xl");
             if (siguiente === "lg") {
+                document.documentElement.classList.add("font-lg");
                 document.body.classList.add("font-lg");
             } else if (siguiente === "xl") {
+                document.documentElement.classList.add("font-xl");
                 document.body.classList.add("font-xl");
             }
 
