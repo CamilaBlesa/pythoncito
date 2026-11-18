@@ -166,9 +166,9 @@ public class EjercicioService {
 
         long intentosFallidos = intentoService.contarIntentosFallidos(usuarioId, ejercicioId);
 
-        if (intentosFallidos < orden) {
+        if (intentosFallidos < orden - 1) {
             throw new AccesoDenegadoException(
-                    "Necesitás realizar " + orden
+                    "Necesitás realizar al menos " + (orden - 1)
                             + " intento(s) incorrecto(s) para desbloquear esta pista.");
         }
 

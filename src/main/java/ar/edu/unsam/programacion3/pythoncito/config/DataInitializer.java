@@ -96,10 +96,10 @@ public class DataInitializer implements CommandLineRunner {
 
         Ejercicio ejercicio = new Ejercicio();
         ejercicio.setTitulo("Aprobado o a Recuperatorio");
-        ejercicio.setConsigna("Ordena los bloques para asignar la nota 7 y mostrar 'Aprobado' si la nota es mayor o igual a 6, o 'A recuperar' en caso contrario.");
-        ejercicio.setExplicacion("La estructura 'if' evalúa una condición lógica. Si es verdadera se ejecuta su bloque indentado. La cláusula 'else' se ejecuta cuando la condición fue falsa.");
-        ejercicio.setEjemploDiferente("puntos = 100\nif puntos > 50:\n    print(\"Ganaste\")\nelse:\n    print(\"Perdiste\")");
-        ejercicio.setResultadoEjemplo("Ganaste");
+        ejercicio.setConsigna("¡Ayudá a Pythoncito a calificar un examen! Primero guardá la nota 7 en su cajita. Luego preguntale a la compu: si la nota es 6 o más (nota >= 6), el loro dirá 'Aprobado'. Y si no (else:), dirá 'A recuperar'.");
+        ejercicio.setExplicacion("¡En la vida tomamos decisiones todo el tiempo! Por ejemplo: 'Si (if) llueve, llevo paraguas; si no (else), salgo con lentes'. En programación, el 'if' es como hacerle una pregunta a la compu. Si la respuesta es sí, la compu ejecuta la orden que está un pasito adentro (con espacios a la derecha). Y si la respuesta es no, ¡hace lo que está adentro del 'else'! ¡Es como elegir qué camino tomar en un videojuego!");
+        ejercicio.setEjemploDiferente("energia = 100\nif energia > 50:\n    print(\"¡Listo para jugar!\")\nelse:\n    print(\"A descansar\")");
+        ejercicio.setResultadoEjemplo("¡Listo para jugar!");
         ejercicio.setCodigoEsperado("nota = 7\nif nota >= 6:\n    print(\"Aprobado\")\nelse:\n    print(\"A recuperar\")");
         ejercicio.setOrdenPresentacion(1);
         ejercicio.setNivel(nivel);
@@ -140,13 +140,13 @@ public class DataInitializer implements CommandLineRunner {
         ejercicio.getBloques().add(b5);
 
         Pista p1 = new Pista();
-        p1.setTexto("Inicializa la variable nota antes de evaluarla con el if.");
+        p1.setTexto("Primero tenés que crear la cajita 'nota = 7' antes de que el 'if' pueda fijarse qué nota sacó.");
         p1.setOrden(1);
         p1.setEjercicio(ejercicio);
         ejercicio.getPistas().add(p1);
 
         Pista p2 = new Pista();
-        p2.setTexto("Cada print con cuatro espacios de sangría debe ir inmediatamente después de su correspondiente if o else.");
+        p2.setTexto("Fijate que los bloques de print(...) tienen espacios a la izquierda (están un pasito adentro). Cada print va justo abajo de su 'if' o de su 'else'.");
         p2.setOrden(2);
         p2.setEjercicio(ejercicio);
         ejercicio.getPistas().add(p2);
