@@ -51,7 +51,6 @@ public class BloqueCodigo {
     private Ejercicio ejercicio;
 
     public BloqueCodigo() {
-      // Constructor vacío requerido por JPA
     }
 
     public Long getId() {

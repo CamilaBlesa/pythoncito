@@ -51,7 +51,7 @@ public class Ejercicio {
     @OrderBy("orden ASC")
     @JsonIgnoreProperties({ "ejercicio" })
     @Schema(description = "Pistas progresivas ordenadas para el ejercicio.")
-    private ArrayList<Pista> pistas = new ArrayList<>();
+    private List<Pista> pistas = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "nivel_id", nullable = false)
@@ -71,7 +71,6 @@ public class Ejercicio {
     private List<Intento> intentos = new ArrayList<>();
 
     public Ejercicio() {
-        // Constructor vacío requerido por JPA
     }
 
     public Long getId() {
@@ -134,11 +133,11 @@ public class Ejercicio {
         this.ordenPresentacion = ordenPresentacion;
     }
 
-    public ArrayList<Pista> getPistas() {
+    public List<Pista> getPistas() {
         return pistas;
     }
 
-    public void setPistas(ArrayList<Pista> pistas) {
+    public void setPistas(List<Pista> pistas) {
         this.pistas = pistas;
     }
 

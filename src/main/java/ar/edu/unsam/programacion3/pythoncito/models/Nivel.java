@@ -42,7 +42,6 @@ public class Nivel {
     private List<ProgresoEstudiante> progresos = new ArrayList<>();
 
     public Nivel() {
-        // Constructor vacío requerido por JPA
     }
 
     public Long getId() {

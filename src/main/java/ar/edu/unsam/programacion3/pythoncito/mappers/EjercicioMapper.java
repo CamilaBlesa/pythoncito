@@ -15,7 +15,6 @@ import java.util.ArrayList;
 public class EjercicioMapper {
 
     private EjercicioMapper() {
-        // Constructor privado para evitar instanciación
     }
 
     public static EjercicioDTO aDTOEstudiante(Ejercicio ejercicio) {
