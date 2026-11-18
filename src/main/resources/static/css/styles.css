@@ -1,82 +1,127 @@
+/* =========================================================
+   1. VARIABLES GENERALES
+   ========================================================= */
+
 :root {
-    --bg-main: #f8fafc;
+    /* Superficies */
+    --bg-main: #f4f8fb;
     --bg-card: #ffffff;
-    --bg-subtle: #f1f5f9;
-    --text-primary: #0f172a;
-    --text-secondary: #475569;
-    --text-muted: #64748b;
-    --border-color: #cbd5e1;
-    --primary: #2563eb;
-    --primary-hover: #1d4ed8;
-    --primary-light: #dbeafe;
-    --accent: #f59e0b;
-    --accent-hover: #d97706;
-    --success: #16a34a;
-    --success-light: #dcfce7;
-    --danger: #dc2626;
-    --danger-light: #fee2e2;
-    --warning: #ea580c;
-    --warning-light: #ffedd5;
-    --code-bg: #1e293b;
-    --code-text: #f8fafc;
-    --focus-ring: #2563eb;
-    --font-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    --font-code: "Consolas", "Courier New", Courier, monospace;
+    --bg-subtle: #e6f2fa;
+
+    /* Texto */
+    --text-primary: #233548;
+    --text-secondary: #506477;
+    --text-muted: #5f7183;
+
+    /* Marca Python */
+    --blue: #4b8bbe;
+    --primary: #306998;
+    --primary-hover: #1e4f75;
+    --primary-light: #e6f2fa;
+
+    --accent: #ffd43b;
+    --accent-hover: #e6bd24;
+
+    /* Bordes */
+    --border-color: #dce6ed;
+    --control-border: #71889a;
+
+    /* Estados */
+    --success: #2d8b57;
+    --success-text: #247348;
+    --success-light: #e7f7ee;
+
+    --danger: #b83c4b;
+    --danger-text: #b83c4b;
+    --danger-light: #fff0f1;
+
+    --warning: #a36f00;
+    --warning-text: #795200;
+    --warning-light: #fff5c4;
+
+    /* Editor de código */
+    --code-bg: #17283b;
+    --code-text: #dce9f1;
+    --code-highlight: #ffe873;
+    --code-label: #89bde0;
+
+    /* Tipografías */
+    --font-base: Arial, sans-serif;
+    --font-code: "Courier New", monospace;
     --font-size-base: 16px;
+
+    /* Foco */
+    --focus-ring: #1e4f75;
+    --focus-on-dark: #ffe873;
+
+    /* Sombras */
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    --shadow-md:
+        0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --shadow-lg:
+        0 10px 15px -3px rgba(0, 0, 0, 0.1),
+        0 4px 6px -4px rgba(0, 0, 0, 0.1);
+
+    /* Bordes redondeados */
     --radius-sm: 6px;
     --radius-md: 10px;
     --radius-lg: 16px;
 }
 
-body.high-contrast {
-    --bg-main: #000000;
-    --bg-card: #0c0c0c;
-    --bg-subtle: #1a1a1a;
-    --text-primary: #ffffff;
-    --text-secondary: #ffff00;
-    --text-muted: #e2e8f0;
-    --border-color: #ffffff;
-    --primary: #ffff00;
-    --primary-hover: #ffea00;
-    --primary-light: #333300;
-    --accent: #00ffff;
-    --accent-hover: #00cccc;
-    --success: #00ff66;
-    --success-light: #003311;
-    --danger: #ff3333;
-    --danger-light: #330000;
-    --warning: #ff9900;
-    --warning-light: #331f00;
-    --code-bg: #111111;
-    --code-text: #00ff66;
-    --focus-ring: #00ffff;
+
+/* =========================================================
+   2. TIPOGRAFÍAS
+   ========================================================= */
+
+@font-face {
+    font-family: "Atkinson Hyperlegible";
+    src: url("/fonts/AtkinsonHyperlegible-Regular.ttf") format("truetype");
+    font-display: swap;
 }
 
-body.font-dyslexic {
-    --font-base: "Comic Sans MS", "Arial Rounded MT Bold", "Verdana", sans-serif;
+@font-face {
+    font-family: "OpenDyslexic";
+    src: url("/fonts/OpenDyslexic-Regular.otf") format("opentype");
+    font-display: swap;
+}
+
+/* Fuente Atkinson */
+
+body.font-atkinson {
+    --font-base: "Atkinson Hyperlegible", Arial, sans-serif;
+
     letter-spacing: 0.05em;
+    font-size: 16px;
     word-spacing: 0.1em;
     line-height: 1.8;
 }
 
-html {
-    font-size: 16px;
+/* Fuente OpenDyslexic */
+
+body.font-opendyslexic {
+    --font-base: "OpenDyslexic", Arial, sans-serif;
 }
 
-html.font-lg,
+
+/* =========================================================
+   3. TAMAÑOS DE FUENTE
+   ========================================================= */
+html {
+  font-size: 14.5px;
+}
 body.font-lg {
-    font-size: 19px;
     --font-size-base: 19px;
 }
 
-html.font-xl,
 body.font-xl {
-    font-size: 23px;
     --font-size-base: 23px;
 }
+
+
+/* =========================================================
+   4. CONFIGURACIÓN GENERAL
+   ========================================================= */
 
 * {
     box-sizing: border-box;
@@ -90,33 +135,68 @@ body {
     font-family: var(--font-base);
     font-size: var(--font-size-base);
     line-height: 1.6;
+
     min-height: 100vh;
+
     display: flex;
     flex-direction: column;
 }
+
+/* Los controles heredan la tipografía seleccionada */
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: var(--font-base);
+}
+
+/* Foco visible para navegación con teclado */
 
 :focus-visible {
     outline: 3px solid var(--focus-ring);
     outline-offset: 3px;
 }
 
+.code-block:focus-visible,
+.btn-block-action:focus-visible {
+    outline-color: var(--focus-on-dark);
+}
+
+
+/* =========================================================
+   5. ENCABEZADO
+   ========================================================= */
+
 .header {
     background-color: var(--bg-card);
     border-bottom: 2px solid var(--border-color);
+
     padding: 1rem 1.5rem;
+
     position: sticky;
     top: 0;
     z-index: 100;
+
     box-shadow: var(--shadow-sm);
 }
 
 .header-container {
     max-width: 1200px;
     margin: 0 auto;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
+
     gap: 1rem;
 }
 
@@ -124,6 +204,7 @@ body {
     display: flex;
     align-items: center;
     gap: 0.75rem;
+
     text-decoration: none;
     color: var(--text-primary);
 }
@@ -145,6 +226,11 @@ body {
     color: var(--text-muted);
 }
 
+
+/* =========================================================
+   6. BARRA DE ACCESIBILIDAD
+   ========================================================= */
+
 .accessibility-bar {
     display: flex;
     align-items: center;
@@ -154,17 +240,22 @@ body {
 
 .btn-a11y {
     background-color: var(--bg-subtle);
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--control-border);
     color: var(--text-primary);
+
     padding: 0.4rem 0.75rem;
     border-radius: var(--radius-sm);
+
     font-size: 0.85rem;
-    cursor: pointer;
     font-weight: 600;
+
+    cursor: pointer;
+
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    transition: all 0.15s ease;
+
+    transition: background-color 0.15s ease;
 }
 
 .btn-a11y:hover {
@@ -177,32 +268,48 @@ body {
     border-color: var(--primary);
 }
 
+
+/* =========================================================
+   7. CONTENIDO PRINCIPAL
+   ========================================================= */
+
 .main-content {
     flex: 1;
+
     max-width: 1200px;
     width: 100%;
+
     margin: 0 auto;
     padding: 2rem 1.5rem;
 }
 
+
+/* =========================================================
+   8. TARJETA PRINCIPAL (HERO)
+   ========================================================= */
+
 .hero-card {
-    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+    background: linear-gradient(
+        135deg,
+        #1e4f75 0%,
+        #306998 100%
+    );
+
     color: #ffffff;
+
     padding: 2rem;
     border-radius: var(--radius-lg);
+
     box-shadow: var(--shadow-md);
+
     margin-bottom: 2rem;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 1.5rem;
-}
 
-body.high-contrast .hero-card {
-    background: #000000;
-    border: 3px solid #ffff00;
-    color: #ffffff;
+    gap: 1.5rem;
 }
 
 .hero-text h2 {
@@ -218,18 +325,16 @@ body.high-contrast .hero-card {
 }
 
 .hero-stats {
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color: rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(8px);
+
     padding: 1.25rem 1.5rem;
     border-radius: var(--radius-md);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+
+    border: 1px solid rgba(255, 255, 255, 0.5);
+
     min-width: 220px;
     text-align: center;
-}
-
-body.high-contrast .hero-stats {
-    background-color: #111111;
-    border: 2px solid #ffffff;
 }
 
 .stat-value {
@@ -244,35 +349,42 @@ body.high-contrast .hero-stats {
     opacity: 0.9;
 }
 
+
+/* =========================================================
+   9. BARRA DE PROGRESO
+   ========================================================= */
+
 .progress-track {
     background-color: rgba(255, 255, 255, 0.25);
+
     border-radius: 999px;
     height: 10px;
+
     margin-top: 0.75rem;
     overflow: hidden;
 }
 
-body.high-contrast .progress-track {
-    background-color: #333333;
-    border: 1px solid #ffffff;
-}
-
 .progress-fill {
-    background-color: #10b981;
+    background-color: var(--code-highlight);
+
     height: 100%;
     width: 0%;
+
     transition: width 0.4s ease;
 }
 
-body.high-contrast .progress-fill {
-    background-color: #ffff00;
-}
+
+/* =========================================================
+   10. TÍTULOS Y NIVELES
+   ========================================================= */
 
 .section-title {
     font-size: 1.4rem;
     font-weight: 800;
     color: var(--text-primary);
+
     margin-bottom: 1.25rem;
+
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -281,6 +393,7 @@ body.high-contrast .progress-fill {
 .levels-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
     gap: 1.5rem;
     margin-bottom: 3rem;
 }
@@ -289,12 +402,20 @@ body.high-contrast .progress-fill {
     background-color: var(--bg-card);
     border: 2px solid var(--border-color);
     border-radius: var(--radius-lg);
+
     padding: 1.5rem;
+
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
     box-shadow: var(--shadow-sm);
-    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        border-color 0.15s ease;
+
     position: relative;
     overflow: hidden;
 }
@@ -307,7 +428,6 @@ body.high-contrast .progress-fill {
 
 .level-card.locked {
     background-color: var(--bg-subtle);
-    opacity: 0.8;
 }
 
 .level-card.completed {
@@ -318,12 +438,16 @@ body.high-contrast .progress-fill {
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
+
     padding: 0.25rem 0.75rem;
     border-radius: 999px;
+
     font-size: 0.75rem;
     font-weight: 700;
+
     text-transform: uppercase;
     letter-spacing: 0.05em;
+
     align-self: flex-start;
     margin-bottom: 1rem;
 }
@@ -335,12 +459,786 @@ body.high-contrast .progress-fill {
 
 .badge-unlocked {
     background-color: var(--primary-light);
-    color: var(--primary);
+    color: var(--primary-hover);
 }
 
 .badge-completed {
     background-color: var(--success-light);
-    color: var(--success);
+    color: var(--success-text);
+}
+
+.level-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+
+    margin-bottom: 0.5rem;
+
+    color: var(--text-primary);
+}
+
+.level-theme {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+
+    margin-bottom: 1.5rem;
+    flex: 1;
+}
+
+
+/* =========================================================
+   11. BOTONES
+   ========================================================= */
+
+.btn-primary {
+    background-color: var(--primary);
+    color: #ffffff;
+
+    border: 2px solid var(--primary);
+    padding: 0.75rem 1.25rem;
+
+    border-radius: var(--radius-md);
+
+    font-weight: 700;
+    font-size: 1rem;
+
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+}
+
+.btn-secondary {
+    background-color: var(--bg-subtle);
+    color: var(--text-primary);
+
+    border: 2px solid var(--control-border);
+    padding: 0.75rem 1.25rem;
+
+    border-radius: var(--radius-md);
+
+    font-weight: 700;
+    font-size: 1rem;
+
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    transition: background-color 0.15s ease;
+}
+
+.btn-secondary:hover {
+    background-color: var(--border-color);
+}
+
+.btn-disabled {
+    background-color: #e2e8f0;
+    color: #475569;
+
+    border: 2px solid #94a3b8;
+    padding: 0.75rem 1.25rem;
+
+    border-radius: var(--radius-md);
+
+    font-weight: 700;
+    font-size: 1rem;
+
+    cursor: not-allowed;
+    text-align: center;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+
+/* =========================================================
+   12. CONTENEDOR DE EJERCICIOS
+   ========================================================= */
+
+.exercise-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.pedagogy-card {
+    background-color: var(--bg-card);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+
+    padding: 1.5rem;
+
+    box-shadow: var(--shadow-sm);
+}
+
+
+/* =========================================================
+   13. CONSIGNA DEL EJERCICIO
+   ========================================================= */
+
+.consigna-box {
+    background-color: var(--primary-light);
+
+    border-left: 5px solid var(--primary);
+
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius-sm);
+
+    margin-bottom: 1.25rem;
+}
+
+.consigna-box h3 {
+    font-size: 1.1rem;
+    font-weight: 800;
+
+    color: var(--primary-hover);
+
+    margin-bottom: 0.35rem;
+}
+
+
+/* =========================================================
+   14. CONTENIDO PEDAGÓGICO
+   ========================================================= */
+
+.pedagogy-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.pedagogy-block h4 {
+    font-size: 1rem;
+    font-weight: 700;
+
+    margin-bottom: 0.5rem;
+
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+
+/* =========================================================
+   15. CÓDIGO Y RESULTADOS
+   ========================================================= */
+
+.code-snippet {
+    background-color: var(--code-bg);
+    color: var(--code-text);
+
+    padding: 1rem;
+    border-radius: var(--radius-md);
+
+    font-family: var(--font-code);
+    font-size: 0.9rem;
+
+    white-space: pre-wrap;
+    line-height: 1.5;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.code-output {
+    background-color: var(--bg-subtle);
+
+    border: 1px dashed var(--border-color);
+
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+
+    font-family: var(--font-code);
+    font-size: 0.85rem;
+
+    color: var(--text-secondary);
+
+    margin-top: 0.5rem;
+}
+
+
+/* =========================================================
+   16. PISTAS
+   ========================================================= */
+
+.hints-container {
+    margin-top: 1rem;
+
+    border-top: 1px solid var(--border-color);
+    padding-top: 1rem;
+}
+
+.hint-card {
+    background-color: var(--warning-light);
+
+    border: 2px solid var(--warning);
+    color: var(--warning-text);
+
+    padding: 1rem;
+    border-radius: var(--radius-md);
+
+    margin-top: 0.75rem;
+
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+
+/* =========================================================
+   17. ESPACIO DE TRABAJO
+   ========================================================= */
+
+.workspace-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.workspace-panel {
+    background-color: var(--bg-card);
+
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+
+    padding: 1.25rem;
+
+    display: flex;
+    flex-direction: column;
+
+    min-height: 380px;
+
+    box-shadow: var(--shadow-sm);
+}
+
+.workspace-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+
+    border-bottom: 2px solid var(--border-color);
+}
+
+.workspace-header h3 {
+    font-size: 1.15rem;
+    font-weight: 800;
+
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.block-count {
+    background-color: var(--bg-subtle);
+
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+
+    font-size: 0.8rem;
+    font-weight: 700;
+
+    color: var(--text-secondary);
+}
+
+
+/* =========================================================
+   18. ZONAS DE BLOQUES
+   ========================================================= */
+
+.block-dropzone {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+
+    padding: 0.5rem;
+    border-radius: var(--radius-md);
+
+    background-color: var(--bg-subtle);
+    border: 2px dashed var(--border-color);
+
+    min-height: 250px;
+
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease;
+}
+
+.block-dropzone.drag-over {
+    background-color: var(--primary-light);
+    border-color: var(--primary);
+}
+
+.empty-placeholder {
+    margin: auto;
+
+    text-align: center;
+    color: var(--text-muted);
+
+    font-size: 0.95rem;
+    padding: 2rem 1rem;
+}
+
+
+/* =========================================================
+   19. BLOQUES DE CÓDIGO
+   ========================================================= */
+
+.code-block {
+    background-color: var(--code-bg);
+    color: var(--code-text);
+
+    border: 2px solid transparent;
+    border-radius: var(--radius-md);
+
+    padding: 0.65rem 0.85rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+
+    cursor: grab;
+    user-select: none;
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        transform 0.1s ease,
+        border-color 0.15s ease,
+        background-color 0.15s ease;
+}
+
+.code-block:hover {
+    border-color: var(--code-label);
+    transform: translateY(-2px);
+}
+
+.code-block.dragging {
+    opacity: 0.4;
+}
+
+.block-content {
+    font-family: var(--font-code);
+    font-size: 1rem;
+
+    white-space: pre;
+    flex: 1;
+}
+
+.block-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.btn-block-action {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+
+    border: none;
+    padding: 0.3rem 0.5rem;
+
+    border-radius: var(--radius-sm);
+
+    font-size: 0.8rem;
+    cursor: pointer;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: background-color 0.15s ease;
+}
+
+.btn-block-action:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+
+/* =========================================================
+   20. CONTROLES DE EJERCICIOS
+   ========================================================= */
+
+.controls-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 1rem;
+    margin-top: 1.5rem;
+
+    flex-wrap: wrap;
+}
+
+
+/* =========================================================
+   21. MENSAJES DE RESULTADO
+   ========================================================= */
+
+.feedback-card {
+    border-radius: var(--radius-lg);
+
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+
+    border: 2px solid;
+    box-shadow: var(--shadow-md);
+
+    display: none;
+}
+
+.feedback-card.show {
+    display: block;
+}
+
+.feedback-success {
+    background-color: var(--success-light);
+    border-color: var(--success);
+    color: var(--success-text);
+}
+
+.feedback-error {
+    background-color: var(--danger-light);
+    border-color: var(--danger);
+    color: var(--danger-text);
+}
+
+.feedback-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    margin-bottom: 0.75rem;
+}
+
+.feedback-header h3 {
+    font-size: 1.3rem;
+    font-weight: 800;
+}
+
+.feedback-details {
+    margin-top: 1rem;
+    padding-top: 1rem;
+
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.feedback-item {
+    font-size: 0.95rem;
+
+    padding: 0.35rem 0.6rem;
+    border-radius: var(--radius-sm);
+
+    background-color: #ffffff;
+    color: var(--text-primary);
+}
+
+
+/* =========================================================
+   22. PIE DE PÁGINA
+   ========================================================= */
+
+.footer {
+    background-color: var(--bg-card);
+
+    border-top: 2px solid var(--border-color);
+
+    padding: 1.5rem;
+    text-align: center;
+
+    margin-top: auto;
+
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+
+/* =========================================================
+   23. TABLAS ADMINISTRATIVAS
+   ========================================================= */
+
+.admin-table-container {
+    width: 100%;
+    overflow-x: auto;
+
+    margin-top: 1.5rem;
+    border-radius: var(--radius-md);
+}
+
+.admin-table {
+    min-width: 700px;
+    width: 100%;
+
+    border-collapse: collapse;
+
+    margin-top: 1.5rem;
+
+    background-color: var(--bg-card);
+
+    border-radius: var(--radius-md);
+    overflow: hidden;
+
+    box-shadow: var(--shadow-sm);
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 0.75rem 1rem;
+
+    text-align: left;
+
+    border-bottom: 1px solid var(--border-color);
+    white-space: nowrap;
+}
+
+.admin-table th {
+    background-color: var(--bg-subtle);
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+
+/* =========================================================
+   24. FORMULARIOS
+   ========================================================= */
+
+.form-group {
+    margin-bottom: 1rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.form-group label {
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.form-input {
+    padding: 0.65rem 0.85rem;
+
+    border-radius: var(--radius-md);
+    border: 2px solid var(--control-border);
+
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+
+    font-size: 1rem;
+}
+
+.form-input::placeholder {
+    color: var(--text-secondary);
+    opacity: 1;
+}
+
+.form-input:focus {
+    border-color: var(--primary);
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   25. VENTANAS MODALES
+   ========================================================= */
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0, 0, 0, 0.5);
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 200;
+}
+
+.modal-backdrop.show {
+    display: flex;
+}
+
+.modal-content {
+    background-color: var(--bg-card);
+
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+
+    padding: 2rem;
+
+    max-width: 500px;
+    width: 90%;
+
+    box-shadow: var(--shadow-lg);
+}
+
+
+/* =========================================================
+   26. ICONOS
+   ========================================================= */
+
+.icono {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+
+/* =========================================================
+   27. MODO DE ALTO CONTRASTE
+   ========================================================= */
+
+body.high-contrast {
+    --bg-main: #000000;
+    --bg-card: #0c0c0c;
+    --bg-subtle: #1a1a1a;
+
+    --text-primary: #ffffff;
+    --text-secondary: #ffff00;
+    --text-muted: #e2e8f0;
+
+    --border-color: #ffffff;
+    --control-border: #ffffff;
+
+    --blue: #00ffff;
+    --primary: #ffff00;
+    --primary-hover: #ffea00;
+    --primary-light: #333300;
+
+    --accent: #00ffff;
+    --accent-hover: #00cccc;
+
+    --success: #00ff66;
+    --success-text: #00ff66;
+    --success-light: #003311;
+
+    --danger: #ff3333;
+    --danger-text: #ff9999;
+    --danger-light: #330000;
+
+    --warning: #ff9900;
+    --warning-text: #ffcc66;
+    --warning-light: #331f00;
+
+    --code-bg: #111111;
+    --code-text: #ffffff;
+    --code-highlight: #ffff00;
+    --code-label: #00ffff;
+
+    --focus-ring: #00ffff;
+    --focus-on-dark: #ffff00;
+}
+
+/* Hero */
+
+body.high-contrast .hero-card {
+    background: #000000;
+    border: 3px solid #ffff00;
+    color: #ffffff;
+}
+
+body.high-contrast .hero-stats {
+    background-color: #111111;
+    border: 2px solid #ffffff;
+}
+
+body.high-contrast .progress-track {
+    background-color: #333333;
+    border: 1px solid #ffffff;
+}
+
+body.high-contrast .progress-fill {
+    background-color: #ffff00;
+}
+
+/* Botones */
+
+body.high-contrast .btn-primary,
+body.high-contrast .btn-a11y.active {
+    background-color: #ffff00;
+    color: #000000;
+    border: 2px solid #ffff00;
+}
+
+body.high-contrast .btn-primary:hover,
+body.high-contrast .btn-a11y.active:hover {
+    background-color: #ffea00;
+}
+
+body.high-contrast .btn-secondary {
+    background-color: #000000;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+}
+
+body.high-contrast .btn-secondary:hover {
+    background-color: #222222;
+}
+
+body.high-contrast .btn-a11y {
+    background-color: #111111;
+    color: #ffffff;
+    border-color: #ffffff;
+}
+
+body.high-contrast .btn-a11y:hover {
+    background-color: #333333;
+}
+
+body.high-contrast .btn-disabled {
+    background-color: #222222;
+    color: #ffffff;
+    border: 2px solid #aaaaaa;
+}
+
+/* Niveles */
+
+body.high-contrast .level-card {
+    background-color: #0c0c0c;
+    border-color: #ffffff;
+}
+
+body.high-contrast .level-card.locked {
+    background-color: #1a1a1a;
+}
+
+body.high-contrast .level-card.completed {
+    border-color: #00ff66;
 }
 
 body.high-contrast .badge-locked {
@@ -361,329 +1259,41 @@ body.high-contrast .badge-completed {
     border: 1px solid #00ff66;
 }
 
-.level-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    color: var(--text-primary);
-}
-
-.level-theme {
-    font-size: 0.95rem;
-    color: var(--text-secondary);
-    margin-bottom: 1.5rem;
-    flex: 1;
-}
-
-.btn-primary {
-    background-color: var(--primary);
-    color: #ffffff;
-    border: none;
-    padding: 0.75rem 1.25rem;
-    border-radius: var(--radius-md);
-    font-weight: 700;
-    font-size: 1rem;
-    cursor: pointer;
-    text-decoration: none;
-    text-align: center;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    transition: background-color 0.15s ease;
-}
-
-.btn-primary:hover {
-    background-color: var(--primary-hover);
-}
-
-.btn-secondary {
-    background-color: var(--bg-subtle);
-    color: var(--text-primary);
-    border: 2px solid var(--border-color);
-    padding: 0.75rem 1.25rem;
-    border-radius: var(--radius-md);
-    font-weight: 700;
-    font-size: 1rem;
-    cursor: pointer;
-    text-decoration: none;
-    text-align: center;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    transition: all 0.15s ease;
-}
-
-.btn-secondary:hover {
-    background-color: var(--border-color);
-}
-
-.btn-disabled {
-    background-color: #e2e8f0;
-    color: #94a3b8;
-    border: none;
-    padding: 0.75rem 1.25rem;
-    border-radius: var(--radius-md);
-    font-weight: 700;
-    font-size: 1rem;
-    cursor: not-allowed;
-    text-align: center;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-}
-
-body.high-contrast .btn-disabled {
-    background-color: #222222;
-    color: #777777;
-    border: 1px solid #444444;
-}
-
-.exercise-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.pedagogy-card {
-    background-color: var(--bg-card);
-    border: 2px solid var(--border-color);
-    border-radius: var(--radius-lg);
-    padding: 1.5rem;
-    box-shadow: var(--shadow-sm);
-}
-
-.consigna-box {
-    background-color: var(--primary-light);
-    border-left: 5px solid var(--primary);
-    padding: 1rem 1.25rem;
-    border-radius: var(--radius-sm);
-    margin-bottom: 1.25rem;
-}
+/* Consigna */
 
 body.high-contrast .consigna-box {
     background-color: #111111;
-    border-left: 5px solid #ffff00;
     border: 1px solid #ffff00;
-}
-
-.consigna-box h3 {
-    font-size: 1.1rem;
-    font-weight: 800;
-    color: var(--primary);
-    margin-bottom: 0.35rem;
+    border-left: 5px solid #ffff00;
 }
 
 body.high-contrast .consigna-box h3 {
     color: #ffff00;
 }
 
-.pedagogy-columns {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-}
+/* Editor de código */
 
-@media (max-width: 768px) {
-    .pedagogy-columns {
-        grid-template-columns: 1fr;
-    }
-}
-
-.pedagogy-block h4 {
-    font-size: 1rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.35rem;
-}
-
-.code-snippet {
-    background-color: var(--code-bg);
-    color: var(--code-text);
-    padding: 1rem;
-    border-radius: var(--radius-md);
-    font-family: var(--font-code);
-    font-size: 0.9rem;
-    white-space: pre-wrap;
-    line-height: 1.5;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.code-output {
-    background-color: var(--bg-subtle);
-    border: 1px dashed var(--border-color);
-    padding: 0.75rem 1rem;
-    border-radius: var(--radius-md);
-    font-family: var(--font-code);
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    margin-top: 0.5rem;
-}
-
-.hints-container {
-    margin-top: 1rem;
-    border-top: 1px solid var(--border-color);
-    padding-top: 1rem;
-}
-
-.hint-card {
-    background-color: var(--warning-light);
-    border: 2px solid var(--warning);
-    color: var(--text-primary);
-    padding: 1rem;
-    border-radius: var(--radius-md);
-    margin-top: 0.75rem;
-    display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-}
-
-body.high-contrast .hint-card {
-    background-color: #331f00;
-    border: 2px solid #ff9900;
-    color: #ffffff;
-}
-
-.workspace-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin-top: 1rem;
-}
-
-@media (max-width: 850px) {
-    .workspace-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-.workspace-panel {
-    background-color: var(--bg-card);
-    border: 2px solid var(--border-color);
-    border-radius: var(--radius-lg);
-    padding: 1.25rem;
-    display: flex;
-    flex-direction: column;
-    min-height: 380px;
-    box-shadow: var(--shadow-sm);
-}
-
-.workspace-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 2px solid var(--border-color);
-}
-
-.workspace-header h3 {
-    font-size: 1.15rem;
-    font-weight: 800;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.block-count {
-    background-color: var(--bg-subtle);
-    padding: 0.2rem 0.6rem;
-    border-radius: 999px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: var(--text-secondary);
-}
-
-.block-dropzone {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-    padding: 0.5rem;
-    border-radius: var(--radius-md);
-    background-color: var(--bg-subtle);
-    border: 2px dashed var(--border-color);
-    min-height: 250px;
-    transition: background-color 0.15s ease, border-color 0.15s ease;
-}
-
-.block-dropzone.drag-over {
-    background-color: var(--primary-light);
-    border-color: var(--primary);
-}
-
-.empty-placeholder {
-    margin: auto;
-    text-align: center;
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    padding: 2rem 1rem;
-}
-
-.code-block {
-    background-color: var(--code-bg);
-    color: var(--code-text);
-    border: 2px solid transparent;
-    border-radius: var(--radius-md);
-    padding: 0.65rem 0.85rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem;
-    cursor: grab;
-    user-select: none;
-    box-shadow: var(--shadow-sm);
-    transition: transform 0.1s ease, border-color 0.15s ease, background-color 0.15s ease;
-}
-
-.code-block:hover {
-    border-color: var(--primary);
-    transform: translateY(-2px);
-}
-
-.code-block.dragging {
-    opacity: 0.4;
-}
-
+body.high-contrast .code-snippet,
 body.high-contrast .code-block {
     background-color: #111111;
     border: 2px solid #ffffff;
     color: #ffffff;
 }
 
-.block-content {
-    font-family: var(--font-code);
-    font-size: 1rem;
-    white-space: pre;
-    flex: 1;
+body.high-contrast .block-dropzone {
+    background-color: #1a1a1a;
+    border-color: #ffffff;
 }
 
-.block-actions {
-    display: flex;
-    align-items: center;
-    gap: 0.35rem;
+body.high-contrast .block-dropzone.drag-over {
+    background-color: #333300;
+    border-color: #ffff00;
 }
 
-.btn-block-action {
-    background-color: rgba(255, 255, 255, 0.15);
+body.high-contrast .block-count {
+    background-color: #222222;
     color: #ffffff;
-    border: none;
-    padding: 0.3rem 0.5rem;
-    border-radius: var(--radius-sm);
-    font-size: 0.8rem;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.15s ease;
-}
-
-.btn-block-action:hover {
-    background-color: rgba(255, 255, 255, 0.3);
+    border: 1px solid #ffffff;
 }
 
 body.high-contrast .btn-block-action {
@@ -696,44 +1306,20 @@ body.high-contrast .btn-block-action:hover {
     background-color: #444444;
 }
 
-.controls-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-top: 1.5rem;
-    flex-wrap: wrap;
+/* Pistas */
+
+body.high-contrast .hint-card {
+    background-color: #331f00;
+    border: 2px solid #ff9900;
+    color: #ffffff;
 }
 
-.feedback-card {
-    border-radius: var(--radius-lg);
-    padding: 1.5rem;
-    margin-top: 1.5rem;
-    border: 2px solid;
-    box-shadow: var(--shadow-md);
-    display: none;
-}
-
-.feedback-card.show {
-    display: block;
-}
-
-.feedback-success {
-    background-color: var(--success-light);
-    border-color: var(--success);
-    color: #065f46;
-}
+/* Resultados */
 
 body.high-contrast .feedback-success {
     background-color: #003311;
     border-color: #00ff66;
     color: #00ff66;
-}
-
-.feedback-error {
-    background-color: var(--danger-light);
-    border-color: var(--danger);
-    color: #991b1b;
 }
 
 body.high-contrast .feedback-error {
@@ -742,122 +1328,150 @@ body.high-contrast .feedback-error {
     color: #ff9999;
 }
 
-.feedback-header {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 0.75rem;
-}
-
-.feedback-header h3 {
-    font-size: 1.3rem;
-    font-weight: 800;
-}
-
-.feedback-details {
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.feedback-item {
-    font-size: 0.95rem;
-    padding: 0.35rem 0.6rem;
-    border-radius: var(--radius-sm);
-    background-color: rgba(255, 255, 255, 0.7);
-}
-
 body.high-contrast .feedback-item {
     background-color: #111111;
     border: 1px solid #ffffff;
     color: #ffffff;
 }
 
-.footer {
-    background-color: var(--bg-card);
-    border-top: 2px solid var(--border-color);
-    padding: 1.5rem;
-    text-align: center;
-    margin-top: auto;
-    font-size: 0.9rem;
-    color: var(--text-muted);
+/* Formularios */
+
+body.high-contrast .form-input {
+    background-color: #000000;
+    color: #ffffff;
+    border-color: #ffffff;
 }
 
-.admin-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1.5rem;
-    background-color: var(--bg-card);
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    box-shadow: var(--shadow-sm);
+body.high-contrast .form-input::placeholder {
+    color: #e2e8f0;
 }
 
-.admin-table th,
-.admin-table td {
-    padding: 0.75rem 1rem;
-    text-align: left;
-    border-bottom: 1px solid var(--border-color);
+body.high-contrast .form-input:focus {
+    outline-color: #00ffff;
+    border-color: #00ffff;
 }
 
-.admin-table th {
-    background-color: var(--bg-subtle);
-    font-weight: 700;
-    color: var(--text-secondary);
+/* Tablas */
+
+body.high-contrast .admin-table {
+    background-color: #0c0c0c;
+    border: 1px solid #ffffff;
 }
 
-.modal-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 200;
+body.high-contrast .admin-table th {
+    background-color: #222222;
+    color: #ffff00;
 }
 
-.modal-backdrop.show {
-    display: flex;
+body.high-contrast .admin-table td {
+    color: #ffffff;
+    border-color: #ffffff;
 }
 
-.modal-content {
-    background-color: var(--bg-card);
-    border: 2px solid var(--border-color);
-    border-radius: var(--radius-lg);
-    padding: 2rem;
-    max-width: 500px;
-    width: 90%;
-    box-shadow: var(--shadow-lg);
+/* Modal */
+
+body.high-contrast .modal-content {
+    background-color: #0c0c0c;
+    border: 2px solid #ffffff;
 }
 
-.form-group {
-    margin-bottom: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
+/* Pie de página */
+
+body.high-contrast .footer {
+    background-color: #000000;
+    border-color: #ffffff;
+    color: #ffffff;
 }
 
-.form-group label {
-    font-weight: 700;
-    font-size: 0.9rem;
+
+/* =========================================================
+   28. DISEÑO RESPONSIVE
+   ========================================================= */
+
+/* Tablets */
+
+@media (max-width: 850px) {
+    .workspace-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
-.form-input {
-    padding: 0.65rem 0.85rem;
-    border-radius: var(--radius-md);
-    border: 2px solid var(--border-color);
-    background-color: var(--bg-main);
-    color: var(--text-primary);
-    font-size: 1rem;
+/* Pantallas medianas y celulares */
+
+@media (max-width: 768px) {
+    .pedagogy-columns {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-card {
+        align-items: stretch;
+    }
+
+    .hero-stats {
+        width: 100%;
+    }
 }
 
-.form-input:focus {
-    border-color: var(--primary);
-    outline: none;
+/* Celulares */
+
+@media (max-width: 600px) {
+    .main-content {
+        padding: 1rem;
+    }
+
+    .header {
+        padding: 1rem;
+    }
+
+    .header-container {
+        align-items: flex-start;
+    }
+
+    .accessibility-bar {
+        width: 100%;
+    }
+
+    .accessibility-bar button,
+    .accessibility-bar a {
+        flex: 1;
+    }
+
+    .levels-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-table th,
+    .admin-table td {
+        padding: 0.6rem;
+    }
+
+    .hero-card {
+        padding: 1.25rem;
+    }
+
+    .controls-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .controls-bar button,
+    .controls-bar a {
+        width: 100%;
+    }
+}
+
+
+/* =========================================================
+   29. RESPETO POR MOVIMIENTO REDUCIDO
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }

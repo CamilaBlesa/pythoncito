@@ -54,7 +54,7 @@ public class SecurityConfig {
                     "/css/**",
                     "/js/**",
                     "/img/**",
-                    "/favicon.ico"
+                    "/fonts/**"
                 ).permitAll()
 
                 .requestMatchers("/api/auth/**").permitAll()
