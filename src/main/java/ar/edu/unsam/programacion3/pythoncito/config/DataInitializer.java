@@ -42,10 +42,10 @@ public class DataInitializer implements CommandLineRunner {
 
         Ejercicio ejercicio = new Ejercicio();
         ejercicio.setTitulo("Mi primer saludo");
-        ejercicio.setConsigna("Ordena los bloques para guardar el nombre 'Pythoncito', preparar el saludo '¡Hola ' y mostrar '¡Hola Pythoncito!' por pantalla.");
-        ejercicio.setExplicacion("En Python usamos variables para guardar información en la memoria usando el signo igual (=). La función print() muestra texto o variables en la consola.");
-        ejercicio.setEjemploDiferente("edad = 12\nprint(\"Edad:\", edad)");
-        ejercicio.setResultadoEjemplo("Edad: 12");
+        ejercicio.setConsigna("¡Ayudá a Pythoncito a presentarse! Guardá el nombre 'Pythoncito' en una cajita, el saludo '¡Hola ' en otra, y al final usá el loro mágico print(...) para decir el saludo en la pantalla.");
+        ejercicio.setExplicacion("Una variable es como una cajita con etiqueta donde guardamos una palabra o número usando el signo igual (=) para no olvidarlo. Y print() es como un loro mágico: todo lo que pongas adentro de sus paréntesis, ¡lo dirá en voz alta y lo mostrará en la pantalla!");
+        ejercicio.setEjemploDiferente("juguete = \"Pelota\"\nprint(\"Mi juguete es: \" + juguete)");
+        ejercicio.setResultadoEjemplo("Mi juguete es: Pelota");
         ejercicio.setCodigoEsperado("nombre = \"Pythoncito\"\nmensaje = \"¡Hola \"\nprint(mensaje + nombre + \"!\")");
         ejercicio.setOrdenPresentacion(1);
         ejercicio.setNivel(nivel);
@@ -59,26 +59,26 @@ public class DataInitializer implements CommandLineRunner {
 
         BloqueCodigo b2 = new BloqueCodigo();
         b2.setContenido("mensaje = \"¡Hola \"");
-        b2.setOrdenCorrecto(2);
+        b2.setOrdenCorrecto(1);
         b2.setOrdenPresentacion(3);
         b2.setEjercicio(ejercicio);
         ejercicio.getBloques().add(b2);
 
         BloqueCodigo b3 = new BloqueCodigo();
         b3.setContenido("print(mensaje + nombre + \"!\")");
-        b3.setOrdenCorrecto(3);
+        b3.setOrdenCorrecto(2);
         b3.setOrdenPresentacion(1);
         b3.setEjercicio(ejercicio);
         ejercicio.getBloques().add(b3);
 
         Pista p1 = new Pista();
-        p1.setTexto("Primero define las variables con el nombre y el saludo antes de intentar imprimirlas.");
+        p1.setTexto("Las dos cajitas (nombre y saludo) tienen que estar listas antes de que el loro print(...) las use.");
         p1.setOrden(1);
         p1.setEjercicio(ejercicio);
         ejercicio.getPistas().add(p1);
 
         Pista p2 = new Pista();
-        p2.setTexto("La instrucción print() debe ir al final para mostrar la combinación de mensaje y nombre.");
+        p2.setTexto("No importa si ponés primero la cajita 'nombre' o 'mensaje', ¡las dos opciones antes del print() son correctas!");
         p2.setOrden(2);
         p2.setEjercicio(ejercicio);
         ejercicio.getPistas().add(p2);

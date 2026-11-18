@@ -201,7 +201,7 @@ public class EjercicioService {
         List<BloqueCodigo> solucionOrdenada = ordenarPorSolucion(bloquesOficiales);
 
         List<Long> bloquesFueraDeOrden = buscarFueraDeOrden(
-                solucionOrdenada, idsRecibidos, bloquesSobrantes);
+                solucionOrdenada, idsRecibidos, bloquesSobrantes, bloquesOficiales);
 
         boolean esCorrecta = bloquesFaltantes.isEmpty()
                 && bloquesSobrantes.isEmpty()
@@ -299,12 +299,13 @@ public class EjercicioService {
     private List<Long> buscarFueraDeOrden(
             List<BloqueCodigo> solucionOrdenada,
             List<Long> idsRecibidos,
-            List<Long> bloquesSobrantes) {
+            List<Long> bloquesSobrantes,
+            List<BloqueCodigo> bloquesOficiales) {
         List<Long> fueraDeOrden = new ArrayList<>();
         for (int i = 0; i < idsRecibidos.size(); i++) {
             Long idRecibido = idsRecibidos.get(i);
             if (!contieneId(bloquesSobrantes, idRecibido)
-                    && estaFueraDePosicion(solucionOrdenada, idsRecibidos, i)
+                    && estaFueraDePosicion(solucionOrdenada, idsRecibidos, i, bloquesOficiales)
                     && !contieneId(fueraDeOrden, idRecibido)) {
                 fueraDeOrden.add(idRecibido);
             }
@@ -315,12 +316,26 @@ public class EjercicioService {
     private boolean estaFueraDePosicion(
             List<BloqueCodigo> solucionOrdenada,
             List<Long> idsRecibidos,
-            int posicion) {
+            int posicion,
+            List<BloqueCodigo> bloquesOficiales) {
         if (posicion >= solucionOrdenada.size()) {
             return true;
         }
-        Long idEsperado = solucionOrdenada.get(posicion).getId();
-        return idEsperado != null && !idEsperado.equals(idsRecibidos.get(posicion));
+        Integer ordenEsperado = solucionOrdenada.get(posicion).getOrdenCorrecto();
+        BloqueCodigo bloqueActual = buscarBloquePorId(bloquesOficiales, idsRecibidos.get(posicion));
+        if (bloqueActual == null || bloqueActual.getOrdenCorrecto() == null) {
+            return true;
+        }
+        return !bloqueActual.getOrdenCorrecto().equals(ordenEsperado);
+    }
+
+    private BloqueCodigo buscarBloquePorId(List<BloqueCodigo> bloques, Long id) {
+        for (int i = 0; i < bloques.size(); i++) {
+            if (bloques.get(i).getId() != null && bloques.get(i).getId().equals(id)) {
+                return bloques.get(i);
+            }
+        }
+        return null;
     }
 
     private boolean perteneceAlEjercicio(List<BloqueCodigo> bloques, Long id) {
