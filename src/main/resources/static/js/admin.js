@@ -185,8 +185,9 @@ window.darDeBajaNivel = async function(id) {
     }
 
     try {
-        await adminFetch(`/admin/niveles/${id}`, {
-            method: "DELETE"
+        await adminFetch(`/admin/niveles/${id}/baja`, {
+            method: "PATCH",
+            body: JSON.stringify({ activo: false })
         });
         await cargarNivelesAdmin();
     } catch (error) {
