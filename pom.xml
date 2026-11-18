@@ -72,8 +72,18 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<argLine>"-Djava.library.path=${project.basedir}/drivers/sqljdbc_auth"</argLine>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<jvmArguments>-Djava.library.path=${project.basedir}/drivers/sqljdbc_auth</jvmArguments>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

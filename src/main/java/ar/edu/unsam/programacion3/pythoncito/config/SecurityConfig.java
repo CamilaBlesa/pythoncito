@@ -20,8 +20,9 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(
-            HttpSecurity http,
-            ObjectMapper objectMapper) throws Exception {
+            HttpSecurity http) throws Exception {
+
+        ObjectMapper objectMapper = new ObjectMapper();
 
         JwtGrantedAuthoritiesConverter authoritiesConverter =
                 new JwtGrantedAuthoritiesConverter();
