@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pythoncito - Desafío de Código</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <a href="/index.html" class="brand" aria-label="Volver al inicio de Pythoncito">
+                <span class="brand-icon" aria-hidden="true">🐍</span>
+                <div class="brand-text">
+                    <h1>Pythoncito</h1>
+                    <p id="header-level-title">Cargando nivel...</p>
+                </div>
+            </a>
+            <div class="accessibility-bar" role="toolbar" aria-label="Opciones de accesibilidad">
+                <a href="/index.html" class="btn-a11y" aria-label="Volver al mapa de niveles">
+                    ⬅️ Niveles
+                </a>
+                <button type="button" id="toggle-contrast" class="btn-a11y" aria-pressed="false">
+                    🌓 Alto Contraste
+                </button>
+                <button type="button" id="toggle-dyslexic" class="btn-a11y" aria-pressed="false">
+                    🔤 Fuente Accesible
+                </button>
+                <button type="button" id="toggle-fontsize" class="btn-a11y">
+                    🔍 Texto: Normal
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="exercise-container">
+            <section class="pedagogy-card" aria-labelledby="consigna-heading">
+                <div class="consigna-box">
+                    <h3 id="consigna-heading">🎯 Consigna del Desafío</h3>
+                    <p id="exercise-consigna">Cargando consigna...</p>
+                </div>
+
+                <div class="pedagogy-columns">
+                    <div class="pedagogy-block">
+                        <h4>💡 Explicación del Concepto</h4>
+                        <p id="exercise-explicacion">Cargando explicación...</p>
+                    </div>
+
+                    <div class="pedagogy-block">
+                        <h4>📖 Ejemplo Diferente</h4>
+                        <pre class="code-snippet" id="exercise-ejemplo">Cargando ejemplo...</pre>
+                        <div class="code-output">
+                            <strong>Resultado del ejemplo:</strong>
+                            <span id="exercise-resultado-ejemplo">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hints-container" id="hints-wrapper" style="display: none;">
+                    <div id="hints-list"></div>
+                </div>
+            </section>
+
+            <section aria-label="Área de armado del ejercicio">
+                <div class="workspace-grid">
+                    <div class="workspace-panel" aria-labelledby="bank-title">
+                        <div class="workspace-header">
+                            <h3 id="bank-title">
+                                🧩 Banco de Bloques
+                            </h3>
+                            <span class="block-count" id="bank-count">0 disponibles</span>
+                        </div>
+                        <div class="block-dropzone" id="zone-bank" role="region" aria-label="Zona de bloques disponibles" tabindex="0">
+                            <div class="empty-placeholder" id="bank-empty">
+                                Todos los bloques fueron colocados en tu solución.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="workspace-panel" aria-labelledby="solution-title">
+                        <div class="workspace-header">
+                            <h3 id="solution-title">
+                                📝 Mi Solución de Código
+                            </h3>
+                            <span class="block-count" id="solution-count">0 en solución</span>
+                        </div>
+                        <div class="block-dropzone" id="zone-solution" role="region" aria-label="Zona de armado de la solución" tabindex="0">
+                            <div class="empty-placeholder" id="solution-empty">
+                                Arrastra o haz clic en los bloques de la izquierda para armar tu programa.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="controls-bar">
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <button type="button" id="btn-reset" class="btn-secondary">
+                            🔄 Reiniciar Bloques
+                        </button>
+                        <button type="button" id="btn-hint" class="btn-secondary">
+                            💡 Pedir Pista
+                        </button>
+                    </div>
+                    <div>
+                        <button type="button" id="btn-validate" class="btn-primary" style="font-size: 1.1rem; padding: 0.85rem 1.75rem;">
+                            🚀 Comprobar Código
+                        </button>
+                    </div>
+                </div>
+
+                <div class="feedback-card" id="feedback-panel" role="alert" aria-live="polite">
+                    <div class="feedback-header">
+                        <span id="feedback-icon" style="font-size: 1.8rem;" aria-hidden="true"></span>
+                        <h3 id="feedback-title"></h3>
+                    </div>
+                    <p id="feedback-message"></p>
+                    <div class="feedback-details" id="feedback-details"></div>
+                    <div id="feedback-next-container" style="margin-top: 1.25rem; display: none;">
+                        <a href="/index.html" class="btn-primary" id="btn-next-level">
+                            ¡Nivel Superado! Volver al Mapa ➡️
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p><strong>Pythoncito</strong> · TPI Programación III / Programación Avanzada · Universidad Nacional de San Martín (UNSAM)</p>
+        <p>Grupo 1: Trejo Samuel · Pintos Sam · Blesa Camila · Docente: Ing. Maximiliano Di Ludovico</p>
+    </footer>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/puzzle.js"></script>
+</body>
+</html>
