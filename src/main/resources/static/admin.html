@@ -203,7 +203,6 @@
         </div>
       </div>
       <section id="ejercicios-section" style="display: none">
-
         <div class="admin-section-header">
           <h2 class="section-title">Ejercicios del nivel</h2>
 
@@ -246,7 +245,7 @@
 
             <div class="form-group">
               <label for="ejercicio-titulo">Título</label>
-              <input id="ejercicio-titulo" class="form-input" required />
+              <input id="ejercicio-titulo" class="form-input" required placeholder="Ej: Mostrar un mensaje" />
             </div>
 
             <div class="form-group">
@@ -255,6 +254,7 @@
                 id="ejercicio-consigna"
                 class="form-input"
                 required
+                placeholder="Ej: Ordená los bloques para mostrar el mensaje "Hola mundo"."
               ></textarea>
             </div>
 
@@ -264,6 +264,7 @@
                 id="ejercicio-explicacion"
                 class="form-input"
                 required
+                placeholder="Ej: La función print() se utiliza para mostrar mensajes en la consola."
               ></textarea>
             </div>
 
@@ -273,6 +274,7 @@
                 id="ejercicio-ejemplo"
                 class="form-input"
                 required
+                placeholder="Ej: print("Bienvenidos a Python")"
               ></textarea>
             </div>
 
@@ -282,6 +284,7 @@
                 id="ejercicio-resultado"
                 class="form-input"
                 required
+                placeholder="Ej: Bienvenidos a Python"
               ></textarea>
             </div>
 
@@ -291,6 +294,7 @@
                 id="ejercicio-codigo"
                 class="form-input"
                 required
+                placeholder="Ej: print("Hola mundo")"
               ></textarea>
             </div>
 
@@ -302,6 +306,7 @@
                 class="form-input"
                 min="1"
                 required
+                placeholder="Ej: 1"
               />
             </div>
 
@@ -313,6 +318,7 @@
                 class="form-input"
                 min="1"
                 required
+                placeholder="Ej: 2"
               />
             </div>
 
@@ -322,6 +328,13 @@
                 id="ejercicio-bloques"
                 class="form-input"
                 rows="8"
+                placeholder='[
+                  {
+                    "contenido": "    print(\"Aprobado\")",
+                    "ordenPresentacion": 5,
+                    "ordenCorrecto": 3
+                  }
+                ]'
               ></textarea>
             </div>
 
@@ -331,9 +344,24 @@
                 id="ejercicio-pistas"
                 class="form-input"
                 rows="6"
+                placeholder='[
+                        {
+                          "texto": "Utilizá la función print para mostrar un mensaje.",
+                          "orden": 1
+                        }
+                      ]'
               ></textarea>
             </div>
-
+            <small>
+              Cada bloque debe tener contenido, orden de presentación y
+              orden correcto
+            </small>
+            <br />
+            <small>
+              El contenido debe ser el fragmento de código que
+              verá el estudiante.
+            </small>
+            <br />
             <button
               type="button"
               id="btn-cancelar-ejercicio"

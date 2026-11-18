@@ -535,8 +535,16 @@ async function abrirModalEjercicio(id = null) {
   document.getElementById("ejercicio-id").value = "";
   document.getElementById("ejercicio-nivel").value = nivelSeleccionadoId;
 
-  document.getElementById("ejercicio-bloques").value = "[]";
-  document.getElementById("ejercicio-pistas").value = "[]";
+  document.getElementById("ejercicio-titulo").value = "";
+  document.getElementById("ejercicio-consigna").value = "";
+  document.getElementById("ejercicio-explicacion").value = "";
+  document.getElementById("ejercicio-ejemplo").value = "";
+  document.getElementById("ejercicio-resultado").value = "";
+  document.getElementById("ejercicio-codigo").value = "";
+  document.getElementById("ejercicio-orden").value = "";
+  document.getElementById("ejercicio-nivel").value = "";
+  document.getElementById("ejercicio-bloques").value = "";
+  document.getElementById("ejercicio-pistas").value = "";
 
   document.getElementById("ejercicio-modal-title").textContent = id
     ? "Modificar ejercicio"
