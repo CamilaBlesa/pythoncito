@@ -157,17 +157,17 @@ public class DataInitializer implements CommandLineRunner {
     private void crearNivel3() {
         Nivel nivel = new Nivel();
         nivel.setTitulo("Nivel 3: Repetición y Bucles");
-        nivel.setTema("Aprende a iterar con for y range() para repetir acciones");
+        nivel.setTema("Aprende a usar el bucle for para repetir acciones como un reloj");
         nivel.setOrdenPresentacion(3);
         nivel.setActivo(true);
         nivel = nivelRepository.save(nivel);
 
         Ejercicio ejercicio = new Ejercicio();
         ejercicio.setTitulo("Contador de Despegue");
-        ejercicio.setConsigna("Ordena los bloques para imprimir los segundos 1, 2 y 3 usando un bucle for, y finalmente mostrar '¡Despegue!'.");
-        ejercicio.setExplicacion("El bucle 'for variable in range(inicio, fin)' itera desde el valor de inicio hasta fin - 1. Las líneas indentadas se repiten en cada iteración.");
-        ejercicio.setEjemploDiferente("for i in range(2):\n    print(\"Paso\", i)\nprint(\"Fin\")");
-        ejercicio.setResultadoEjemplo("Paso 0\nPaso 1\nFin");
+        ejercicio.setConsigna("¡Ayudá a Pythoncito a lanzar un cohete al espacio! Usá un bucle for para contar los segundos 1, 2 y 3 en voz alta, y cuando termine la cuenta regresiva, hacé que grite '¡Despegue!'.");
+        ejercicio.setExplicacion("A veces queremos que la compu repita una acción muchas veces sin tener que escribirla una y otra vez. Para eso usamos el bucle 'for' con 'range(...)'. Es como una calesita o un reloj: da vueltas contando números. Todo lo que pongas un pasito adentro (con espacios a la derecha) se repetirá en cada vuelta. ¡Y lo que pongas afuera se ejecutará recién al final!");
+        ejercicio.setEjemploDiferente("for aplauso in range(1, 3):\n    print(\"¡Aplauso!\", aplauso)\nprint(\"¡Bravo!\")");
+        ejercicio.setResultadoEjemplo("¡Aplauso! 1\n¡Aplauso! 2\n¡Bravo!");
         ejercicio.setCodigoEsperado("for segundo in range(1, 4):\n    print(segundo)\nprint(\"¡Despegue!\")");
         ejercicio.setOrdenPresentacion(1);
         ejercicio.setNivel(nivel);
@@ -194,13 +194,13 @@ public class DataInitializer implements CommandLineRunner {
         ejercicio.getBloques().add(b3);
 
         Pista p1 = new Pista();
-        p1.setTexto("La estructura for debe encabezar la secuencia para controlar las repeticiones.");
+        p1.setTexto("Primero va el bloque del 'for' para encender la cuenta de los segundos.");
         p1.setOrden(1);
         p1.setEjercicio(ejercicio);
         ejercicio.getPistas().add(p1);
 
         Pista p2 = new Pista();
-        p2.setTexto("El bloque print(segundo) va indentado dentro del for, y print('¡Despegue!') va fuera sin indentar.");
+        p2.setTexto("Fijate que print(segundo) tiene espacios y va un pasito adentro porque se repite en cada vuelta. En cambio, print('¡Despegue!') va afuera de la calesita, abajo del todo.");
         p2.setOrden(2);
         p2.setEjercicio(ejercicio);
         ejercicio.getPistas().add(p2);
@@ -211,16 +211,16 @@ public class DataInitializer implements CommandLineRunner {
     private void crearNivel4() {
         Nivel nivel = new Nivel();
         nivel.setTitulo("Nivel 4: Creando Funciones");
-        nivel.setTema("Modulariza lógica definiendo funciones con def y return");
+        nivel.setTema("Construye tus propias máquinas mágicas con def y return");
         nivel.setOrdenPresentacion(4);
         nivel.setActivo(true);
         nivel = nivelRepository.save(nivel);
 
         Ejercicio ejercicio = new Ejercicio();
         ejercicio.setTitulo("Función Duplicadora");
-        ejercicio.setConsigna("Ordena los bloques para definir la función duplicar(numero), invocarla con el número 5 y mostrar su resultado por pantalla.");
-        ejercicio.setExplicacion("Una función se define con la palabra clave def seguida de su nombre y parámetros. La instrucción return entrega el valor calculado al invocador.");
-        ejercicio.setEjemploDiferente("def sumar_uno(x):\n    return x + 1\nr = sumar_uno(9)\nprint(r)");
+        ejercicio.setConsigna("¡Ayudá a Pythoncito a construir una máquina mágica que duplica números! Creá la máquina 'duplicar(numero)' con def, hacé que devuelva el doble con return, usala con el número 5 y mostrá el resultado en pantalla.");
+        ejercicio.setExplicacion("Una función con 'def' es como fabricar tu propia máquina mágica o un robot ayudante: le ponés un nombre, le das un ingrediente (parámetro), y con 'return' la máquina te devuelve el premio terminado. Una vez que tu máquina está construida, ¡podés llamarla y usarla todas las veces que quieras con distintos números!");
+        ejercicio.setEjemploDiferente("def sumar_uno(x):\n    return x + 1\npremio = sumar_uno(9)\nprint(premio)");
         ejercicio.setResultadoEjemplo("10");
         ejercicio.setCodigoEsperado("def duplicar(numero):\n    return numero * 2\nresultado = duplicar(5)\nprint(resultado)");
         ejercicio.setOrdenPresentacion(1);
@@ -255,13 +255,13 @@ public class DataInitializer implements CommandLineRunner {
         ejercicio.getBloques().add(b4);
 
         Pista p1 = new Pista();
-        p1.setTexto("Primero debes definir la función con def y su return antes de llamarla.");
+        p1.setTexto("Primero tenés que armar la maquinita con 'def' y su 'return' antes de poder usarla.");
         p1.setOrden(1);
         p1.setEjercicio(ejercicio);
         ejercicio.getPistas().add(p1);
 
         Pista p2 = new Pista();
-        p2.setTexto("Guarda el resultado de duplicar(5) en la variable 'resultado' antes de imprimirla con print().");
+        p2.setTexto("Una vez armada la máquina, llamala con duplicar(5), guardá el premio en la cajita 'resultado' y mostralo con print(resultado).");
         p2.setOrden(2);
         p2.setEjercicio(ejercicio);
         ejercicio.getPistas().add(p2);
@@ -272,17 +272,17 @@ public class DataInitializer implements CommandLineRunner {
     private void crearNivel5() {
         Nivel nivel = new Nivel();
         nivel.setTitulo("Nivel 5: Listas y Colecciones");
-        nivel.setTema("Agrupa datos en listas y recórrelas para calcular acumulados");
+        nivel.setTema("Guarda tesoros en listas y recórrelos para sumar tus ahorros");
         nivel.setOrdenPresentacion(5);
         nivel.setActivo(true);
         nivel = nivelRepository.save(nivel);
 
         Ejercicio ejercicio = new Ejercicio();
         ejercicio.setTitulo("Suma de Monedas");
-        ejercicio.setConsigna("Ordena los bloques para crear la lista de monedas [10, 20, 50], acumular su suma con un bucle for y mostrar 'Total: 80'.");
-        ejercicio.setExplicacion("Una lista almacena varios valores entre corchetes separados por comas. Para acumular la suma, inicializamos una variable en 0 y sumamos cada elemento dentro de un for.");
-        ejercicio.setEjemploDiferente("puntos = [5, 5]\ntotal = 0\nfor p in puntos:\n    total = total + p\nprint(total)");
-        ejercicio.setResultadoEjemplo("10");
+        ejercicio.setConsigna("¡Pythoncito abrió su alcancía! Guardá las monedas [10, 20, 50] en una lista, sumalas una por una con un bucle for en una cajita 'total', y al final mostrá el total ahorrado en la pantalla.");
+        ejercicio.setExplicacion("Una lista entre corchetes [...] es como una cartuchera o una alcancía: ¡te permite guardar muchos elementos juntos en un solo lugar! Y si usamos un bucle 'for m in monedas:', es como sacar las monedas de la alcancía una por una para ir sumándolas a nuestro chanchito de ahorros.");
+        ejercicio.setEjemploDiferente("caramelos = [5, 5]\nbolsa = 0\nfor c in caramelos:\n    bolsa = bolsa + c\nprint(\"Total:\", bolsa)");
+        ejercicio.setResultadoEjemplo("Total: 10");
         ejercicio.setCodigoEsperado("monedas = [10, 20, 50]\ntotal = 0\nfor m in monedas:\n    total = total + m\nprint(\"Total:\", total)");
         ejercicio.setOrdenPresentacion(1);
         ejercicio.setNivel(nivel);
@@ -296,40 +296,40 @@ public class DataInitializer implements CommandLineRunner {
 
         BloqueCodigo b2 = new BloqueCodigo();
         b2.setContenido("total = 0");
-        b2.setOrdenCorrecto(2);
+        b2.setOrdenCorrecto(1);
         b2.setOrdenPresentacion(1);
         b2.setEjercicio(ejercicio);
         ejercicio.getBloques().add(b2);
 
         BloqueCodigo b3 = new BloqueCodigo();
         b3.setContenido("for m in monedas:");
-        b3.setOrdenCorrecto(3);
+        b3.setOrdenCorrecto(2);
         b3.setOrdenPresentacion(5);
         b3.setEjercicio(ejercicio);
         ejercicio.getBloques().add(b3);
 
         BloqueCodigo b4 = new BloqueCodigo();
         b4.setContenido("    total = total + m");
-        b4.setOrdenCorrecto(4);
+        b4.setOrdenCorrecto(3);
         b4.setOrdenPresentacion(2);
         b4.setEjercicio(ejercicio);
         ejercicio.getBloques().add(b4);
 
         BloqueCodigo b5 = new BloqueCodigo();
         b5.setContenido("print(\"Total:\", total)");
-        b5.setOrdenCorrecto(5);
+        b5.setOrdenCorrecto(4);
         b5.setOrdenPresentacion(3);
         b5.setEjercicio(ejercicio);
         ejercicio.getBloques().add(b5);
 
         Pista p1 = new Pista();
-        p1.setTexto("Crea la lista y la variable total en 0 antes de iniciar el for.");
+        p1.setTexto("Antes de ponerte a contar, tenés que tener lista la lista de monedas y la cajita 'total = 0' en cero (¡pueden ir en cualquier orden!).");
         p1.setOrden(1);
         p1.setEjercicio(ejercicio);
         ejercicio.getPistas().add(p1);
 
         Pista p2 = new Pista();
-        p2.setTexto("La suma acumulativa va dentro del for indentada, y el print mostrando el total va al final.");
+        p2.setTexto("La suma de cada moneda va un pasito adentro del for, y el loro print con el total va afuera, al final de todo.");
         p2.setOrden(2);
         p2.setEjercicio(ejercicio);
         ejercicio.getPistas().add(p2);
