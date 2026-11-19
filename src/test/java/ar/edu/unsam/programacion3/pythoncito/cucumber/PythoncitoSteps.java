@@ -20,6 +20,9 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+
 public class PythoncitoSteps {
 
     private record Solucion(long ejercicioId, List<Long> bloquesEnOrden) {
@@ -35,8 +38,6 @@ public class PythoncitoSteps {
     private String tokenAdminCache;
     private MvcResult respuesta;
     private Long nivelCreadoId;
-
-    // ---------- helpers ----------
 
     private void ejecutar(MockHttpServletRequestBuilder peticion, String bearer) throws Exception {
         if (bearer != null) {
@@ -79,7 +80,6 @@ public class PythoncitoSteps {
         return id.longValue();
     }
 
-    /** Busca el ejercicio del nivel y devuelve sus bloques en el orden correcto (usa la API admin). */
     @SuppressWarnings("unchecked")
     private Solucion solucionDelNivel(int posicion) throws Exception {
         long nivelId = idNivel(posicion);
@@ -88,7 +88,8 @@ public class PythoncitoSteps {
 
         for (Map<String, Object> ejercicio : ejercicios) {
             if (((Number) ejercicio.get("nivelId")).longValue() == nivelId) {
-                ArrayList<Map<String, Object>> bloques = new ArrayList<>((List<Map<String, Object>>) ejercicio.get("bloques"));
+                ArrayList<Map<String, Object>> bloques = new ArrayList<>(
+                        (List<Map<String, Object>>) ejercicio.get("bloques"));
                 bloques.sort(Comparator.comparingInt(b -> ((Number) b.get("ordenCorrecto")).intValue()));
 
                 List<Long> ids = new ArrayList<>();
@@ -106,8 +107,6 @@ public class PythoncitoSteps {
                 post("/api/estudiante/ejercicios/" + solucion.ejercicioId() + "/validar"),
                 bloques.toString()));
     }
-
-    // ---------- autenticación ----------
 
     @Given("un visitante sin autenticar")
     public void visitanteSinAutenticar() {
@@ -146,14 +145,10 @@ public class PythoncitoSteps {
         ejecutar(conJson(post("/api/auth/estudiante/recuperar"), "{\"token\":\"" + token + "\"}"), null);
     }
 
-    // ---------- peticiones genéricas ----------
-
     @When("hago un GET a {string}")
     public void peticionGet(String url) throws Exception {
         enviar(get(url));
     }
-
-    // ---------- niveles y progreso ----------
 
     @Then("el nivel {int} está desbloqueado")
     public void nivelDesbloqueado(int posicion) throws Exception {
@@ -183,8 +178,6 @@ public class PythoncitoSteps {
     public void consultoProgreso() throws Exception {
         enviar(get("/api/estudiante/progreso"));
     }
-
-    // ---------- validación, intentos y pistas ----------
 
     @When("resuelvo correctamente el ejercicio del nivel {int}")
     public void resuelvoCorrectamente(int posicion) throws Exception {
@@ -228,8 +221,6 @@ public class PythoncitoSteps {
         enviar(get("/api/estudiante/ejercicios/" + solucion.ejercicioId() + "/pistas/" + orden));
     }
 
-    // ---------- administración ----------
-
     @When("creo un nivel con título {string}")
     public void creoNivel(String titulo) throws Exception {
         String json = "{\"titulo\":\"" + titulo + "\",\"tema\":\"Tema de prueba\","
@@ -244,13 +235,10 @@ public class PythoncitoSteps {
         enviar(patch("/api/admin/niveles/" + nivelCreadoId + "/baja"));
     }
 
-    // ---------- verificaciones de la respuesta ----------
-
     @Then("la respuesta tiene estado {int}")
     public void respuestaTieneEstado(int esperado) {
         assertThat(respuesta.getResponse().getStatus()).isEqualTo(esperado);
     }
-
 
     @Then("la respuesta es exitosa")
     public void respuestaExitosa() {
@@ -278,5 +266,77 @@ public class PythoncitoSteps {
     public void respuestaTieneAlMenos(int cantidad) throws Exception {
         List<?> lista = JsonPath.read(cuerpo(), "$");
         assertThat(lista).hasSizeGreaterThanOrEqualTo(cantidad);
+    }
+
+    private Long ejercicioCreadoId;
+    private Long bloqueCreadoId;
+
+    private String jsonEjercicio(String titulo) {
+        return "{\"titulo\":\"" + titulo + "\",\"consigna\":\"Consigna de prueba\","
+                + "\"explicacion\":\"Explicacion de prueba\",\"ejemploDiferente\":\"x = 1\","
+                + "\"resultadoEjemplo\":\"1\",\"codigoEsperado\":\"print(1)\","
+                + "\"ordenPresentacion\":1,\"nivelId\":" + nivelCreadoId + ","
+                + "\"bloques\":[{\"contenido\":\"print(1)\",\"ordenPresentacion\":1,\"ordenCorrecto\":1}],"
+                + "\"pistas\":[{\"texto\":\"Usa print\",\"orden\":1}]}";
+    }
+
+    @When("modifico el nivel creado con título {string}")
+    public void modificoNivelCreado(String titulo) throws Exception {
+        String json = "{\"titulo\":\"" + titulo + "\",\"tema\":\"Tema editado\","
+                + "\"activo\":true,\"ordenPresentacion\":99}";
+        enviar(conJson(put("/api/admin/niveles/" + nivelCreadoId), json));
+    }
+
+    @When("creo un ejercicio {string} en el nivel creado")
+    public void creoEjercicio(String titulo) throws Exception {
+        enviar(conJson(post("/api/admin/ejercicios"), jsonEjercicio(titulo)));
+        Number idEjercicio = JsonPath.read(cuerpo(), "$.id");
+        Number idBloque = JsonPath.read(cuerpo(), "$.bloques[0].id");
+        ejercicioCreadoId = idEjercicio.longValue();
+        bloqueCreadoId = idBloque.longValue();
+    }
+
+    @When("consulto el ejercicio creado")
+    public void consultoEjercicioCreado() throws Exception {
+        enviar(get("/api/admin/ejercicios/" + ejercicioCreadoId));
+    }
+
+    @When("modifico el ejercicio creado con título {string}")
+    public void modificoEjercicioCreado(String titulo) throws Exception {
+        enviar(conJson(put("/api/admin/ejercicios/" + ejercicioCreadoId), jsonEjercicio(titulo)));
+    }
+
+    @When("elimino el ejercicio creado")
+    public void eliminoEjercicioCreado() throws Exception {
+        enviar(delete("/api/admin/ejercicios/" + ejercicioCreadoId));
+    }
+
+    @When("consulto el bloque del ejercicio creado")
+    public void consultoBloqueCreado() throws Exception {
+        enviar(get("/api/admin/bloques/" + bloqueCreadoId));
+    }
+
+    @When("modifico el bloque del ejercicio creado con contenido {string}")
+    public void modificoBloqueCreado(String contenido) throws Exception {
+        String json = "{\"contenido\":\"" + contenido + "\",\"ordenPresentacion\":1,\"ordenCorrecto\":1}";
+        enviar(conJson(put("/api/admin/bloques/" + bloqueCreadoId), json));
+    }
+
+    @When("envío un cuerpo JSON inválido a {string}")
+    public void cuerpoJsonInvalido(String url) throws Exception {
+        enviar(conJson(post(url), "{esto no es json"));
+    }
+
+    @When("consulto el detalle del ejercicio del nivel {int}")
+    public void consultoDetalleEjercicio(int posicion) throws Exception {
+        enviar(get("/api/estudiante/ejercicios/" + solucionDelNivel(posicion).ejercicioId()));
+    }
+
+    @When("valido directamente la solución correcta del ejercicio del nivel {int}")
+    public void validoDirectamente(int posicion) throws Exception {
+        Solucion solucion = solucionDelNivel(posicion);
+        String json = "{\"ejercicioId\":" + solucion.ejercicioId()
+                + ",\"bloqueIds\":" + solucion.bloquesEnOrden() + "}";
+        enviar(conJson(post("/api/estudiante/ejercicios/validar"), json));
     }
 }
