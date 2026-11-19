@@ -12,6 +12,11 @@ import ar.edu.unsam.programacion3.pythoncito.dtos.*;
 import ar.edu.unsam.programacion3.pythoncito.exceptions.*;
 import ar.edu.unsam.programacion3.pythoncito.repositories.*;
 
+/**
+ * Servicio central del motor pedagogico de Pythoncito.
+ * Gestiona el catalogo de ejercicios, validacion algoritmica de soluciones (DUA),
+ * administracion de bloques y entrega progresiva de pistas.
+ */
 @Service
 public class EjercicioService {
 
@@ -131,6 +136,13 @@ public class EjercicioService {
         return EjercicioMapper.aDTOAdmin(ejercicio);
     }
 
+    /**
+     * Entrega una pista progresiva al estudiante si alcanza el umbral de intentos fallidos requerido.
+     * @param ejercicioId identificador del ejercicio
+     * @param orden numero correlativo de la pista solicitada
+     * @param usuarioId identificador del estudiante
+     * @return DTO con la pista desbloqueada
+     */
     @Transactional(readOnly = true)
     public PistaDTO obtenerPista(
             Long ejercicioId, Integer orden, Long usuarioId) {
@@ -178,6 +190,12 @@ public class EjercicioService {
                 pistaSolicitada.getOrden());
     }
 
+    /**
+     * Valida la secuencia de bloques enviada por el estudiante diagnosticando bloques faltantes, sobrantes y fuera de orden.
+     * @param peticion DTO con el ejercicio y la lista de IDs de bloques
+     * @param usuarioId identificador del estudiante
+     * @return DTO con el resultado del motor DUA
+     */
     @Transactional
     public ResultadoValidacionDTO validarRespuesta(ValidacionPeticionDTO peticion, Long usuarioId) {
 

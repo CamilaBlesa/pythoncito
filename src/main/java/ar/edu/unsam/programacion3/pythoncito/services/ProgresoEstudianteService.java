@@ -1,4 +1,3 @@
-
 package ar.edu.unsam.programacion3.pythoncito.services;
 
 import ar.edu.unsam.programacion3.pythoncito.models.*;
@@ -15,6 +14,9 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
 
+/**
+ * Servicio encargado del seguimiento de progreso de los estudiantes y desbloqueo de niveles.
+ */
 @Service
 public class ProgresoEstudianteService {
 
@@ -35,6 +37,12 @@ public class ProgresoEstudianteService {
                 this.nivelRepository = nivelRepository;
         }
 
+        /**
+         * Verifica si todos los ejercicios de un nivel estan aprobados y, si corresponde, registra el progreso.
+         * @param usuarioId identificador del estudiante
+         * @param nivelId identificador del nivel evaluado
+         * @return true si el nivel fue completado con exito, false en caso contrario
+         */
         @Transactional
         public boolean completarNivelSiCorresponde(
                         Long usuarioId,
@@ -83,6 +91,11 @@ public class ProgresoEstudianteService {
                 return true;
         }
 
+        /**
+         * Lista los niveles completados por un estudiante.
+         * @param usuarioId identificador del estudiante
+         * @return lista de DTOs con la informacion de niveles completados
+         */
         @Transactional(readOnly = true)
         public List<ProgresoEstudianteDTO> listarProgreso(Long usuarioId) {
 

@@ -15,6 +15,9 @@ import ar.edu.unsam.programacion3.pythoncito.repositories.ProgresoEstudianteRepo
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Servicio encargado de la administracion y consulta pedagogica de los niveles de aprendizaje.
+ */
 @Service
 public class NivelService {
 
@@ -26,6 +29,10 @@ public class NivelService {
         this.progresoRepository = progresoRepository;
     }
 
+    /**
+     * Lista todos los niveles registrados en el sistema para fines administrativos.
+     * @return lista completa de niveles en formato DTO
+     */
     public List<NivelDTO> listar() {
         List<Nivel> niveles = nivelRepository.findAll();
         List<NivelDTO> nivelesDTO = new ArrayList<>();
@@ -35,6 +42,10 @@ public class NivelService {
         return nivelesDTO;
     }
 
+    /**
+     * Lista y ordena los niveles activos utilizando el algoritmo de ordenamiento burbuja.
+     * @return lista de niveles activos ordenados por su orden de presentacion
+     */
     public List<NivelDTO> listarActivos() {
         List<Nivel> todos = nivelRepository.findAll();
         List<Nivel> activos = new ArrayList<>();
@@ -63,12 +74,22 @@ public class NivelService {
         return nivelesDTO;
     }
 
+    /**
+     * Obtiene el detalle de un nivel por su identificador.
+     * @param id identificador unico del nivel
+     * @return DTO con la informacion del nivel
+     */
     public NivelDTO obtenerPorId(Long id) {
         Nivel nivel = nivelRepository.findById(id)
                 .orElseThrow(() -> new RecursoNoEncontradoException("Nivel", id));
         return NivelMapper.aDTO(nivel);
     }
 
+    /**
+     * Crea un nuevo nivel educativo guardandolo en la base de datos.
+     * @param dto informacion del nuevo nivel
+     * @return DTO del nivel persistido
+     */
     @Transactional
     public NivelDTO crear(NivelDTO dto) {
         Nivel nivel = new Nivel();
@@ -79,6 +100,12 @@ public class NivelService {
         return NivelMapper.aDTO(nivelRepository.save(nivel));
     }
 
+    /**
+     * Modifica los datos de un nivel existente.
+     * @param id identificador del nivel a modificar
+     * @param dto nuevos datos del nivel
+     * @return DTO del nivel actualizado
+     */
     @Transactional
     public NivelDTO modificar(Long id, NivelDTO dto) {
         Nivel nivel = nivelRepository.findById(id)
@@ -92,6 +119,11 @@ public class NivelService {
         return NivelMapper.aDTO(nivelRepository.save(nivel));
     }
 
+    /**
+     * Aplica la baja logica de un nivel estableciendo su estado activo en falso.
+     * @param id identificador del nivel a dar de baja
+     * @return DTO del nivel con estado inactivo
+     */
     @Transactional
     public NivelDTO darDeBaja(Long id) {
         Nivel nivel = nivelRepository.findById(id)
@@ -100,6 +132,12 @@ public class NivelService {
         return NivelMapper.aDTO(nivelRepository.save(nivel));
     }
 
+    /**
+     * Obtiene un nivel para un estudiante validando si tiene los prerrequisitos de desbloqueo.
+     * @param nivelId identificador del nivel solicitado
+     * @param usuarioId identificador del estudiante
+     * @return DTO con el nivel accesible
+     */
     public NivelDTO obtenerNivelParaEstudiante(Long nivelId, Long usuarioId) {
 
         List<NivelDTO> niveles = listarActivosParaEstudiante(usuarioId);
@@ -121,6 +159,11 @@ public class NivelService {
         throw new RecursoNoEncontradoException("Nivel", nivelId);
     }
 
+    /**
+     * Lista los niveles activos calculando dinamicamente si estan desbloqueados o completados para el alumno.
+     * @param usuarioId identificador del estudiante
+     * @return lista de DTOs con estados desbloqueado y completado calculados
+     */
     public List<NivelDTO> listarActivosParaEstudiante(Long usuarioId) {
 
         List<Nivel> activos = obtenerNivelesActivosOrdenados();

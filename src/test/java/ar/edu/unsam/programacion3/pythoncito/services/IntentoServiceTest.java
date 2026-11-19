@@ -13,6 +13,7 @@ import ar.edu.unsam.programacion3.pythoncito.repositories.UsuarioRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -64,10 +65,11 @@ class IntentoServiceTest {
 
     @Test
     void registrarIntento_primerIntento_asignaNumeroUno() {
+        ArgumentCaptor<Intento> captor = ArgumentCaptor.forClass(Intento.class);
         when(usuarioRepository.findById(10L)).thenReturn(Optional.of(estudiante));
         when(ejercicioRepository.findById(100L)).thenReturn(Optional.of(ejercicio));
         when(intentoRepository.findTopByUsuarioIdAndEjercicioIdOrderByNumeroIntentoDesc(10L, 100L)).thenReturn(null);
-        when(intentoRepository.save(any(Intento.class))).thenAnswer(invocation -> {
+        when(intentoRepository.save(captor.capture())).thenAnswer(invocation -> {
             Intento i = invocation.getArgument(0);
             ReflectionTestUtils.setField(i, "id", 50L);
             return i;
@@ -80,17 +82,25 @@ class IntentoServiceTest {
         assertEquals(100L, resultado.getEjercicioId());
         assertEquals(1, resultado.getNumeroIntento());
         assertTrue(resultado.getCorrecta());
+
+        Intento guardado = captor.getValue();
+        assertEquals(estudiante, guardado.getUsuario());
+        assertEquals(ejercicio, guardado.getEjercicio());
+        assertEquals(1, guardado.getNumeroIntento());
+        assertTrue(guardado.getCorrecta());
+        assertNotNull(guardado.getFechaHora());
     }
 
     @Test
     void registrarIntento_intentoPrevioExistente_incrementaNumero() {
+        ArgumentCaptor<Intento> captor = ArgumentCaptor.forClass(Intento.class);
         Intento previo = new Intento();
         previo.setNumeroIntento(3);
 
         when(usuarioRepository.findById(10L)).thenReturn(Optional.of(estudiante));
         when(ejercicioRepository.findById(100L)).thenReturn(Optional.of(ejercicio));
         when(intentoRepository.findTopByUsuarioIdAndEjercicioIdOrderByNumeroIntentoDesc(10L, 100L)).thenReturn(previo);
-        when(intentoRepository.save(any(Intento.class))).thenAnswer(invocation -> {
+        when(intentoRepository.save(captor.capture())).thenAnswer(invocation -> {
             Intento i = invocation.getArgument(0);
             ReflectionTestUtils.setField(i, "id", 51L);
             return i;
@@ -101,6 +111,11 @@ class IntentoServiceTest {
         assertNotNull(resultado);
         assertEquals(4, resultado.getNumeroIntento());
         assertFalse(resultado.getCorrecta());
+
+        Intento guardado = captor.getValue();
+        assertEquals(4, guardado.getNumeroIntento());
+        assertFalse(guardado.getCorrecta());
+        assertEquals(estudiante, guardado.getUsuario());
     }
 
     @Test

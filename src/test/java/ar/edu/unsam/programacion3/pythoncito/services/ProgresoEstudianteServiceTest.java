@@ -14,6 +14,7 @@ import ar.edu.unsam.programacion3.pythoncito.repositories.UsuarioRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -132,6 +133,7 @@ class ProgresoEstudianteServiceTest {
 
     @Test
     void completarNivelSiCorresponde_todosCompletadosSinProgresoPrevio_guardaProgresoYRetornaTrue() {
+        ArgumentCaptor<ProgresoEstudiante> captor = ArgumentCaptor.forClass(ProgresoEstudiante.class);
         when(usuarioRepository.findById(10L)).thenReturn(Optional.of(estudiante));
         when(nivelRepository.findById(1L)).thenReturn(Optional.of(nivel));
         when(intentoRepository.existsByUsuarioIdAndEjercicioIdAndCorrectaTrue(10L, 100L)).thenReturn(true);
@@ -140,7 +142,11 @@ class ProgresoEstudianteServiceTest {
         boolean resultado = progresoEstudianteService.completarNivelSiCorresponde(10L, 1L);
 
         assertTrue(resultado);
-        verify(progresoRepository).save(any(ProgresoEstudiante.class));
+        verify(progresoRepository).save(captor.capture());
+        ProgresoEstudiante guardado = captor.getValue();
+        assertEquals(estudiante, guardado.getUsuario());
+        assertEquals(nivel, guardado.getNivel());
+        assertNotNull(guardado.getFechaCompletado());
     }
 
     @Test

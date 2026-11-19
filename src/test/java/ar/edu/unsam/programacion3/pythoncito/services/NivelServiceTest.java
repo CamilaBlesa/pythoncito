@@ -128,6 +128,8 @@ class NivelServiceTest {
         assertNotNull(resultado);
         assertTrue(resultado.getActivo());
         assertEquals("Nuevo", resultado.getTitulo());
+        assertEquals("Tema", resultado.getTema());
+        assertEquals(5, resultado.getOrdenPresentacion());
         verify(nivelRepository).save(any(Nivel.class));
     }
 

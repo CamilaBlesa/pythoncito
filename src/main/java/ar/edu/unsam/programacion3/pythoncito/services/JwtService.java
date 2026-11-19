@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 
+/**
+ * Servicio encargado de la emision, firma y decodificacion de tokens JWT mediante Spring Security.
+ */
 @Service
 public class JwtService {
 
@@ -27,6 +30,11 @@ public class JwtService {
         this.jwtDecoder = jwtDecoder;
     }
 
+    /**
+     * Genera un token JWT firmado para el usuario con duracion y roles correspondientes.
+     * @param usuario usuario para el cual se emitira el token
+     * @return valor string del token JWT firmado
+     */
     public String generarToken(Usuario usuario) {
 
         Instant ahora = Instant.now();
@@ -58,6 +66,11 @@ public class JwtService {
         return DURACION_ESTUDIANTE;
     }
 
+    /**
+     * Extrae el identificador de usuario almacenado en el claim subject del token JWT.
+     * @param token token JWT en formato string
+     * @return identificador unico del usuario
+     */
     public Long obtenerIdUsuario(String token) {
         return Long.parseLong(jwtDecoder.decode(token).getSubject());
     }

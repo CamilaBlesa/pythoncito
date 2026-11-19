@@ -1,4 +1,3 @@
-
 package ar.edu.unsam.programacion3.pythoncito.services;
 
 import org.springframework.stereotype.Service;
@@ -19,6 +18,9 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Servicio encargado del registro, consulta y conteo de intentos de resolucion de ejercicios.
+ */
 @Service
 public class IntentoService {
 
@@ -39,6 +41,13 @@ public class IntentoService {
                 this.nivelService = nivelService;
         }
 
+        /**
+         * Registra un nuevo intento de resolucion calculando correlativamente su numero de intento.
+         * @param usuarioId identificador del estudiante
+         * @param ejercicioId identificador del ejercicio
+         * @param correcta booleano que indica si la resolucion fue exitosa
+         * @return DTO con el intento registrado
+         */
         @Transactional
         public IntentoDTO registrarIntento(
                         Long usuarioId,
@@ -66,6 +75,12 @@ public class IntentoService {
                 return convertirADTO(intentoRepository.save(intento));
         }
 
+        /**
+         * Lista cronologicamente los intentos de un estudiante en un ejercicio especifico.
+         * @param usuarioId identificador del estudiante
+         * @param ejercicioId identificador del ejercicio
+         * @return lista de intentos realizados
+         */
         @Transactional(readOnly = true)
         public List<IntentoDTO> listarPorEjercicio(
                         Long usuarioId,
@@ -127,6 +142,12 @@ public class IntentoService {
                                 intento.getFechaHora());
         }
 
+        /**
+         * Cuenta la cantidad de intentos fallidos registrados por un alumno para un ejercicio.
+         * @param usuarioId identificador del estudiante
+         * @param ejercicioId identificador del ejercicio
+         * @return cantidad de intentos incorrectos
+         */
         @Transactional(readOnly = true)
         public long contarIntentosFallidos(Long usuarioId, Long ejercicioId) {
 

@@ -6,6 +6,7 @@ import ar.edu.unsam.programacion3.pythoncito.repositories.UsuarioRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -36,14 +37,19 @@ class AuthServiceTest {
 
     @Test
     void crearEstudiante_guardaUsuarioYGeneraToken() {
-        when(usuarioRepository.save(any(Usuario.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        ArgumentCaptor<Usuario> captor = ArgumentCaptor.forClass(Usuario.class);
+        when(usuarioRepository.save(captor.capture())).thenAnswer(invocation -> invocation.getArgument(0));
         when(jwtService.generarToken(any(Usuario.class))).thenReturn("token_estudiante_mock");
 
         String token = authService.crearEstudiante();
 
         assertEquals("token_estudiante_mock", token);
-        verify(usuarioRepository).save(any(Usuario.class));
-        verify(jwtService).generarToken(any(Usuario.class));
+        Usuario guardado = captor.getValue();
+        assertNotNull(guardado);
+        assertNotNull(guardado.getUsername());
+        assertFalse(guardado.getUsername().isBlank());
+        assertEquals(Usuario.Rol.ESTUDIANTE, guardado.getRol());
+        verify(jwtService).generarToken(guardado);
     }
 
     @Test
@@ -63,14 +69,18 @@ class AuthServiceTest {
 
     @Test
     void autenticarAdmin_adminNoExistePreviamente_creaAdminYRetornaToken() {
+        ArgumentCaptor<Usuario> captor = ArgumentCaptor.forClass(Usuario.class);
         when(usuarioRepository.findByUsername("admin")).thenReturn(Optional.empty());
-        when(usuarioRepository.save(any(Usuario.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(usuarioRepository.save(captor.capture())).thenAnswer(invocation -> invocation.getArgument(0));
         when(jwtService.generarToken(any(Usuario.class))).thenReturn("token_admin_creado");
 
         String token = authService.autenticarAdmin("secret_admin_key");
 
         assertEquals("token_admin_creado", token);
-        verify(usuarioRepository).save(any(Usuario.class));
+        Usuario creado = captor.getValue();
+        assertNotNull(creado);
+        assertEquals("admin", creado.getUsername());
+        assertEquals(Usuario.Rol.ADMIN, creado.getRol());
     }
 
     @Test
