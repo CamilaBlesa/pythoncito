@@ -20,8 +20,6 @@ Feature: Recorrido del estudiante por niveles y ejercicios
     When hago un GET a "/api/estudiante/ejercicios/999999"
     Then la respuesta tiene estado 404
 
-  # --- Validación de respuestas ---
-
   Scenario: Solución correcta
     When resuelvo correctamente el ejercicio del nivel 1
     Then la respuesta tiene estado 200
@@ -43,8 +41,6 @@ Feature: Recorrido del estudiante por niveles y ejercicios
     Then el campo "$.correcta" de la respuesta es "false"
     And el campo "$.mensaje" de la respuesta es "Hay bloques que no pertenecen a este ejercicio."
 
-  # --- Progreso e intentos ---
-
   Scenario: Completar un nivel desbloquea el siguiente y queda en el progreso
     When resuelvo correctamente el ejercicio del nivel 1
     Then el nivel 2 está desbloqueado
@@ -61,8 +57,6 @@ Feature: Recorrido del estudiante por niveles y ejercicios
     And el campo "$[0].correcta" de la respuesta es "false"
     And el campo "$[1].numeroIntento" de la respuesta es "2"
     And el campo "$[1].correcta" de la respuesta es "true"
-
-  # --- Pistas ---
 
   Scenario: La primera pista está disponible desde el inicio
     When pido la pista 1 del ejercicio del nivel 1
@@ -87,3 +81,17 @@ Feature: Recorrido del estudiante por niveles y ejercicios
       | orden | estado |
       | 0     | 400    |
       | 99    | 404    |
+
+  Scenario: Se puede abrir el primer nivel
+    When intento abrir el nivel 1
+    Then la respuesta tiene estado 200
+    And el campo "$.titulo" de la respuesta es "Nivel 1: Variables y Mensajes"
+
+  Scenario: Se puede ver el detalle de un ejercicio
+    When consulto el detalle del ejercicio del nivel 1
+    Then la respuesta tiene estado 200
+    And el campo "$.titulo" de la respuesta es "Mi primer saludo"
+
+  Scenario: Validación directa con el cuerpo completo
+    When valido directamente la solución correcta del ejercicio del nivel 1
+    Then el campo "$.correcta" de la respuesta es "true"

@@ -141,11 +141,17 @@
 					</targetClasses>
 					<targetTests>
 						<param>ar.edu.unsam.programacion3.pythoncito.services.*Test</param>
+						<param>ar.edu.unsam.programacion3.pythoncito.mappers.*Test</param>
 					</targetTests>
+					<targetClasses>
+						<param>ar.edu.unsam.programacion3.pythoncito.services.*</param>
+						<param>ar.edu.unsam.programacion3.pythoncito.mappers.*</param>
+					</targetClasses>
 					<outputFormats>
 						<outputFormat>HTML</outputFormat>
 					</outputFormats>
 					<timestampedReports>false</timestampedReports>
+					<useClasspathJar>true</useClasspathJar>
 				</configuration>
 			</plugin>
 			<plugin>
