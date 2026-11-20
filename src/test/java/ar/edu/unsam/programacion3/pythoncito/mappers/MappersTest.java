@@ -81,6 +81,15 @@ class MappersTest {
     }
 
     @Test
+    void ejercicioMapper_aDTOAdmin_verificaSettersExplicacionEjemploResultado() {
+        EjercicioAdminDTO dto = EjercicioMapper.aDTOAdmin(ejercicioDePrueba());
+
+        assertEquals("Explicacion", dto.getExplicacion());
+        assertEquals("Ejemplo", dto.getEjemploDiferente());
+        assertEquals("Resultado", dto.getResultadoEjemplo());
+    }
+
+    @Test
     void nivelMapper_aDTO_copiaCampos() {
         Nivel nivel = new Nivel();
         ReflectionTestUtils.setField(nivel, "id", 4L);

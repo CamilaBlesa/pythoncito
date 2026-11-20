@@ -251,4 +251,181 @@ class NivelServiceTest {
         assertThrows(RecursoNoEncontradoException.class, () ->
                 nivelService.obtenerNivelParaEstudiante(99L, 10L));
     }
+
+    @Test
+    void listarActivos_listaVacia() {
+        when(nivelRepository.findAll()).thenReturn(List.of());
+
+        List<NivelDTO> resultado = nivelService.listarActivos();
+
+        assertTrue(resultado.isEmpty());
+    }
+
+    @Test
+    void listarActivos_unSoloElemento() {
+        when(nivelRepository.findAll()).thenReturn(List.of(nivel1));
+
+        List<NivelDTO> resultado = nivelService.listarActivos();
+
+        assertEquals(1, resultado.size());
+        assertEquals("Nivel 1", resultado.get(0).getTitulo());
+    }
+
+    @Test
+    void listarActivos_ordenNuloSeTrataComoCero() {
+        Nivel n1 = new Nivel();
+        ReflectionTestUtils.setField(n1, "id", 1L);
+        n1.setTitulo("Nivel 1");
+        n1.setActivo(true);
+        n1.setOrdenPresentacion(2);
+
+        Nivel n2 = new Nivel();
+        ReflectionTestUtils.setField(n2, "id", 2L);
+        n2.setTitulo("Nivel 2");
+        n2.setActivo(true);
+        n2.setOrdenPresentacion(null);
+
+        when(nivelRepository.findAll()).thenReturn(List.of(n1, n2));
+
+        List<NivelDTO> resultado = nivelService.listarActivos();
+
+        assertEquals(2, resultado.size());
+        assertEquals("Nivel 2", resultado.get(0).getTitulo());
+        assertEquals("Nivel 1", resultado.get(1).getTitulo());
+    }
+
+    @Test
+    void listarActivos_ordenNegativo() {
+        Nivel n1 = new Nivel();
+        ReflectionTestUtils.setField(n1, "id", 1L);
+        n1.setTitulo("Nivel 1");
+        n1.setActivo(true);
+        n1.setOrdenPresentacion(-1);
+
+        Nivel n2 = new Nivel();
+        ReflectionTestUtils.setField(n2, "id", 2L);
+        n2.setTitulo("Nivel 2");
+        n2.setActivo(true);
+        n2.setOrdenPresentacion(5);
+
+        when(nivelRepository.findAll()).thenReturn(List.of(n1, n2));
+
+        List<NivelDTO> resultado = nivelService.listarActivos();
+
+        assertEquals(2, resultado.size());
+        assertEquals("Nivel 1", resultado.get(0).getTitulo());
+        assertEquals("Nivel 2", resultado.get(1).getTitulo());
+    }
+
+    @Test
+    void listarActivos_muchosElementos() {
+        List<Nivel> niveles = new ArrayList<>();
+        for (int i = 10; i >= 1; i--) {
+            Nivel n = new Nivel();
+            ReflectionTestUtils.setField(n, "id", (long) i);
+            n.setTitulo("Nivel " + i);
+            n.setActivo(true);
+            n.setOrdenPresentacion(i);
+            niveles.add(n);
+        }
+        when(nivelRepository.findAll()).thenReturn(niveles);
+
+        List<NivelDTO> resultado = nivelService.listarActivos();
+
+        assertEquals(10, resultado.size());
+        for (int i = 0; i < 10; i++) {
+            assertEquals("Nivel " + (i + 1), resultado.get(i).getTitulo());
+        }
+    }
+
+    @Test
+    void obtenerNivelParaEstudiante_obtenerNivelesActivosOrdenados_bordeListaVacia() {
+        when(nivelRepository.findAll()).thenReturn(List.of());
+
+        assertThrows(RecursoNoEncontradoException.class, () ->
+                nivelService.obtenerNivelParaEstudiante(1L, 10L));
+    }
+
+    @Test
+    void obtenerNivelParaEstudiante_obtenerNivelesActivosOrdenados_unSoloElemento() {
+        when(nivelRepository.findAll()).thenReturn(List.of(nivel1));
+        when(progresoRepository.existsByUsuarioIdAndNivelId(10L, 1L)).thenReturn(false);
+
+        NivelDTO resultado = nivelService.obtenerNivelParaEstudiante(1L, 10L);
+
+        assertNotNull(resultado);
+        assertEquals(1L, resultado.getId());
+    }
+
+    @Test
+    void obtenerNivelParaEstudiante_obtenerNivelesActivosOrdenados_ordenNuloComoCero() {
+        Nivel n1 = new Nivel();
+        ReflectionTestUtils.setField(n1, "id", 1L);
+        n1.setTitulo("Nivel 1");
+        n1.setActivo(true);
+        n1.setOrdenPresentacion(2);
+
+        Nivel n2 = new Nivel();
+        ReflectionTestUtils.setField(n2, "id", 2L);
+        n2.setTitulo("Nivel 2");
+        n2.setActivo(true);
+        n2.setOrdenPresentacion(null);
+
+        when(nivelRepository.findAll()).thenReturn(List.of(n1, n2));
+        // n2 (null->0) es el primero, así que desbloqueado
+        when(progresoRepository.existsByUsuarioIdAndNivelId(10L, 2L)).thenReturn(false);
+        when(progresoRepository.existsByUsuarioIdAndNivelId(10L, 1L)).thenReturn(false);
+
+        // n2 (null->0) debería ser accesible
+        NivelDTO resultado = nivelService.obtenerNivelParaEstudiante(2L, 10L);
+        assertEquals(2L, resultado.getId());
+    }
+
+    @Test
+    void obtenerNivelParaEstudiante_obtenerNivelesActivosOrdenados_ordenNegativo() {
+        Nivel n1 = new Nivel();
+        ReflectionTestUtils.setField(n1, "id", 1L);
+        n1.setTitulo("Nivel 1");
+        n1.setActivo(true);
+        n1.setOrdenPresentacion(-1);
+
+        Nivel n2 = new Nivel();
+        ReflectionTestUtils.setField(n2, "id", 2L);
+        n2.setTitulo("Nivel 2");
+        n2.setActivo(true);
+        n2.setOrdenPresentacion(5);
+
+        when(nivelRepository.findAll()).thenReturn(List.of(n1, n2));
+        // n1 (orden -1) es el primero, así que desbloqueado
+        when(progresoRepository.existsByUsuarioIdAndNivelId(10L, 1L)).thenReturn(false);
+        when(progresoRepository.existsByUsuarioIdAndNivelId(10L, 2L)).thenReturn(false);
+
+        NivelDTO resultado = nivelService.obtenerNivelParaEstudiante(1L, 10L);
+        assertEquals(1L, resultado.getId());
+    }
+
+    @Test
+    void obtenerNivelParaEstudiante_obtenerNivelesActivosOrdenados_muchosElementos() {
+        List<Nivel> niveles = new ArrayList<>();
+        for (int i = 10; i >= 1; i--) {
+            Nivel n = new Nivel();
+            ReflectionTestUtils.setField(n, "id", (long) i);
+            n.setTitulo("Nivel " + i);
+            n.setActivo(true);
+            n.setOrdenPresentacion(i);
+            niveles.add(n);
+        }
+        when(nivelRepository.findAll()).thenReturn(niveles);
+
+        // El nivel con orden 1 (ID=1) está completado, así que el orden 2 (ID=2) se desbloquea
+        when(progresoRepository.existsByUsuarioIdAndNivelId(10L, 1L)).thenReturn(true);
+        when(progresoRepository.existsByUsuarioIdAndNivelId(10L, 2L)).thenReturn(false);
+        for (int i = 3; i <= 10; i++) {
+            when(progresoRepository.existsByUsuarioIdAndNivelId(10L, (long) i)).thenReturn(false);
+        }
+
+        // El nivel con ID=2 (orden 2) debería ser accesible
+        NivelDTO resultado = nivelService.obtenerNivelParaEstudiante(2L, 10L);
+        assertEquals(2L, resultado.getId());
+    }
 }
