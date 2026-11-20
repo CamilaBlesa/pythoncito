@@ -140,7 +140,9 @@ class EjercicioServiceNulosTest {
         List<EjercicioDTO> resultado = ejercicioService.listarPorNivelParaEstudiante(7L, 5L);
 
         assertEquals(List.of("sinOrden", "conOrden"),
-                resultado.stream().map(EjercicioDTO::getTitulo).toList());
+                resultado.stream()
+                        .map(EjercicioDTO::getTitulo)
+                        .toList());
     }
 
     @Test
