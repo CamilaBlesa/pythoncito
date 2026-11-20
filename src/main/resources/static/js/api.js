@@ -212,10 +212,10 @@ function inicializarPreferenciasAccesibilidad() {
 
 function actualizarTextoBotonTamano(boton, tamano) {
     if (tamano === "lg") {
-        boton.textContent = "🔍 Texto: Grande";
+        boton.textContent = "🔍 Texto: Mediano";
     } else if (tamano === "xl") {
-        boton.textContent = "🔍 Texto: Muy Grande";
+        boton.textContent = "🔍 Texto: Grande";
     } else {
-        boton.textContent = "🔍 Texto: Normal";
+        boton.textContent = "🔍 Texto: Predeterminado";
     }
 }

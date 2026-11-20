@@ -106,10 +106,13 @@ body.font-opendyslexic {
 html {
   font-size: 14.5px;
 }
+
+html.font-lg,
 body.font-lg {
   --font-size-base: 19px;
 }
 
+html.font-xl,
 body.font-xl {
   --font-size-base: 23px;
 }
