@@ -107,12 +107,20 @@ html {
   font-size: 14.5px;
 }
 
-html.font-lg,
+/* Texto mediano: aumento perceptible */
+html.font-lg {
+  font-size: 18px;
+}
+
 body.font-lg {
   --font-size-base: 19px;
 }
 
-html.font-xl,
+/* Texto grande: aumento considerable */
+html.font-xl {
+  font-size: 21px;
+}
+
 body.font-xl {
   --font-size-base: 23px;
 }
